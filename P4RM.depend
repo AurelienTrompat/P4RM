@@ -16,3 +16,13 @@
 	<fstream>
 	<unistd.h>
 
+1477125960 source:/home/corentin/Projets/P4RM/main.cpp
+	<iostream>
+	<unistd.h>
+	"Pgpio.hpp"
+
+1477125960 /home/corentin/Projets/P4RM/include/Pgpio.hpp
+	<cstdint>
+	<fstream>
+	<unistd.h>
+

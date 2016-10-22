@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>P4RM:  Fichier source de include/PGpio.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">P4RM
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">PGpio.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef PGPIO_HPP</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define PGPIO_HPP</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;cstdint&gt;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classPGpio.html">    8</a></span>&#160;<span class="keyword">class </span><a class="code" href="classPGpio.html">PGpio</a></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classPGpio.html#afbb1c8e7df2bb9b762085fce7ae85e1b">PGpio</a>(<span class="keyword">const</span> uint8_t pin, <span class="keyword">const</span> <span class="keywordtype">bool</span> direction);</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classPGpio.html#a18dfec799d0c34a16f5ed7f1bad7af6a">~PGpio</a>();</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classPGpio.html#a3781148fbeaf775ad2db0b6d15fd6f79">read</a>();</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classPGpio.html#af0b83458de7f0fcc082f56177bfcfb1d">write</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span> value);</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">private</span>:</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        uint8_t mPin;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">bool</span> mDirection;</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        std::fstream mFile;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif // PGPIO_HPP</span></div><div class="ttc" id="classPGpio_html"><div class="ttname"><a href="classPGpio.html">PGpio</a></div><div class="ttdef"><b>Definition:</b> PGpio.hpp:8</div></div>
+<div class="ttc" id="classPGpio_html_afbb1c8e7df2bb9b762085fce7ae85e1b"><div class="ttname"><a href="classPGpio.html#afbb1c8e7df2bb9b762085fce7ae85e1b">PGpio::PGpio</a></div><div class="ttdeci">PGpio(const uint8_t pin, const bool direction)</div><div class="ttdoc">Constructeur. </div><div class="ttdef"><b>Definition:</b> PGpio.cpp:5</div></div>
+<div class="ttc" id="classPGpio_html_a18dfec799d0c34a16f5ed7f1bad7af6a"><div class="ttname"><a href="classPGpio.html#a18dfec799d0c34a16f5ed7f1bad7af6a">PGpio::~PGpio</a></div><div class="ttdeci">~PGpio()</div><div class="ttdoc">Destructeur. </div><div class="ttdef"><b>Definition:</b> PGpio.cpp:25</div></div>
+<div class="ttc" id="classPGpio_html_af0b83458de7f0fcc082f56177bfcfb1d"><div class="ttname"><a href="classPGpio.html#af0b83458de7f0fcc082f56177bfcfb1d">PGpio::write</a></div><div class="ttdeci">void write(const bool value)</div><div class="ttdoc">Positionne la valeur de la broche. </div><div class="ttdef"><b>Definition:</b> PGpio.cpp:41</div></div>
+<div class="ttc" id="classPGpio_html_a3781148fbeaf775ad2db0b6d15fd6f79"><div class="ttname"><a href="classPGpio.html#a3781148fbeaf775ad2db0b6d15fd6f79">PGpio::read</a></div><div class="ttdeci">bool read()</div><div class="ttdoc">Lit la valeur de la broche. </div><div class="ttdef"><b>Definition:</b> PGpio.cpp:32</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>
