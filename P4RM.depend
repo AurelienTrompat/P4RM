@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1476998580 source:c:\users\aurélien\documents\megasync\projet s34\c++\p4rm\main.cpp
+	<iostream>
+	<vector>
+
+1477086675 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\main.cpp
+	<iostream>
+	<unistd.h>
+	"Pgpio.hpp"
+
+1477085155 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\src\pgpio.cpp
+	"PGpio.hpp"
+
+1477086876 c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\include\pgpio.hpp
+	<cstdint>
+	<fstream>
+	<unistd.h>
+
