@@ -3,15 +3,15 @@
 	<iostream>
 	<vector>
 
-1477086675 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\main.cpp
+1477144369 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\main.cpp
 	<iostream>
 	<unistd.h>
-	"Pgpio.hpp"
+	"PGpioManager.hpp"
 
-1477085155 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\src\pgpio.cpp
+1477144412 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\src\pgpio.cpp
 	"PGpio.hpp"
 
-1477086876 c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\include\pgpio.hpp
+1477144519 c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\include\pgpio.hpp
 	<cstdint>
 	<fstream>
 	<unistd.h>
@@ -25,4 +25,12 @@
 	<cstdint>
 	<fstream>
 	<unistd.h>
+
+1477147809 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\src\pgpiomanager.cpp
+	"PGpioManager.hpp"
+
+1477148400 c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\include\pgpiomanager.hpp
+	<map>
+	<memory>
+	<fstream>
 

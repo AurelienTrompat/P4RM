@@ -1,7 +1,7 @@
 #include "PGpio.hpp"
 
 using namespace std;
-
+/*
 PGpio::PGpio(const uint8_t pin, const bool direction)
 {
     mDirection=direction;
@@ -46,5 +46,5 @@ void PGpio::write(const bool value)
         mFile<<to_string(value);
         mFile.close();
     }
-}
+}*/
 
