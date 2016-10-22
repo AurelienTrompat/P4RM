@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unistd.h>
-#include "Pgpio.hpp"
+#include "PGpio.hpp"
 
 using namespace std;
 
