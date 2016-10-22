@@ -1,0 +1,83 @@
+\hypertarget{classPGpio}{}\section{Référence de la classe P\+Gpio}
+\label{classPGpio}\index{P\+Gpio@{P\+Gpio}}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classPGpio_afbb1c8e7df2bb9b762085fce7ae85e1b}{P\+Gpio} (const uint8\+\_\+t pin, const bool direction)
+\begin{DoxyCompactList}\small\item\em Constructeur. \end{DoxyCompactList}\item 
+\hyperlink{classPGpio_a18dfec799d0c34a16f5ed7f1bad7af6a}{$\sim$\+P\+Gpio} ()
+\begin{DoxyCompactList}\small\item\em Destructeur. \end{DoxyCompactList}\item 
+bool \hyperlink{classPGpio_a3781148fbeaf775ad2db0b6d15fd6f79}{read} ()
+\begin{DoxyCompactList}\small\item\em Lit la valeur de la broche. \end{DoxyCompactList}\item 
+void \hyperlink{classPGpio_af0b83458de7f0fcc082f56177bfcfb1d}{write} (const bool value)
+\begin{DoxyCompactList}\small\item\em Positionne la valeur de la broche. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{classPGpio_afbb1c8e7df2bb9b762085fce7ae85e1b}{}\label{classPGpio_afbb1c8e7df2bb9b762085fce7ae85e1b} 
+\index{P\+Gpio@{P\+Gpio}!P\+Gpio@{P\+Gpio}}
+\index{P\+Gpio@{P\+Gpio}!P\+Gpio@{P\+Gpio}}
+\subsubsection{\texorpdfstring{P\+Gpio()}{PGpio()}}
+{\footnotesize\ttfamily P\+Gpio\+::\+P\+Gpio (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{pin,  }\item[{const bool}]{direction }\end{DoxyParamCaption})}
+
+
+
+Constructeur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em pin} & const uint8\+\_\+t Num�ro de la broche du gpio \\
+\hline
+{\em direction} & bool direction de la broche (0-\/$>$ in, 1 -\/$>$ out) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classPGpio_a18dfec799d0c34a16f5ed7f1bad7af6a}{}\label{classPGpio_a18dfec799d0c34a16f5ed7f1bad7af6a} 
+\index{P\+Gpio@{P\+Gpio}!````~P\+Gpio@{$\sim$\+P\+Gpio}}
+\index{````~P\+Gpio@{$\sim$\+P\+Gpio}!P\+Gpio@{P\+Gpio}}
+\subsubsection{\texorpdfstring{$\sim$\+P\+Gpio()}{~PGpio()}}
+{\footnotesize\ttfamily P\+Gpio\+::$\sim$\+P\+Gpio (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructeur. 
+
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{classPGpio_a3781148fbeaf775ad2db0b6d15fd6f79}{}\label{classPGpio_a3781148fbeaf775ad2db0b6d15fd6f79} 
+\index{P\+Gpio@{P\+Gpio}!read@{read}}
+\index{read@{read}!P\+Gpio@{P\+Gpio}}
+\subsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily bool P\+Gpio\+::read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Lit la valeur de la broche. 
+
+\begin{DoxyReturn}{Renvoie}
+bool valeur de la broche (0 -\/$>$ 0V, 1 -\/$>$ 3.\+3V) 
+\end{DoxyReturn}
+\hypertarget{classPGpio_af0b83458de7f0fcc082f56177bfcfb1d}{}\label{classPGpio_af0b83458de7f0fcc082f56177bfcfb1d} 
+\index{P\+Gpio@{P\+Gpio}!write@{write}}
+\index{write@{write}!P\+Gpio@{P\+Gpio}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void P\+Gpio\+::write (\begin{DoxyParamCaption}\item[{const bool}]{value }\end{DoxyParamCaption})}
+
+
+
+Positionne la valeur de la broche. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em value} & const bool valeur de la broche (0 -\/$>$ 0V, 1 -\/$>$ 3.\+3V) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+void 
+\end{DoxyReturn}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+include/P\+Gpio.\+hpp\item 
+src/P\+Gpio.\+cpp\end{DoxyCompactItemize}
