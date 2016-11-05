@@ -1,0 +1,100 @@
+\hypertarget{classPGpioManager}{\section{Référence de la classe P\+Gpio\+Manager}
+\label{classPGpioManager}\index{P\+Gpio\+Manager@{P\+Gpio\+Manager}}
+}
+
+
+{\ttfamily \#include $<$P\+Gpio\+Manager.\+hpp$>$}
+
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classPGpioManager_ab2c6f7880cfdcb968cb8d16e5f3a3c7e}{add\+Pin} (const \hyperlink{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6}{Pin} id)
+\begin{DoxyCompactList}\small\item\em Ajoute une broche au manager. \end{DoxyCompactList}\item 
+void \hyperlink{classPGpioManager_a26fe261d8f03e966db86c1dfdc2898b6}{remove\+Pin} (const \hyperlink{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6}{Pin} id)
+\begin{DoxyCompactList}\small\item\em Retire une broche au manager. \end{DoxyCompactList}\item 
+bool \hyperlink{classPGpioManager_ac21a6bc5ac96acd1c3cf748c72a740a5}{read} (const \hyperlink{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6}{Pin} id)
+\begin{DoxyCompactList}\small\item\em Lit une broche. \end{DoxyCompactList}\item 
+void \hyperlink{classPGpioManager_a6baa9605f1299fde9a9117e2e4b81078}{write} (const \hyperlink{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6}{Pin} id, const bool value)
+\begin{DoxyCompactList}\small\item\em Modifie la valeur d'une broche. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Gère les broches du G\+P\+I\+O. 
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{classPGpioManager_ab2c6f7880cfdcb968cb8d16e5f3a3c7e}{\index{P\+Gpio\+Manager@{P\+Gpio\+Manager}!add\+Pin@{add\+Pin}}
+\index{add\+Pin@{add\+Pin}!P\+Gpio\+Manager@{P\+Gpio\+Manager}}
+\subsubsection[{add\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}void P\+Gpio\+Manager\+::add\+Pin (
+\begin{DoxyParamCaption}
+\item[{const {\bf Pin}}]{id}
+\end{DoxyParamCaption}
+)}}\label{classPGpioManager_ab2c6f7880cfdcb968cb8d16e5f3a3c7e}
+
+
+Ajoute une broche au manager. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Label de la broche à ajouter. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classPGpioManager_ac21a6bc5ac96acd1c3cf748c72a740a5}{\index{P\+Gpio\+Manager@{P\+Gpio\+Manager}!read@{read}}
+\index{read@{read}!P\+Gpio\+Manager@{P\+Gpio\+Manager}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+Gpio\+Manager\+::read (
+\begin{DoxyParamCaption}
+\item[{const {\bf Pin}}]{id}
+\end{DoxyParamCaption}
+)}}\label{classPGpioManager_ac21a6bc5ac96acd1c3cf748c72a740a5}
+
+
+Lit une broche. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Label de la broche à lire. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Valeur de la broche. 
+\end{DoxyReturn}
+\hypertarget{classPGpioManager_a26fe261d8f03e966db86c1dfdc2898b6}{\index{P\+Gpio\+Manager@{P\+Gpio\+Manager}!remove\+Pin@{remove\+Pin}}
+\index{remove\+Pin@{remove\+Pin}!P\+Gpio\+Manager@{P\+Gpio\+Manager}}
+\subsubsection[{remove\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}void P\+Gpio\+Manager\+::remove\+Pin (
+\begin{DoxyParamCaption}
+\item[{const {\bf Pin}}]{id}
+\end{DoxyParamCaption}
+)}}\label{classPGpioManager_a26fe261d8f03e966db86c1dfdc2898b6}
+
+
+Retire une broche au manager. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Label de la broche à retirer. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classPGpioManager_a6baa9605f1299fde9a9117e2e4b81078}{\index{P\+Gpio\+Manager@{P\+Gpio\+Manager}!write@{write}}
+\index{write@{write}!P\+Gpio\+Manager@{P\+Gpio\+Manager}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}void P\+Gpio\+Manager\+::write (
+\begin{DoxyParamCaption}
+\item[{const {\bf Pin}}]{id, }
+\item[{const bool}]{value}
+\end{DoxyParamCaption}
+)}}\label{classPGpioManager_a6baa9605f1299fde9a9117e2e4b81078}
+
+
+Modifie la valeur d'une broche. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em id} & Label de la broche à modifier. \\
+\hline
+{\em value} & Valeur de la broche \\
+\hline
+\end{DoxyParams}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{PGpioManager_8hpp}{P\+Gpio\+Manager.\+hpp}\item 
+src/P\+Gpio\+Manager.\+cpp\end{DoxyCompactItemize}

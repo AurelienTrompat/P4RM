@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pgpio',['PGpio',['../classPGpio.html',1,'']]]
+  ['pgpiomanager',['PGpioManager',['../classPGpioManager.html',1,'']]]
 ];

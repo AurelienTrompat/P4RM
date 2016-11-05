@@ -1,0 +1,49 @@
+\hypertarget{PGpioManager_8hpp}{\section{Référence du fichier include/\+P\+Gpio\+Manager.hpp}
+\label{PGpioManager_8hpp}\index{include/\+P\+Gpio\+Manager.\+hpp@{include/\+P\+Gpio\+Manager.\+hpp}}
+}
+
+
+Déclaration de l'énumeration Pin et de la classe \hyperlink{classPGpioManager}{P\+Gpio\+Manager}.  
+
+
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$memory$>$}\\*
+{\ttfamily \#include $<$cassert$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classPGpioManager}{P\+Gpio\+Manager}
+\end{DoxyCompactItemize}
+\subsection*{Énumérations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6}{Pin} \+: uint8\+\_\+t \{ \hyperlink{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6a9577975c7a65b453ee5a9ec237bad5a1}{Pin\+::\+L\+E\+D1} = 128, 
+\hyperlink{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6ae7e94083c39dab7994ba8bcbd56c407c}{Pin\+::\+S\+W1} = 0
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration qui permet l'abstraction des broches du G\+P\+I\+O. Le bit de poids fort de la valeur associée à chaque énumération sert pour différencier les broches en entrée de celles en sorties. (0 -\/$>$ entrée, 1 -\/$>$ sortie) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Déclaration de l'énumeration Pin et de la classe \hyperlink{classPGpioManager}{P\+Gpio\+Manager}. 
+
+
+
+\subsection{Documentation du type de l'énumération}
+\hypertarget{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6}{\index{P\+Gpio\+Manager.\+hpp@{P\+Gpio\+Manager.\+hpp}!Pin@{Pin}}
+\index{Pin@{Pin}!P\+Gpio\+Manager.\+hpp@{P\+Gpio\+Manager.\+hpp}}
+\subsubsection[{Pin}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Pin} \+: uint8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}}\label{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6}
+
+
+Enumeration qui permet l'abstraction des broches du G\+P\+I\+O. Le bit de poids fort de la valeur associée à chaque énumération sert pour différencier les broches en entrée de celles en sorties. (0 -\/$>$ entrée, 1 -\/$>$ sortie) 
+
+\begin{Desc}
+\item[Valeurs énumérées]\par
+\begin{description}
+\index{L\+E\+D1@{L\+E\+D1}!P\+Gpio\+Manager.\+hpp@{P\+Gpio\+Manager.\+hpp}}\index{P\+Gpio\+Manager.\+hpp@{P\+Gpio\+Manager.\+hpp}!L\+E\+D1@{L\+E\+D1}}\item[{\em 
+\hypertarget{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6a9577975c7a65b453ee5a9ec237bad5a1}{L\+E\+D1}\label{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6a9577975c7a65b453ee5a9ec237bad5a1}
+}]Led1. \index{S\+W1@{S\+W1}!P\+Gpio\+Manager.\+hpp@{P\+Gpio\+Manager.\+hpp}}\index{P\+Gpio\+Manager.\+hpp@{P\+Gpio\+Manager.\+hpp}!S\+W1@{S\+W1}}\item[{\em 
+\hypertarget{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6ae7e94083c39dab7994ba8bcbd56c407c}{S\+W1}\label{PGpioManager_8hpp_a03a94c64bfae5a81916fbe47ec3775a6ae7e94083c39dab7994ba8bcbd56c407c}
+}]Bouton1. \end{description}
+\end{Desc}

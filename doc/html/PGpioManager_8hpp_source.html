@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>P4RM:  Fichier source de include/PGpioManager.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">P4RM
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Membres&#160;de&#160;fichier</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Valeurs énumérées</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">PGpioManager.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="PGpioManager_8hpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef PGPIOMANAGER_HPP</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define PGPIOMANAGER_HPP</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6">   19</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6">Pin</a> : uint8_t {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6a9577975c7a65b453ee5a9ec237bad5a1">LED1</a> = 128, </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6ae7e94083c39dab7994ba8bcbd56c407c">SW1</a> = 0 </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    }; <span class="comment">// le bit de poids fort à 1 indique que la broche est une sortie</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classPGpioManager.html">   26</a></span>&#160;<span class="keyword">class </span><a class="code" href="classPGpioManager.html">PGpioManager</a></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classPGpioManager.html">PGpioManager</a>();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        ~<a class="code" href="classPGpioManager.html">PGpioManager</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classPGpioManager.html#ab2c6f7880cfdcb968cb8d16e5f3a3c7e">addPin</a>(<span class="keyword">const</span> <a class="code" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6">Pin</a> <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classPGpioManager.html#a26fe261d8f03e966db86c1dfdc2898b6">removePin</a>(<span class="keyword">const</span> <a class="code" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6">Pin</a> <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classPGpioManager.html#ac21a6bc5ac96acd1c3cf748c72a740a5">read</a>(<span class="keyword">const</span> <a class="code" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6">Pin</a> <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classPGpioManager.html#a6baa9605f1299fde9a9117e2e4b81078">write</a>(<span class="keyword">const</span> <a class="code" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6">Pin</a> <span class="keywordtype">id</span>, <span class="keyword">const</span> <span class="keywordtype">bool</span> value);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        std::string fromPinToString(<span class="keyword">const</span> <a class="code" href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6">Pin</a> <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        std::map&lt;std::string, uint8_t&gt; mPinMapFromFile;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        std::map&lt;Pin, uint8_t&gt; mPinMap;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        std::fstream mFile;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;};</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif // PGPIOMANAGER_HPP</span></div>
+<div class="ttc" id="classPGpioManager_html_a6baa9605f1299fde9a9117e2e4b81078"><div class="ttname"><a href="classPGpioManager.html#a6baa9605f1299fde9a9117e2e4b81078">PGpioManager::write</a></div><div class="ttdeci">void write(const Pin id, const bool value)</div><div class="ttdoc">Modifie la valeur d&#39;une broche. </div><div class="ttdef"><b>Definition:</b> PGpioManager.cpp:115</div></div>
+<div class="ttc" id="PGpioManager_8hpp_html_a03a94c64bfae5a81916fbe47ec3775a6ae7e94083c39dab7994ba8bcbd56c407c"><div class="ttname"><a href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6ae7e94083c39dab7994ba8bcbd56c407c">Pin::SW1</a></div><div class="ttdoc">Bouton1. </div></div>
+<div class="ttc" id="classPGpioManager_html_a26fe261d8f03e966db86c1dfdc2898b6"><div class="ttname"><a href="classPGpioManager.html#a26fe261d8f03e966db86c1dfdc2898b6">PGpioManager::removePin</a></div><div class="ttdeci">void removePin(const Pin id)</div><div class="ttdoc">Retire une broche au manager. </div><div class="ttdef"><b>Definition:</b> PGpioManager.cpp:87</div></div>
+<div class="ttc" id="classPGpioManager_html"><div class="ttname"><a href="classPGpioManager.html">PGpioManager</a></div><div class="ttdef"><b>Definition:</b> PGpioManager.hpp:26</div></div>
+<div class="ttc" id="classPGpioManager_html_ac21a6bc5ac96acd1c3cf748c72a740a5"><div class="ttname"><a href="classPGpioManager.html#ac21a6bc5ac96acd1c3cf748c72a740a5">PGpioManager::read</a></div><div class="ttdeci">bool read(const Pin id)</div><div class="ttdoc">Lit une broche. </div><div class="ttdef"><b>Definition:</b> PGpioManager.cpp:101</div></div>
+<div class="ttc" id="classPGpioManager_html_ab2c6f7880cfdcb968cb8d16e5f3a3c7e"><div class="ttname"><a href="classPGpioManager.html#ab2c6f7880cfdcb968cb8d16e5f3a3c7e">PGpioManager::addPin</a></div><div class="ttdeci">void addPin(const Pin id)</div><div class="ttdoc">Ajoute une broche au manager. </div><div class="ttdef"><b>Definition:</b> PGpioManager.cpp:61</div></div>
+<div class="ttc" id="PGpioManager_8hpp_html_a03a94c64bfae5a81916fbe47ec3775a6a9577975c7a65b453ee5a9ec237bad5a1"><div class="ttname"><a href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6a9577975c7a65b453ee5a9ec237bad5a1">Pin::LED1</a></div><div class="ttdoc">Led1. </div></div>
+<div class="ttc" id="PGpioManager_8hpp_html_a03a94c64bfae5a81916fbe47ec3775a6"><div class="ttname"><a href="PGpioManager_8hpp.html#a03a94c64bfae5a81916fbe47ec3775a6">Pin</a></div><div class="ttdeci">Pin</div><div class="ttdoc">Enumeration qui permet l&#39;abstraction des broches du GPIO. Le bit de poids fort de la valeur associée ...</div><div class="ttdef"><b>Definition:</b> PGpioManager.hpp:19</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.7
+</small></address>
+</body>
+</html>

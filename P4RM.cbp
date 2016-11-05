@@ -34,10 +34,8 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 		</Compiler>
-		<Unit filename="include/PGpio.hpp" />
 		<Unit filename="include/PGpioManager.hpp" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/PGpio.cpp" />
 		<Unit filename="src/PGpioManager.cpp" />
 		<Extensions>
 			<code_completion />

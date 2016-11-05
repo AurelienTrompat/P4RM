@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['read',['read',['../classPGpio.html#a3781148fbeaf775ad2db0b6d15fd6f79',1,'PGpio']]]
+  ['read',['read',['../classPGpioManager.html#ac21a6bc5ac96acd1c3cf748c72a740a5',1,'PGpioManager']]],
+  ['removepin',['removePin',['../classPGpioManager.html#a26fe261d8f03e966db86c1dfdc2898b6',1,'PGpioManager']]]
 ];

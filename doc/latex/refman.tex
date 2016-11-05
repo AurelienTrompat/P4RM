@@ -4,7 +4,6 @@
 \usepackage{fixltx2e}
 \usepackage{calc}
 \usepackage{doxygen}
-\usepackage[export]{adjustbox} % also loads graphicx
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage{makeidx}
@@ -20,6 +19,7 @@
 
 % Font selection
 \usepackage[T1]{fontenc}
+\usepackage{mathptmx}
 \usepackage[scaled=.90]{helvet}
 \usepackage{courier}
 \usepackage{amssymb}
@@ -49,7 +49,7 @@
 \hbadness=750
 \setlength{\emergencystretch}{15pt}
 \setlength{\parindent}{0cm}
-\setlength{\parskip}{3ex plus 2ex minus 2ex}
+\setlength{\parskip}{0.2cm}
 \makeatletter
 \renewcommand{\paragraph}{%
   \@startsection{paragraph}{4}{0ex}{-1.0ex}{1.0ex}{%
@@ -74,8 +74,8 @@
 \fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
 \fancyfoot[LE]{\fancyplain{}{}}
 \fancyfoot[CE]{\fancyplain{}{}}
-\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize Généré par Doxygen }}
-\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize Généré par Doxygen }}
+\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize Généré le Samedi 5 Novembre 2016 23\+:44\+:26 pour P4\+R\+M par Doxygen }}
+\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize Généré le Samedi 5 Novembre 2016 23\+:44\+:26 pour P4\+R\+M par Doxygen }}
 \fancyfoot[CO]{\fancyplain{}{}}
 \fancyfoot[RO]{\fancyplain{}{}}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -112,8 +112,6 @@
   \newpage{\pagestyle{empty}\cleardoublepage}%
 }
 
-\usepackage{caption}
-\captionsetup{labelsep=space,justification=centering,font={bf},singlelinecheck=off,skip=4pt,position=top}
 
 %===== C O N T E N T S =====
 
@@ -121,41 +119,45 @@
 
 % Titlepage & ToC
 \hypersetup{pageanchor=false,
+             bookmarks=true,
              bookmarksnumbered=true,
              pdfencoding=unicode
             }
-\pagenumbering{alph}
+\pagenumbering{roman}
 \begin{titlepage}
 \vspace*{7cm}
 \begin{center}%
-{\Large P4\+RM }\\
+{\Large P4\+R\+M }\\
 \vspace*{1cm}
-{\large Généré par Doxygen 1.8.12}\\
+{\large Généré par Doxygen 1.8.7}\\
+\vspace*{0.5cm}
+{\small Samedi 5 Novembre 2016 23:44:26}\\
 \end{center}
 \end{titlepage}
 \clearemptydoublepage
-\pagenumbering{roman}
 \tableofcontents
 \clearemptydoublepage
 \pagenumbering{arabic}
 \hypersetup{pageanchor=true}
 
 %--- Begin generated contents ---
-\chapter{P4\+RM}
+\chapter{P4\+R\+M}
 \label{md_README}
 \hypertarget{md_README}{}
 \input{md_README}
 \chapter{Index des classes}
 \input{annotated}
+\chapter{Index des fichiers}
+\input{files}
 \chapter{Documentation des classes}
-\input{classPGpio}
+\input{classPGpioManager}
+\chapter{Documentation des fichiers}
+\input{PGpioManager_8hpp}
 %--- End generated contents ---
 
 % Index
-\backmatter
 \newpage
 \phantomsection
-\clearemptydoublepage
 \addcontentsline{toc}{chapter}{Index}
 \printindex
 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pgpio',['PGpio',['../classPGpio.html#afbb1c8e7df2bb9b762085fce7ae85e1b',1,'PGpio']]]
+  ['addpin',['addPin',['../classPGpioManager.html#ab2c6f7880cfdcb968cb8d16e5f3a3c7e',1,'PGpioManager']]]
 ];

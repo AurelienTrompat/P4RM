@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7epgpio',['~PGpio',['../classPGpio.html#a18dfec799d0c34a16f5ed7f1bad7af6a',1,'PGpio']]]
+  ['read',['read',['../classPGpioManager.html#ac21a6bc5ac96acd1c3cf748c72a740a5',1,'PGpioManager']]],
+  ['removepin',['removePin',['../classPGpioManager.html#a26fe261d8f03e966db86c1dfdc2898b6',1,'PGpioManager']]]
 ];
