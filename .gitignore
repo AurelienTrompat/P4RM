@@ -28,4 +28,6 @@
 *.out
 *.app
 *.bin
+
+#Code::Blocks
 *.layout
