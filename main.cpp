@@ -1,7 +1,7 @@
 #include <iostream>
-#include <unistd.h>
 #include <exception>
 #include "PGpioManager.hpp"
+#include "SFML/System.hpp"
 
 using namespace std;
 
@@ -16,9 +16,9 @@ int main()
         while(!pm.read(Pin::SW1))
         {
             pm.write(Pin::LED1, true);
-            usleep(100000);
+            sf::sleep(sf::milliseconds(200));
             pm.write(Pin::LED1, false);
-            usleep(100000);
+            sf::sleep(sf::milliseconds(200));
         }
     }
     catch(exception const& exep)

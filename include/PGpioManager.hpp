@@ -7,7 +7,6 @@
 
 #include <map>
 #include <memory>
-#include <cassert>
 #include <fstream>
 #include <string>
 

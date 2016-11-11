@@ -64,22 +64,146 @@
 1477933243 source:c:\users\aurelien\documents\megasync\projet s34\rpi\c++\p4rm\src\pgpiomanager.cpp
 	"PGpioManager.hpp"
 
-1478276936 source:/home/corentin/Projets/P4RM/main.cpp
+1478763803 source:/home/corentin/Projets/P4RM/main.cpp
 	<iostream>
-	<unistd.h>
 	<exception>
 	"PGpioManager.hpp"
+	"SFML/System.hpp"
 
-1478276228 /home/corentin/Projets/P4RM/include/PGpioManager.hpp
+1478683934 /home/corentin/Projets/P4RM/include/PGpioManager.hpp
 	<map>
 	<memory>
-	<cassert>
 	<fstream>
 	<string>
 
-1478384544 source:/home/corentin/Projets/P4RM/src/PGpioManager.cpp
+1478534299 source:/home/corentin/Projets/P4RM/src/PGpioManager.cpp
 	"PGpioManager.hpp"
 	<iostream>
 	<set>
 	<sstream>
+
+1478686024 source:/home/corentin/Projets/P4RM/src/UltrasonicSensor.cpp
+	"UltrasonicSensor.hpp"
+
+1478686044 /home/corentin/Projets/P4RM/include/UltrasonicSensor.hpp
+	"PGpioManager.hpp"
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Clock.hpp>
+	<SFML/System/Err.hpp>
+	<SFML/System/FileInputStream.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/Lock.hpp>
+	<SFML/System/MemoryInputStream.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Sleep.hpp>
+	<SFML/System/String.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/ThreadLocal.hpp>
+	<SFML/System/ThreadLocalPtr.hpp>
+	<SFML/System/Time.hpp>
+	<SFML/System/Utf.hpp>
+	<SFML/System/Vector2.hpp>
+	<SFML/System/Vector3.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/Config.hpp
+	"TargetConditionals.h"
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Clock.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Export.hpp
+	<SFML/Config.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Time.hpp
+	<SFML/System/Export.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Err.hpp
+	<SFML/System/Export.hpp>
+	<ostream>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/FileInputStream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Export.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdio>
+	<string>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/InputStream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Export.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/NonCopyable.hpp
+	<SFML/System/Export.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Lock.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/MemoryInputStream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/Export.hpp>
+	<cstdlib>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Mutex.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Sleep.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/String.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Utf.hpp>
+	<iterator>
+	<locale>
+	<string>
+	<SFML/System/String.inl>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Utf.hpp
+	<SFML/Config.hpp>
+	<algorithm>
+	<locale>
+	<string>
+	<cstdlib>
+	<SFML/System/Utf.inl>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Utf.inl
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/String.inl
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Thread.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdlib>
+	<SFML/System/Thread.inl>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Thread.inl
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/ThreadLocal.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdlib>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/ThreadLocalPtr.hpp
+	<SFML/System/ThreadLocal.hpp>
+	<SFML/System/ThreadLocalPtr.inl>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/ThreadLocalPtr.inl
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Vector2.hpp
+	<SFML/System/Vector2.inl>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Vector2.inl
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Vector3.hpp
+	<SFML/System/Vector3.inl>
+
+1478762984 /home/corentin/Projets/P4RM/include/SFML/System/Vector3.inl
 
