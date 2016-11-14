@@ -31,12 +31,24 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-mfpu=vfp" />
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
+			<Add option="-static" />
+			<Add option="-static-libstdc++" />
 		</Compiler>
+		<Linker>
+			<Add library="lib/libstdc++.a" />
+			<Add library="lib/libsfml-network-s.a" />
+			<Add library="lib/libsfml-system-s.a" />
+		</Linker>
 		<Unit filename="include/PGpioManager.hpp" />
+		<Unit filename="include/Robot.hpp" />
+		<Unit filename="include/UltrasonicSensor.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/PGpioManager.cpp" />
+		<Unit filename="src/Robot.cpp" />
+		<Unit filename="src/UltrasonicSensor.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
