@@ -55,10 +55,10 @@ mFile.close();
 PGpioManager::~PGpioManager()
 {
     for(auto itr=mPinMap.begin(); itr!=mPinMap.end(); itr++) //parcourt toute la map pour désactiver toutes les pins
-        removePin(itr->first);
+        deletePin(itr->first);
 }
 
-void PGpioManager::addPin(const Pin id)
+void PGpioManager::declarePin(const Pin id)
 {
     const auto found = mPinMapFromFile.find(fromPinToString(id));
     if(found != mPinMapFromFile.end())
@@ -84,7 +84,7 @@ void PGpioManager::addPin(const Pin id)
 
 }
 
-void PGpioManager::removePin(const Pin id)
+void PGpioManager::deletePin(const Pin id)
 {
     auto found = mPinMap.find(id); //on cherche la pin pour verifier qu'elle a été exportée
     if(found != mPinMap.end())

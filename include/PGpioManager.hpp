@@ -10,6 +10,8 @@
 #include <fstream>
 #include <string>
 
+#include "PSingleTon.hpp"
+
 /** \enum Pin
 *   \brief Enumeration qui permet l'abstraction des broches du GPIO.
 *   Le bit de poids fort de la valeur associée à chaque énumération sert pour différencier les broches en entrée de celles en sorties.
@@ -22,20 +24,20 @@ enum class Pin : uint8_t {
 
 /** \class PGpioManager PGpioManager.hpp PGpioManager.hpp Gère les broches du GPIO.
 */
-class PGpioManager
+class PGpioManager : public PSingleTon<PGpioManager> //Pour assurer l'instance unique du manager
 {
-    public:
+    friend class PSingleTon<PGpioManager>;
+
+    private:
         PGpioManager();
+        PGpioManager(const PGpioManager&){}
         ~PGpioManager();
-        /** \brief Ajoute une broche au manager.
+    public:
+        /** \brief Déclare une broche au manager.
         *   \param id Label de la broche à ajouter.
         */
-        void addPin(const Pin id);
+        void declarePin(const Pin id);
 
-        /** \brief Retire une broche au manager.
-        *   \param id Label de la broche à retirer.
-        */
-        void removePin(const Pin id);
 
         /** \brief Lit une broche.
         *   \param id Label de la broche à lire.
@@ -50,6 +52,7 @@ class PGpioManager
         void write(const Pin id, const bool value);
 
     private:
+        void deletePin(const Pin id);
         std::string fromPinToString(const Pin id);
 
     private:

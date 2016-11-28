@@ -43,12 +43,13 @@
 			<Add library="lib/libsfml-system-s.a" />
 		</Linker>
 		<Unit filename="include/PGpioManager.hpp" />
-		<Unit filename="include/Robot.hpp" />
-		<Unit filename="include/UltrasonicSensor.hpp" />
+		<Unit filename="include/PRobot.hpp" />
+		<Unit filename="include/PSingleTon.hpp" />
+		<Unit filename="include/PUltrasonicSensor.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/PGpioManager.cpp" />
-		<Unit filename="src/Robot.cpp" />
-		<Unit filename="src/UltrasonicSensor.cpp" />
+		<Unit filename="src/PRobot.cpp" />
+		<Unit filename="src/PUltrasonicSensor.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

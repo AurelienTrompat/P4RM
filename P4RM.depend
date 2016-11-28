@@ -64,19 +64,20 @@
 1477933243 source:c:\users\aurelien\documents\megasync\projet s34\rpi\c++\p4rm\src\pgpiomanager.cpp
 	"PGpioManager.hpp"
 
-1478864365 source:/home/corentin/Projets/P4RM/main.cpp
+1480277155 source:/home/corentin/Projets/P4RM/main.cpp
 	<iostream>
 	<exception>
 	"PGpioManager.hpp"
 	"SFML/System.hpp"
 
-1478864365 /home/corentin/Projets/P4RM/include/PGpioManager.hpp
+1480277677 /home/corentin/Projets/P4RM/include/PGpioManager.hpp
 	<map>
 	<memory>
 	<fstream>
 	<string>
+	"PSingleTon.hpp"
 
-1478863778 source:/home/corentin/Projets/P4RM/src/PGpioManager.cpp
+1480265470 source:/home/corentin/Projets/P4RM/src/PGpioManager.cpp
 	"PGpioManager.hpp"
 	<iostream>
 	<set>
@@ -206,4 +207,19 @@
 	<SFML/System/Vector3.inl>
 
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Vector3.inl
+
+1480265134 source:/home/corentin/Projets/P4RM/src/PRobot.cpp
+	"PRobot.hpp"
+
+1480265141 /home/corentin/Projets/P4RM/include/PRobot.hpp
+
+1480265134 source:/home/corentin/Projets/P4RM/src/PUltrasonicSensor.cpp
+	"PUltrasonicSensor.hpp"
+
+1478864365 /home/corentin/Projets/P4RM/include/PUltrasonicSensor.hpp
+	"PGpioManager.hpp"
+
+1480277083 /home/corentin/Projets/P4RM/include/PSingleTon.hpp
+
+1480263762 /home/corentin/Projets/P4RM/src/PSingleTon.inl
 

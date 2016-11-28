@@ -8,7 +8,7 @@ class Robot
         Robot();
         ~Robot();
 
-        run();
+        void run();
 
     protected:
 

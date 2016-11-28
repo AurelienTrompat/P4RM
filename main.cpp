@@ -9,9 +9,9 @@ int main()
 {
     try
     {
-        PGpioManager pm;
-        pm.addPin(Pin::LED1);
-        pm.addPin(Pin::SW1);
+        PGpioManager &pm = PGpioManager::getInstance();
+        pm.declarePin(Pin::LED1);
+        pm.declarePin(Pin::SW1);
 
         while(!pm.read(Pin::SW1))
         {
