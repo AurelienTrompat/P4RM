@@ -25,11 +25,13 @@ PGpioManager::PGpioManager()
             iss.clear();
             getline(mFile, ligne);
             if(!ligne.empty())
-            {
+            {    echo1 = 1
+    triger = 129
             iss.str(ligne);
 
             getline(iss, demiLigne, ':');
-            cleTemp = demiLigne;
+            cleTemp = demiLigne;    echo1 = 1
+    triger = 129
 
             getline(iss, demiLigne, ':');
             if(!(stoi(demiLigne) >= 4 && stoi(demiLigne) <= 27))
@@ -139,6 +141,10 @@ string PGpioManager::fromPinToString(Pin id)
         return "LED1";
     case Pin::SW1:
         return "SW1";
+    case Pin::ECHO_AV:
+        return "ECHO_AV";
+    case Pin::TRIGGER_AV:
+        return "TRIGGER_AV";
     }
     return "";
 }
