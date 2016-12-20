@@ -141,8 +141,8 @@ string PGpioManager::fromPinToString(Pin id)
         return "SW1";
     case Pin::ECHO_AV:
         return "ECHO_AV";
-    case Pin::TRIGGER_AV:
-        return "TRIGGER_AV";
+    case Pin::TRIG_AV:
+        return "TRIG_AV";
     }
     return "";
 }

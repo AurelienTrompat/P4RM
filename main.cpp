@@ -14,9 +14,9 @@ int main()
         pm.declarePin(Pin::LED1);
         pm.declarePin(Pin::SW1);
         pm.declarePin(Pin::ECHO_AV);
-        pm.declarePin(Pin::TRIGGER_AV);
+        pm.declarePin(Pin::TRIG_AV);
 
-        PUltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIGGER_AV);
+        PUltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIG_AV);
         test.start();
 
         while(!pm.read(Pin::SW1))
