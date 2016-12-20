@@ -2,7 +2,7 @@
 #include <exception>
 #include "PGpioManager.hpp"
 #include "SFML/System.hpp"
-#include "pUltrasonicSensor.hpp"
+#include "PUltrasonicSensor.hpp"
 
 using namespace std;
 
@@ -16,7 +16,7 @@ int main()
         pm.declarePin(Pin::ECHO_AV);
         pm.declarePin(Pin::TRIGGER_AV);
 
-        UltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIGGER_AV);
+        PUltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIGGER_AV);
         test.start();
 
         while(!pm.read(Pin::SW1))
