@@ -31,3 +31,4 @@
 
 #Code::Blocks
 *.layout
+*.depend
