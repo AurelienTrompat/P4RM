@@ -2,6 +2,7 @@
 #include <exception>
 #include "PGpioManager.hpp"
 #include "SFML/System.hpp"
+#include "pUltrasonicSensor.hpp"
 
 using namespace std;
 
@@ -13,15 +14,26 @@ int main()
         pm.declarePin(Pin::LED1);
         pm.declarePin(Pin::SW1);
 
+<<<<<<< HEAD
+        pm.declarePin(Pin::ECHO_AV);
+        pm.declarePin(Pin::TRIGGER_AV);
+
+        UltrasonicSensor test(Pin::ECHO_AV, Pin::TRIGGER_AV);
+=======
         pm.declarePin(Pin::ECHO_AV);   // rgzgrzergzergzerg
         pm.declarePin(Pin::TRIGGER_AV); // zrgzergzergzergzerg
 
         UltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIGGER_AV);
+>>>>>>> origin/master
         test.start();
 
         while(!pm.read(Pin::SW1))
         {
+<<<<<<< HEAD
+            if (test.temp() > 296) pm.write(Pin::LED1, true);
+=======
             if (test.temp() > 2) pm.write(Pin::LED1, true);
+>>>>>>> origin/master
             else pm.write(Pin::LED1, false);
             sf::sleep(sf::milliseconds(200));
         }
@@ -30,6 +42,5 @@ int main()
     {
         cerr << exep.what() <<endl;
     }
-
     return 0;
 }
