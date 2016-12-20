@@ -3,26 +3,26 @@
 
 using namespace std;
 
-UltrasonicSensor::UltrasonicSensor(Pin echo , Pin trig) : mPm(PGpioManager::getInstance()), flag(false), tempreponse(0), go()
+PUltrasonicSensor::PUltrasonicSensor(Pin echo , Pin trig) : mPm(PGpioManager::getInstance()), flag(false), tempreponse(0), go()
 {
     //ctor
 }
 
-UltrasonicSensor::~UltrasonicSensor()
+PUltrasonicSensor::~PUltrasonicSensor()
 {
     //dtor
 }
 
-void UltrasonicSensor::start(void)
+void PUltrasonicSensor::start(void)
 {
     if (flag == 0)
     {
         flag = 1;
-        go = thread(&UltrasonicSensor::run, this);
+        go = thread(&PUltrasonicSensor::run, this);
     }
 }
 
-void UltrasonicSensor::run(void)
+void PUltrasonicSensor::run(void)
 {
     float i = 0;
     while(flag)
@@ -42,38 +42,13 @@ void UltrasonicSensor::run(void)
     }
 }
 
-void start(void)
-{
-    flag = 1;
-    go = std::thread(run);
-}
-
-void run(void)
-{
-    int i;
-    while(flag)
-    {
-        i = 0;
-        pm.write(Pin::triger, true);
-        while (Pin::echo == 0 && i < 1000)
-        {
-            if (i = 10) pm.write(Pin::triger, false);
-            std::Thread::Sleep(1);
-            i++;
-        }
-        if (pm.read(Pin::triger, true)) pm.write(Pin::triger, false);
-        std::Thread::Sleep(15);
-        tempreponse = i;
-    }
-}
-
-void UltrasonicSensor::stop(void)
+void PUltrasonicSensor::stop(void)
 {
     flag = 0;
     go.join();
 }
 
-int UltrasonicSensor::temp(void)
+int PUltrasonicSensor::temp(void)
 {
     return (tempreponse);
 }

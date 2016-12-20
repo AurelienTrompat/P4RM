@@ -25,13 +25,11 @@ PGpioManager::PGpioManager()
             iss.clear();
             getline(mFile, ligne);
             if(!ligne.empty())
-            {    echo1 = 1
-    triger = 129
+            {
             iss.str(ligne);
 
             getline(iss, demiLigne, ':');
-            cleTemp = demiLigne;    echo1 = 1
-    triger = 129
+            cleTemp = demiLigne;
 
             getline(iss, demiLigne, ':');
             if(!(stoi(demiLigne) >= 4 && stoi(demiLigne) <= 27))

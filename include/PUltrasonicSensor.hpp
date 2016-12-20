@@ -1,18 +1,18 @@
-#ifndef ULTRASONICSENSOR_HPP
-#define ULTRASONICSENSOR_HPP
+#ifndef PULTRASONICSENSOR_HPP
+#define PULTRASONICSENSOR_HPP
 
 #include "PGpioManager.hpp"
 #include <atomic>
 #include <thread>
 
-class UltrasonicSensor
+class PUltrasonicSensor
 {
     public:
-        UltrasonicSensor(Pin echo , Pin trig );
-        UltrasonicSensor(PGpioManager &pm, Pin echo , Pin triger );
-        ~UltrasonicSensor();
+        PUltrasonicSensor(Pin echo , Pin trig );
+        PUltrasonicSensor(PGpioManager &pm, Pin echo , Pin triger );
+        ~PUltrasonicSensor();
         void start(void);
-        void stopUltrasonicSensor::(void);
+        void stop(void);
         int temp(void);
 
     private:
@@ -25,4 +25,4 @@ class UltrasonicSensor
 };
 
 
-#endif // ULTRASONICSENSOR_HPP
+#endif // PULTRASONICSENSOR_HPP

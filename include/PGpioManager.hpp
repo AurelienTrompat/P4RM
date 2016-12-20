@@ -19,8 +19,8 @@
 */
 enum class Pin : uint8_t {
     LED1 = 128, ///<Led1
-    SW1 = 0 ///<Bouton1
-    ECHO_AV = 1
+    SW1 = 0, ///<Bouton1
+    ECHO_AV = 1,
     TRIGGER_AV = 129
     }; // le bit de poids fort à 1 indique que la broche est une sortie
 
