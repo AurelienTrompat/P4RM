@@ -24,4 +24,5 @@ class UltrasonicSensor
         void run(void);
 };
 
+
 #endif // ULTRASONICSENSOR_HPP

@@ -13,7 +13,6 @@ int main()
         PGpioManager &pm = PGpioManager::getInstance();
         pm.declarePin(Pin::LED1);
         pm.declarePin(Pin::SW1);
-
         pm.declarePin(Pin::ECHO_AV);
         pm.declarePin(Pin::TRIGGER_AV);
 
