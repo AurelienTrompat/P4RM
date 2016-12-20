@@ -1,13 +1,8 @@
 #include "PUltrasonicSensor.hpp"
 
-<<<<<<< HEAD
 using namespace std;
 
 UltrasonicSensor::UltrasonicSensor(Pin echo , Pin trig) : mPm(PGpioManager::getInstance()), flag(false), tempreponse(0), go()
-=======
-
-UltrasonicSensor::UltrasonicSensor(PGpioManager &pm) : mPm(pm)
->>>>>>> origin/master
 {
     //ctor
 }
@@ -17,7 +12,6 @@ UltrasonicSensor::~UltrasonicSensor()
     //dtor
 }
 
-<<<<<<< HEAD
 void UltrasonicSensor::start(void)
 {
     if (flag == 0)
@@ -47,8 +41,6 @@ void UltrasonicSensor::run(void)
     }
 }
 
-void UltrasonicSensor::stop(void)
-=======
 void start(void)
 {
     flag = 1;
@@ -74,18 +66,13 @@ void run(void)
     }
 }
 
-void stop(void)
->>>>>>> origin/master
+void UltrasonicSensor::stop(void)
 {
     flag = 0;
     go.join();
 }
 
-<<<<<<< HEAD
 int UltrasonicSensor::temp(void)
-=======
-int temp(void)
->>>>>>> origin/master
 {
     return (tempreponse);
 }
