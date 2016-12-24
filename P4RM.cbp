@@ -33,7 +33,7 @@
 		<Compiler>
 			<Add option="-mfpu=vfp" />
 			<Add option="-Wall" />
-			<Add option="-std=c++11" />
+			<Add option="-fexceptions" />
 			<Add option="-static" />
 			<Add option="-static-libstdc++" />
 		</Compiler>

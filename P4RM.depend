@@ -3,14 +3,14 @@
 	<iostream>
 	<vector>
 
-1477140919 
+1479674596 
 
 1477144369 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\main.cpp
 	<iostream>
 	<unistd.h>
 	"PGpioManager.hpp"
 
-1477933243 ger.hpp"
+1478864365 ger.hpp"
 
 1477144412 source:c:\users\aurélien\documents\megasync\projet s34\rpi\c++\p4rm\src\pgpio.cpp
 	"PGpio.hpp"
@@ -22,6 +22,8 @@
 	<fstream>
 	<unistd.h>
 
+1477140919 
+
 1480277155 source:/home/corentin/Projets/P4RM/main.cpp
 	<iostream>
 	<unistd.h>
@@ -30,6 +32,8 @@
 	<exception>
 	"PGpioManager.hpp"
 	"SFML/System.hpp"
+
+1480277155 em.hpp"
 
 1477125960 /home/corentin/Projets/P4RM/include/Pgpio.hpp
 	<cstdint>
@@ -51,12 +55,16 @@
 	"SFML/System.hpp"
 	"PUltrasonicSensor.hpp"
 
+1482274079 icSensor.hpp"
+
 1482273989 c:\users\aurelien\documents\megasync\projet s34\rpi\c++\p4rm\include\pgpiomanager.hpp
 	<map>
 	<memory>
 	<fstream>
 	<string>
 	"PSingleTon.hpp"
+
+1480277677 n.hpp"
 
 1477140812 source:c:\users\aurelien\documents\megasync\projet s34\rpi\c++\p4rm\src\pgpio.cpp
 	"PGpio.hpp"
@@ -88,6 +96,8 @@
 1478686024 source:/home/corentin/Projets/P4RM/src/UltrasonicSensor.cpp
 	"UltrasonicSensor.hpp"
 
+1478686024 cSensor.hpp"
+
 1478686044 /home/corentin/Projets/P4RM/include/UltrasonicSensor.hpp
 	"PGpioManager.hpp"
 
@@ -111,18 +121,28 @@
 	<SFML/System/Vector2.hpp>
 	<SFML/System/Vector3.hpp>
 
+1479674596 em/Vector3.hpp>
+
 1478864365 /home/corentin/Projets/P4RM/include/SFML/Config.hpp
 	"TargetConditionals.h"
+
+1479674596 ditionals.h"
 
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Clock.hpp
 	<SFML/System/Export.hpp>
 	<SFML/System/Time.hpp>
 
+1479674596 em/Time.hpp>
+
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Export.hpp
 	<SFML/Config.hpp>
 
+1479674596 ig.hpp>
+
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Time.hpp
 	<SFML/System/Export.hpp>
+
+1479674596 em/Export.hpp>
 
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Err.hpp
 	<SFML/System/Export.hpp>
@@ -147,6 +167,8 @@
 	<SFML/System/Export.hpp>
 	<SFML/System/NonCopyable.hpp>
 
+1479674596 em/NonCopyable.hpp>
+
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/MemoryInputStream.hpp
 	<SFML/Config.hpp>
 	<SFML/System/InputStream.hpp>
@@ -169,6 +191,8 @@
 	<string>
 	<SFML/System/String.inl>
 
+1479674596 em/String.inl>
+
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Utf.hpp
 	<SFML/Config.hpp>
 	<algorithm>
@@ -176,6 +200,8 @@
 	<string>
 	<cstdlib>
 	<SFML/System/Utf.inl>
+
+1479674596 em/Utf.inl>
 
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Utf.inl
 
@@ -186,6 +212,8 @@
 	<SFML/System/NonCopyable.hpp>
 	<cstdlib>
 	<SFML/System/Thread.inl>
+
+1479674596 em/Thread.inl>
 
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Thread.inl
 
@@ -198,20 +226,28 @@
 	<SFML/System/ThreadLocal.hpp>
 	<SFML/System/ThreadLocalPtr.inl>
 
+1479674596 em/ThreadLocalPtr.inl>
+
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/ThreadLocalPtr.inl
 
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Vector2.hpp
 	<SFML/System/Vector2.inl>
+
+1479674596 em/Vector2.inl>
 
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Vector2.inl
 
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Vector3.hpp
 	<SFML/System/Vector3.inl>
 
+1479674596 em/Vector3.inl>
+
 1478864365 /home/corentin/Projets/P4RM/include/SFML/System/Vector3.inl
 
 1480265134 source:/home/corentin/Projets/P4RM/src/PRobot.cpp
 	"PRobot.hpp"
+
+1482249245 p"
 
 1480265141 /home/corentin/Projets/P4RM/include/PRobot.hpp
 
@@ -358,4 +394,158 @@
 	<SFML/System/Vector3.inl>
 
 1479674596 c:\users\aurelien\documents\megasync\projet s34\rpi\c++\p4rm\include\sfml\system\vector3.inl
+
+1482573156 source:/home/corentin/Projets/P4RM/main.cpp
+	<iostream>
+	<exception>
+	"PGpioManager.hpp"
+	"SFML/System.hpp"
+	"PUltrasonicSensor.hpp"
+
+1482573156 /home/corentin/Projets/P4RM/include/PGpioManager.hpp
+	<map>
+	<memory>
+	<fstream>
+	<string>
+	"PSingleTon.hpp"
+
+1480975360 /home/corentin/Projets/P4RM/include/PSingleTon.hpp
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Clock.hpp>
+	<SFML/System/Err.hpp>
+	<SFML/System/FileInputStream.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/Lock.hpp>
+	<SFML/System/MemoryInputStream.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Sleep.hpp>
+	<SFML/System/String.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/ThreadLocal.hpp>
+	<SFML/System/ThreadLocalPtr.hpp>
+	<SFML/System/Time.hpp>
+	<SFML/System/Utf.hpp>
+	<SFML/System/Vector2.hpp>
+	<SFML/System/Vector3.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/Config.hpp
+	"TargetConditionals.h"
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Clock.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Export.hpp
+	<SFML/Config.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Time.hpp
+	<SFML/System/Export.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Err.hpp
+	<SFML/System/Export.hpp>
+	<ostream>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/FileInputStream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Export.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdio>
+	<string>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/InputStream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Export.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/NonCopyable.hpp
+	<SFML/System/Export.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Lock.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/MemoryInputStream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/Export.hpp>
+	<cstdlib>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Mutex.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Sleep.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/String.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Utf.hpp>
+	<iterator>
+	<locale>
+	<string>
+	<SFML/System/String.inl>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Utf.hpp
+	<SFML/Config.hpp>
+	<algorithm>
+	<locale>
+	<string>
+	<cstdlib>
+	<SFML/System/Utf.inl>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Utf.inl
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/String.inl
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Thread.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdlib>
+	<SFML/System/Thread.inl>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Thread.inl
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/ThreadLocal.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdlib>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/ThreadLocalPtr.hpp
+	<SFML/System/ThreadLocal.hpp>
+	<SFML/System/ThreadLocalPtr.inl>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/ThreadLocalPtr.inl
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Vector2.hpp
+	<SFML/System/Vector2.inl>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Vector2.inl
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Vector3.hpp
+	<SFML/System/Vector3.inl>
+
+1480975360 /home/corentin/Projets/P4RM/include/SFML/System/Vector3.inl
+
+1482573156 /home/corentin/Projets/P4RM/include/PUltrasonicSensor.hpp
+	"PGpioManager.hpp"
+	<atomic>
+	<thread>
+
+1482573156 source:/home/corentin/Projets/P4RM/src/PGpioManager.cpp
+	"PGpioManager.hpp"
+	<iostream>
+	<set>
+	<sstream>
+
+1480975360 source:/home/corentin/Projets/P4RM/src/PRobot.cpp
+	"PRobot.hpp"
+
+1480975360 /home/corentin/Projets/P4RM/include/PRobot.hpp
+
+1482573156 source:/home/corentin/Projets/P4RM/src/PUltrasonicSensor.cpp
+	"PUltrasonicSensor.hpp"
 
