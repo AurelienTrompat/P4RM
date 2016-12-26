@@ -33,11 +33,14 @@
 		<Compiler>
 			<Add option="-mfpu=vfp" />
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 			<Add option="-static" />
 			<Add option="-static-libstdc++" />
+			<Add option="-pthread" />
 		</Compiler>
 		<Linker>
+			<Add option="-pthread" />
 			<Add library="lib/libstdc++.a" />
 			<Add library="lib/libsfml-network-s.a" />
 			<Add library="lib/libsfml-system-s.a" />
