@@ -1,8 +1,11 @@
 #include <iostream>
 #include <exception>
-#include "PGpioManager.hpp"
+
 #include "SFML/System.hpp"
+
+#include "PGpioManager.hpp"
 #include "PUltrasonicSensor.hpp"
+#include "PNetwork.hpp"
 
 using namespace std;
 
@@ -16,7 +19,10 @@ int main()
         pm.declarePin(Pin::ECHO_AV);
         pm.declarePin(Pin::TRIG_AV);
 
-        PUltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIG_AV);
+        PNetwork testReseau;
+        testReseau.start();
+
+        /*PUltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIG_AV);
         test.start();
 
         while(pm.read(Pin::SW1))
@@ -26,7 +32,10 @@ int main()
             else pm.write(Pin::LED1, false);
             this_thread::sleep_for(chrono::milliseconds(200));
         }
-        test.stop();
+
+        test.stop();*/
+        getchar();
+        testReseau.stop();
     }
     catch(exception const& exep)
     {

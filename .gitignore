@@ -29,6 +29,6 @@
 *.app
 *.bin
 
-#Code::Blocks
+# Code::Blocks
 *.layout
 *.depend
