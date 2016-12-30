@@ -1,33 +1,39 @@
 #ifndef PAGENT_HPP
 #define PAGENT_HPP
 
-#include <thread>
-#include <atomic>
+#include "PThread.hpp"
+#include "PMaster.hpp"
 #include "PQueue.hpp"
 #include "PCommand.hpp"
+#include "PEvent.hpp"
 
 
-class PAgent
+class PAgent : public PThread
 {
     public:
         PAgent();
         ~PAgent();
 
-        void start();
-        void stop();
+        void bindMaster(PMaster *master);
+        PQueue<PCommand>* getCommandQueue();
     protected:
-        void execute();
+
         virtual void preRun() = 0;
         virtual void run() = 0;
         virtual void postRun() = 0;
 
-        bool getRunState() const;
+        void pushEvent(const PEvent &event);
+        virtual void handleCommand(const PCommand &command) = 0;
 
     private:
-        std::thread mThread;
-        std::atomic_bool mRun;
+        void childStart();
+        void childStop();
+        void pollCommand();
+    private:
+        std::thread mCommandThread;
 
-        PQueue<PCommand> mQueue;
+        PMaster *mMaster;
+        PQueue<PCommand> mCommandQueue;
 };
 
 #endif // PAGENT_HPP

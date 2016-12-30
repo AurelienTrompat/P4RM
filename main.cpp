@@ -3,6 +3,7 @@
 
 #include "SFML/System.hpp"
 
+#include "PRobot.hpp"
 #include "PGpioManager.hpp"
 #include "PUltrasonicSensor.hpp"
 #include "PNetwork.hpp"
@@ -13,7 +14,7 @@ int main()
 {
     try
     {
-        PGpioManager &pm = PGpioManager::getInstance();
+        /*PGpioManager &pm = PGpioManager::getInstance();
         pm.declarePin(Pin::LED1);
         pm.declarePin(Pin::SW1);
         pm.declarePin(Pin::ECHO_AV);
@@ -22,7 +23,7 @@ int main()
         PNetwork testReseau;
         testReseau.start();
 
-        /*PUltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIG_AV);
+        PUltrasonicSensor test(pm,Pin::ECHO_AV, Pin::TRIG_AV);
         test.start();
 
         while(pm.read(Pin::SW1))
@@ -33,9 +34,14 @@ int main()
             this_thread::sleep_for(chrono::milliseconds(200));
         }
 
-        test.stop();*/
+        test.stop();
         getchar();
-        testReseau.stop();
+        testReseau.stop();*/
+        PRobot robot;
+        robot.start();
+        getchar();
+        robot.stop();
+
     }
     catch(exception const& exep)
     {

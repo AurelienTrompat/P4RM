@@ -1,18 +1,25 @@
-#ifndef ROBOT_HPP
-#define ROBOT_HPP
+#ifndef PROBOT_HPP
+#define PROBOT_HPP
+
+#include <iostream>
+#include "PMaster.hpp"
+#include "PNetwork.hpp"
 
 
-class Robot
+class PRobot : public PMaster
 {
     public:
-        Robot();
-        ~Robot();
-
-        void run();
-
-    protected:
+        PRobot();
+        ~PRobot();
 
     private:
+        void preRun();
+        void run();
+        void postRun();
+
+        void handleEvent(const PEvent &event);
+    private:
+        PNetwork mNetwork;
 };
 
-#endif // ROBOT_HPP
+#endif // PROBOT_HPP

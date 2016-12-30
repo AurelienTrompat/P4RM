@@ -1,34 +1,44 @@
 #include "PAgent.hpp"
 
 
-PAgent::PAgent() : mThread(), mRun(false), mQueue(){}
-PAgent::~PAgent()
+PAgent::PAgent() : mCommandThread(), mMaster(nullptr), mCommandQueue(){}
+PAgent::~PAgent(){}
+
+void PAgent::childStart()
 {
-    stop();
+    mCommandThread = std::thread(&PAgent::pollCommand, this);
 }
 
-void PAgent::start()
+void PAgent::childStop()
 {
-    mRun = true;
-    mThread = std::thread(&PAgent::execute, this);
+    PCommand command;
+    command.mType = PCommand::Type::Quit;
+    mCommandQueue.push(command);
+    mCommandThread.join();
+}
+void PAgent::bindMaster(PMaster *master)
+{
+    mMaster = master;
 }
 
-void PAgent::stop()
+void PAgent::pushEvent(const PEvent &event)
 {
-    if(mRun)
+    if(mMaster!= nullptr)
+        mMaster->putEvent(event);
+}
+void PAgent::pollCommand()
+{
+    PCommand command;
+    while(getRunState())
     {
-        mRun = false;
-        mThread.join();
+        mCommandQueue.pop(command);
+        if(command.mType != PCommand::Type::Quit)
+            handleCommand(command);
+        else
+            while(getRunState());
     }
 }
-
-void PAgent::execute()
+PQueue<PCommand>* PAgent::getCommandQueue()
 {
-    preRun();
-    while(mRun) run();
-    postRun();
-}
-bool PAgent::getRunState() const
-{
-    return mRun;
+    return &mCommandQueue;
 }

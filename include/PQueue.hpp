@@ -9,6 +9,14 @@ template<typename T>
 class PQueue
 {
     public:
+
+        void push(const T &element)
+        {
+            std::unique_lock<std::mutex> lock(mMutex);
+            mQueue.push(element);
+            lock.unlock();
+            mCond.notify_one();
+        }
         void pop(T &first)
         {
             std::unique_lock<std::mutex> lock(mMutex);
@@ -18,13 +26,6 @@ class PQueue
             }
             first = mQueue.front();
             mQueue.pop();
-        }
-        void push(const T &element)
-        {
-            std::unique_lock<std::mutex> lock(mMutex);
-            mQueue.push(element);
-            lock.unlock();
-            mCond.notify_one();
         }
 
 

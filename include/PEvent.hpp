@@ -4,7 +4,7 @@
 
 class PEvent
 {
-    protected:
+    public:
 
         struct JoystickEvent
         {
@@ -12,15 +12,15 @@ class PEvent
             signed char y;
         };
 
-        enum class EventType
+        enum class Type
         {
+            Quit,
             ClientConnected,
             ClientDisconnected,
             Joystick
         };
 
-    public:
-        EventType mEventType;
+        Type mType;
 
         union
         {

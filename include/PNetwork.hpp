@@ -17,6 +17,7 @@ class PNetwork : public PAgent
         PNetwork();
         ~PNetwork();
     private:
+        void handleCommand(const PCommand &command);
         void preRun();
         void run();
         void postRun();
@@ -24,6 +25,7 @@ class PNetwork : public PAgent
         void kick(bool force);
 
         void handleJoystick();
+        void handleConnection(bool eventType);
     private:
         std::vector<signed char> mBuffer;
         std::function<void()> mDecoder;
