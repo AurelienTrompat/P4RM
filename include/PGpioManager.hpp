@@ -18,10 +18,41 @@
 *   (0 -> entrée, 1 -> sortie)
 */
 enum class Pin : uint8_t {
-    LED1 = 128, ///<Led1
-    SW1 = 0, ///<Bouton1
-    ECHO_AV = 1,
-    TRIG_AV = 129
+    //LED
+    LED1        = 138, ///<Led1
+
+    //Bouton
+    SW1         = 7,   ///<Bouton1
+    SW2         = 8,   ///<Bouton2
+
+    //Capteur Ultrason
+    TRIG_AV     = 129, ///<Trigger capteur ultrason avant
+    ECHO_AV     = 0,   ///<Echo capteur ultrason avant
+    TRIG_AR     = 133, ///<Trigger capteur ultrason arrière
+    ECHO_AR     = 6,   ///<Echo capteur ultrason arrière
+    CMD_ALIM_US = 136, ///<Autorise l'alimentation des capteurs ultrason
+
+    //Capteur Laser
+    XSHUT_G     = 128, ///<Activation du capteur laser gauche
+    GPIO1_G     = 5,   ///<Intérruption du capteur laser gauche
+    XSHUT_D     = 130, ///<Activation du capteur laser droit
+    GPIO1_D     = 1,   ///<Intérruption du capteur laser droit
+    XSHUT_S    = 137, ///<Activation du capteur laser avant
+    GPIO1_S     = 9,   ///<Intérruption du capteur laser avant
+
+    //Servomoteur
+    PWM_S       = 134, ///<Commande le servomoteur
+
+    //Partie opérative
+    GPIO_OP1    = 3,   ///<Partie opérative 1
+    GPIO_OP2    = 2,   ///<Partie opérative 2
+    GPIO_OP3    = 4,   ///<Partie opérative 3
+    GPIO_OP4    = 132, ///<Partie opérative 4
+    GPIO_OP5    = 135, ///<Partie opérative 5
+    GPIO_OP6    = 139, ///<Partie opérative 6
+
+    //Autres
+    CMD_BUCK    = 131, ///<Non Utilisé
     }; // le bit de poids fort à 1 indique que la broche est une sortie
 
 /** \class PGpioManager PGpioManager.hpp PGpioManager.hpp Gère les broches du GPIO.

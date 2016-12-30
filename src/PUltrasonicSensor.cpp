@@ -21,6 +21,7 @@ void PUltrasonicSensor::start(void)
     if (flag == 0)
     {
         flag = 1;
+
         go = thread(&PUltrasonicSensor::run, this);
     }
 }

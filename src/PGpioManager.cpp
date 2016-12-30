@@ -139,10 +139,46 @@ string PGpioManager::fromPinToString(Pin id)
         return "LED1";
     case Pin::SW1:
         return "SW1";
-    case Pin::ECHO_AV:
-        return "ECHO_AV";
+    case Pin::SW2:
+        return "SW2";
     case Pin::TRIG_AV:
         return "TRIG_AV";
+    case Pin::ECHO_AV:
+        return "ECHO_AV";
+    case Pin::TRIG_AR:
+        return "TRIG_AR";
+    case Pin::ECHO_AR:
+        return "ECHO_AR";
+    case Pin::CMD_ALIM_US:
+        return "CMD_ALIM_US";
+    case Pin::XSHUT_G:
+        return "XSHUT_G";
+    case Pin::GPIO1_G:
+        return "GPIO1_G";
+    case Pin::XSHUT_D:
+        return "XSHUT_D";
+    case Pin::GPIO1_D:
+        return "GPIO1_D";
+    case Pin::XSHUT_S:
+        return "XSHUT_S";
+    case Pin::GPIO1_S:
+        return "GPIO1_S";
+    case Pin::PWM_S:
+        return "PWM_S";
+    case Pin::GPIO_OP1:
+        return "GPIO_OP1";
+    case Pin::GPIO_OP2:
+        return "GPIO_OP2";
+    case Pin::GPIO_OP3:
+        return "GPIO_OP3";
+    case Pin::GPIO_OP4:
+        return "GPIO_OP4";
+    case Pin::GPIO_OP5:
+        return "GPIO_OP5";
+    case Pin::GPIO_OP6:
+        return "GPIO_OP6";
+    case Pin::CMD_BUCK:
+        return "CMD_BUCK";
     }
     return "";
 }

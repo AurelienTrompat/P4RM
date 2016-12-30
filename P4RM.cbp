@@ -42,12 +42,19 @@
 			<Add library="lib/libsfml-network-s.a" />
 			<Add library="lib/libsfml-system-s.a" />
 		</Linker>
+		<Unit filename="include/PAgent.hpp" />
+		<Unit filename="include/PCommand.hpp" />
+		<Unit filename="include/PEvent.hpp" />
 		<Unit filename="include/PGpioManager.hpp" />
+		<Unit filename="include/PNetwork.hpp" />
+		<Unit filename="include/PQueue.hpp" />
 		<Unit filename="include/PRobot.hpp" />
 		<Unit filename="include/PSingleTon.hpp" />
 		<Unit filename="include/PUltrasonicSensor.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/PAgent.cpp" />
 		<Unit filename="src/PGpioManager.cpp" />
+		<Unit filename="src/PNetwork.cpp" />
 		<Unit filename="src/PRobot.cpp" />
 		<Unit filename="src/PUltrasonicSensor.cpp" />
 		<Extensions>

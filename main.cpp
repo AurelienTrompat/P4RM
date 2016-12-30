@@ -27,9 +27,9 @@ int main()
 
         while(pm.read(Pin::SW1))
         {
-            if (test.temp() > 296) pm.write(Pin::LED1, true);
-            if (test.temp() > 2) pm.write(Pin::LED1, true);
+            if (test.temp() < 296 && test.temp() > 2) pm.write(Pin::LED1, true);
             else pm.write(Pin::LED1, false);
+            cout << (test.temp()) << endl;
             this_thread::sleep_for(chrono::milliseconds(200));
         }
 
@@ -43,3 +43,4 @@ int main()
     }
     return 0;
 }
+
