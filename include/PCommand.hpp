@@ -8,10 +8,11 @@ class PCommand
 
         enum class Agent
         {
-            Network
+            Network,
+            I2C
         };
 
-        enum Type
+        enum class Type
         {
             Quit,
             Test

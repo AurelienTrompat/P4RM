@@ -4,7 +4,7 @@
 #include <iostream>
 #include "PMaster.hpp"
 #include "PNetwork.hpp"
-
+#include "PI2C.hpp"
 
 class PRobot : public PMaster
 {
@@ -20,6 +20,7 @@ class PRobot : public PMaster
         void handleEvent(const PEvent &event);
     private:
         PNetwork mNetwork;
+        PI2C mI2C;
 };
 
 #endif // PROBOT_HPP
