@@ -23,6 +23,12 @@ class PI2C : public PAgent
         void run();
         void postRun();
         void handleCommand(const PCommand &command);
+        void OpenI2C();
+        void SetAdresse(uint8_t adresse);
+        void SendEvent(PEvent::Type typeEvent);
+
+    private:
+        int fd;
 };
 
 #endif // PI2C_HPP

@@ -40,7 +40,6 @@ void PRobot::postRun()
 
 void PRobot::handleEvent(const PEvent& event)
 {
-    PCommand command;
     switch(event.mType)
     {
         case PEvent::Type::Joystick:
@@ -51,14 +50,21 @@ void PRobot::handleEvent(const PEvent& event)
         case PEvent::Type::ClientConnected:
         {
             cout <<"Event ClientConnected !"<<endl;
-            command.mAgent = PCommand::Agent::I2C;
-            command.mType = PCommand::Type::Test;
-            pushCommand(command);
             break;
         }
         case PEvent::Type::ClientDisconnected:
         {
             cout <<"Event ClientDisconnected !"<<endl;
+            break;
+        }
+        case PEvent::Type::I2C_Open :
+        {
+            cout << "Le Périphérique I2C est ouvert" << endl ;
+            break;
+        }
+        case PEvent::Type::I2C_NotOpen :
+        {
+            cout << "Le Périphérique I2C n'a pas pu être ouvert" << endl ;
             break;
         }
         default:
