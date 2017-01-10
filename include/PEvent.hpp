@@ -17,7 +17,11 @@ class PEvent
             Quit,
             ClientConnected,
             ClientDisconnected,
-            Joystick
+            Joystick,
+            I2C_NotOpen,
+            I2C_Open,
+            I2C_SetAdresseFailed,
+            I2C_SetAdresseSuccess
         };
 
         Type mType;
