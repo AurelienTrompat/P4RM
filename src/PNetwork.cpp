@@ -13,9 +13,7 @@ PNetwork::~PNetwork()
 }
 void PNetwork::handleCommand(const PCommand& command)
 {
-    if(command.mType == PCommand::Type::Test)
-        cout<<"Test Command"<<endl;
-
+ cout<<"test";
 }
 
 void PNetwork::preRun()

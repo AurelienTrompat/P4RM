@@ -21,7 +21,9 @@ class PEvent
             I2C_NotOpen,
             I2C_Open,
             I2C_SetAdresseFailed,
-            I2C_SetAdresseSuccess
+            I2C_SetAdresseSuccess,
+            I2C_WriteFailed,
+            I2C_WriteSucess
         };
 
         Type mType;

@@ -38,8 +38,8 @@
 			<Add option="-static-libstdc++" />
 		</Compiler>
 		<Linker>
-			<Add library="lib/libsfml-system-s.a" />
 			<Add library="lib/libsfml-network-s.a" />
+			<Add library="lib/libsfml-system-s.a" />
 			<Add library="lib/libstdc++.a" />
 		</Linker>
 		<Unit filename="include/PAgent.hpp" />

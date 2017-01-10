@@ -20,11 +20,6 @@ void PRobot::preRun()
     bindCommandeQueue(PCommand::Agent::I2C, mI2C.getCommandQueue());
     mI2C.bindMaster(this);
     mI2C.start();
-
-    PCommand command;
-    command.mAgent = PCommand::Agent::I2C;
-    command.mType = PCommand::Type::Test;
-    pushCommand(command);
 }
 
 void PRobot::run()
@@ -59,12 +54,32 @@ void PRobot::handleEvent(const PEvent& event)
         }
         case PEvent::Type::I2C_Open :
         {
-            cout << "Le Périphérique I2C est ouvert" << endl ;
+            cout << "Le Peripherique I2C est ouvert" << endl ;
             break;
         }
         case PEvent::Type::I2C_NotOpen :
         {
-            cout << "Le Périphérique I2C n'a pas pu être ouvert" << endl ;
+            cout << "Le Peripherique I2C n'a pas pu etre ouvert" << endl ;
+            break;
+        }
+        case PEvent::Type::I2C_SetAdresseFailed :
+        {
+            cout <<"L'adresse de l'esclave n'a pas pu etre selectionee" <<endl;
+            break;
+        }
+        case PEvent::Type::I2C_SetAdresseSuccess :
+        {
+            cout <<"L'adresse de l'esclave a ete selectionee" <<endl;
+            break;
+        }
+        case PEvent::Type::I2C_WriteFailed :
+        {
+            cout << "L'ecriture a echoue" << endl;
+            break;
+        }
+        case PEvent::Type::I2C_WriteSucess :
+        {
+            cout << "L'ecriture a reussi" << endl;
             break;
         }
         default:
