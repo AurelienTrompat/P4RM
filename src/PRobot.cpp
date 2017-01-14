@@ -72,7 +72,7 @@ void PRobot::handleEvent(const PEvent& event)
             {
                 command.i2c_p.motorP.directionDroite = dir;
                 command.i2c_p.motorP.directionGauche = dir;
-                cout << dir<<endl;
+                //cout << dir<<endl;
                 cg=0;
             }
 
@@ -103,7 +103,7 @@ void PRobot::handleEvent(const PEvent& event)
                 cd=255;
 
 
-            cout<<+((uint8_t)cg) <<" "<<+((uint8_t)cd)<<endl;
+           // cout<<+((uint8_t)cg) <<" "<<+((uint8_t)cd)<<endl;
             command.i2c_p.motorP.vitesseDroite = (uint8_t)cd;
             command.i2c_p.motorP.vitesseGauche = (uint8_t)cg;
 
@@ -118,6 +118,9 @@ void PRobot::handleEvent(const PEvent& event)
         case PEvent::Type::ClientDisconnected:
         {
             cout <<"Event ClientDisconnected !"<<endl;
+            command.mAgent = PCommand::Agent::I2C;
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::StopMoteur;
+            pushCommand(command);
             break;
         }
 
