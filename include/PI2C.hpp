@@ -14,6 +14,7 @@
 #include "PAgent.hpp"
 
 typedef PCommand::I2C_Parameters::I2C_Command i2c_Command;
+typedef std::chrono::high_resolution_clock Chrono;
 
 class PI2C : public PAgent
 {
@@ -32,6 +33,7 @@ class PI2C : public PAgent
         int BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_data *data);
         void MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p);
         void MicroC_ShutdownMoteur();
+        void MicroC_ReadErreurEtVitesse();
 
     private:
         int mFd;
@@ -46,6 +48,10 @@ class PI2C : public PAgent
             uint8_t VitesseDroite;
         };
         struct CommandeMoteur mCmdMoteur;
+
+        std::atomic_bool mActiverRenvoieDist;
+        std::atomic_bool mRenvoieDistance;
+        Chrono::time_point mChrono;
 
 };
 

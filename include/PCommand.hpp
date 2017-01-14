@@ -25,15 +25,15 @@ public:
         {
             uint8_t vitesseGauche;
             bool directionGauche;
-            bool renvoieDistanceGauche;
             bool vitesseProgressiveGauche;
             bool RAZdefaultGauche;
 
             uint8_t vitesseDroite;
             bool directionDroite;
-            bool renvoieDistanceDroite;
             bool vitesseProgressiveDroite;
             bool RAZdefaultDroite;
+
+            bool renvoieDistance;
         };
 
         I2C_Command type;

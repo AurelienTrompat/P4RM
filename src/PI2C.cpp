@@ -2,7 +2,7 @@
 
 using namespace std;
 
-PI2C::PI2C() : mNewCommand(false)
+PI2C::PI2C() : mNewCommand(false), mActiverRenvoieDist(false), mRenvoieDistance(false)
 {
     //ctor
 }
@@ -20,6 +20,20 @@ void PI2C::preRun()
 void PI2C::run()
 {
     union i2c_smbus_data data;
+
+    if (mActiverRenvoieDist)
+    {
+        mRenvoieDistance = true;
+        mChrono = Chrono::now();
+        mActiverRenvoieDist = false;
+    }
+
+    std::chrono::duration<double> diff = Chrono::now() - mChrono;
+    if ((diff.count() > 0.05) && mRenvoieDistance)
+    {
+        mChrono = Chrono::now();
+        //MicroC_ReadErreurEtVitesse();
+    }
 
     if (mNewCommand)
     {
@@ -148,6 +162,7 @@ int PI2C::BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_dat
     {
         i++;
     }
+    this_thread::sleep_for(chrono::microseconds(20));
     if (i == 3)
     {
         SendEvent(PEvent::Type::I2C_WriteFailed);
@@ -164,7 +179,7 @@ void PI2C::MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p)
     // Moteur Gauche
     mCmdMoteur.CmdMGauche   =  (1 << 5)
                             + (i2c_p.motorP.RAZdefaultGauche << 4)
-                            + (i2c_p.motorP.renvoieDistanceGauche << 3)
+                            + (i2c_p.motorP.renvoieDistance << 3)
                             + (1 << 2)
                             + (i2c_p.motorP.directionGauche << 1)
                             + (i2c_p.motorP.vitesseProgressiveGauche);
@@ -174,13 +189,18 @@ void PI2C::MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p)
     //Moteur Droit
     mCmdMoteur.CmdMDroit    = (1 << 5)
                             + (i2c_p.motorP.RAZdefaultDroite << 4)
-                            + (i2c_p.motorP.renvoieDistanceDroite << 3)
+                            + (i2c_p.motorP.renvoieDistance << 3)
                             + (1 << 2)
                             + (i2c_p.motorP.directionDroite << 1)
                             + (i2c_p.motorP.vitesseProgressiveDroite);
 
     mCmdMoteur.VitesseDroite = i2c_p.motorP.vitesseDroite;
     mI2C_Command = i2c_Command::SetCommandMotor;
+
+    if (i2c_p.motorP.renvoieDistance && !mRenvoieDistance)
+    {
+        mActiverRenvoieDist = true;
+    }
 
 }
 
@@ -196,4 +216,20 @@ void PI2C::MicroC_ShutdownMoteur()
 //Moteur Droit
     SetAdresse(0x20);
     BusAccess(I2C_SMBUS_WRITE,(1 << 5),I2C_SMBUS_BYTE_DATA, &data);
+}
+
+void PI2C::MicroC_ReadErreurEtVitesse()
+{
+   union i2c_smbus_data data;
+   SetAdresse(0x10);
+   if (BusAccess(I2C_SMBUS_READ, 0x00, I2C_SMBUS_WORD_DATA, &data))
+        cout << -1 << endl;
+   else
+        cout << "gauche : " << ((data.word & 0xFF00)>>8) << endl;
+
+    SetAdresse(0x20);
+   if (BusAccess(I2C_SMBUS_READ, 0x00, I2C_SMBUS_WORD_DATA, &data))
+        cout << -1 << endl;
+   else
+        cout << "droite : " << ((data.word & 0xFF00)>>8) << endl;
 }
