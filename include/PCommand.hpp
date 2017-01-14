@@ -10,18 +10,6 @@ public:
         I2C
     };
 
-    enum class Type
-    {
-        Quit,
-        Test
-    };
-
-
-
-
-
-
-
     struct I2C_Parameters
     {
         enum class I2C_Command
@@ -49,14 +37,13 @@ public:
         };
 
         I2C_Command type;
-        //union
-        //{
-        struct MotorParameters motorP;
-        //};
+        union
+        {
+            struct MotorParameters motorP;
+        };
 
     };
 
-    Type mType;
     Agent mAgent;
 
     union

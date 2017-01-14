@@ -2,6 +2,7 @@
 #define PMASTER_HPP
 
 #include <memory>
+#include <iostream>
 #include <map>
 #include "PThread.hpp"
 #include "PQueue.hpp"

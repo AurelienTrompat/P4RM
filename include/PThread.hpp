@@ -13,6 +13,7 @@ class PThread
 
         void start();
         void stop();
+
     protected:
         virtual void childStart();
         virtual void childStop();
