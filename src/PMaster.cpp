@@ -1,5 +1,7 @@
 #include "PMaster.hpp"
 
+using namespace std;
+
 PMaster::PMaster() : mEventThread(), mEventQueue(), mCommandQueueMap(){}
 PMaster::~PMaster(){}
 
@@ -10,9 +12,7 @@ void PMaster::childStart()
 
 void PMaster::childStop()
 {
-    PEvent event;
-    event.mType = PEvent::Type::Quit;
-    mEventQueue.push(event);
+    mEventQueue.stopWaiting();
     mEventThread.join();
 }
 void PMaster::putEvent(const PEvent event)
@@ -44,11 +44,8 @@ void PMaster::pollEvent()
     PEvent event;
     while(getRunState())
     {
-        mEventQueue.pop(event);
-        if(event.mType != PEvent::Type::Quit)
+        if(mEventQueue.pop(event))
             handleEvent(event);
-        else
-            while(getRunState());
     }
 }
 

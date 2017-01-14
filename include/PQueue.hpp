@@ -10,6 +10,8 @@ class PQueue
 {
     public:
 
+        PQueue() : mRun(true){}
+
         void push(const T &element)
         {
             std::unique_lock<std::mutex> lock(mMutex);
@@ -17,15 +19,26 @@ class PQueue
             lock.unlock();
             mCond.notify_one();
         }
-        void pop(T &first)
+        bool pop(T &first)
         {
             std::unique_lock<std::mutex> lock(mMutex);
-            while(mQueue.empty())
+            while(mQueue.empty() && mRun)
             {
                 mCond.wait(lock);
             }
-            first = mQueue.front();
-            mQueue.pop();
+            if(mRun)
+            {
+                first = mQueue.front();
+                mQueue.pop();
+            }
+            return mRun;
+
+        }
+
+        void stopWaiting()
+        {
+            mRun=false;
+            mCond.notify_all();
         }
 
 
@@ -33,6 +46,8 @@ class PQueue
         std::mutex mMutex;
         std::condition_variable mCond;
         std::queue<T> mQueue;
+
+        std::atomic_bool mRun;
 };
 
 #endif // PQUEUE_HPP

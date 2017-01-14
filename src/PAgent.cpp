@@ -11,9 +11,7 @@ void PAgent::childStart()
 
 void PAgent::childStop()
 {
-    PCommand command;
-    command.mType = PCommand::Type::Quit;
-    mCommandQueue.push(command);
+    mCommandQueue.stopWaiting();
     mCommandThread.join();
 }
 void PAgent::bindMaster(PMaster *master)
@@ -31,11 +29,8 @@ void PAgent::pollCommand()
     PCommand command;
     while(getRunState())
     {
-        mCommandQueue.pop(command);
-        if(command.mType != PCommand::Type::Quit)
+        if(mCommandQueue.pop(command))
             handleCommand(command);
-        else
-            while(getRunState());
     }
 }
 PQueue<PCommand>* PAgent::getCommandQueue()
