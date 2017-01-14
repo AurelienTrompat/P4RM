@@ -7,10 +7,11 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 #include <linux/i2c.h>
+#include <atomic>
+
 
 #include "PCommand.hpp"
 #include "PAgent.hpp"
-
 
 
 class PI2C : public PAgent
@@ -27,10 +28,13 @@ class PI2C : public PAgent
         void OpenI2C();
         void SetAdresse(uint8_t adresse);
         void SendEvent(PEvent::Type typeEvent);
-        int BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_data *data);
-        void WriteData(const struct PCommand::I2C_Parameters &i2c_p);
+        void BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_data *data);
+        void MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p);
+        void MicroC_ShutdownMoteur();
     private:
         int mFd;
+        std::atomic_bool mNewCommand;
+
 };
 
 #endif // PI2C_HPP

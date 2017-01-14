@@ -8,8 +8,8 @@ class PEvent
 
         struct JoystickEvent
         {
-            signed char x;
-            signed char y;
+            uint8_t x;
+            uint8_t y;
         };
 
         enum class Type
@@ -19,11 +19,8 @@ class PEvent
             ClientDisconnected,
             Joystick,
             I2C_NotOpen,
-            I2C_Open,
             I2C_SetAdresseFailed,
-            I2C_SetAdresseSuccess,
-            I2C_WriteFailed,
-            I2C_WriteSucess
+            I2C_WriteFailed
         };
 
         Type mType;

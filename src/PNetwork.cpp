@@ -69,11 +69,11 @@ void PNetwork::run()
                         cout << "\tInvalid Client !!! Kicking it..." <<endl;
                         kick(false);
                     }
-                        case ';':
-                        {
-                            mStatus = sf::Socket::Disconnected;
-                            break;
-                        }
+                    case ';':
+                    {
+                        mStatus = sf::Socket::Disconnected;
+                        break;
+                    }
                 }
                 if(mStatus == sf::Socket::Done)
                 {

@@ -27,7 +27,7 @@ class PNetwork : public PAgent
         void handleJoystick();
         void handleConnection(bool eventType);
     private:
-        std::vector<signed char> mBuffer;
+        std::vector<unsigned char> mBuffer;
         std::function<void()> mDecoder;
 
         sf::Uint16 mPort;
