@@ -2,7 +2,7 @@
 
 using namespace std;
 
-PRobot::PRobot()
+PRobot::PRobot() : mPm(PGpioManager::getInstance())
 {
     //ctor
 }
@@ -143,4 +143,6 @@ void PRobot::handleEvent(const PEvent& event)
         default:
         {}
     }
+
+    mPm.write(Pin::GPIO_OP2, true);
 }

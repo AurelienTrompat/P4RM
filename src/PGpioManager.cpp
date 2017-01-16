@@ -8,48 +8,77 @@ using namespace std;
 
 PGpioManager::PGpioManager()
 {
-    set<uint8_t> valeurs;
-
-
-    string ligne;
-    string demiLigne;
-    string cleTemp;
-
-    istringstream iss;
-
-    mFile.open("config/pins.txt", ios::in);
-    if(mFile.is_open())
+    try
     {
-        while(!mFile.eof())
+        set<uint8_t> valeurs;
+
+
+        string ligne;
+        string demiLigne;
+        string cleTemp;
+
+        istringstream iss;
+
+        mFile.open("config/pins.txt", ios::in);
+        if(mFile.is_open())
         {
-            iss.clear();
-            getline(mFile, ligne);
-            if(!ligne.empty())
+            while(!mFile.eof())
             {
-            iss.str(ligne);
+                iss.clear();
+                getline(mFile, ligne);
+                if(!ligne.empty())
+                {
+                    iss.str(ligne);
 
-            getline(iss, demiLigne, ':');
-            cleTemp = demiLigne;
+                    getline(iss, demiLigne, ':');
+                    cleTemp = demiLigne;
 
-            getline(iss, demiLigne, ':');
-            if(!(stoi(demiLigne) >= 4 && stoi(demiLigne) <= 27))
-                throw runtime_error("La valeur d'une pin dans pins.txt est incorrecte");
-            else
-            {
-                if(!valeurs.insert(stoi(demiLigne)).second)
-                    throw runtime_error("Le fichier pins.txt est mal écrit (doublons dans les valeurs de pin)");
+                    getline(iss, demiLigne, ':');
+                    if(!(stoi(demiLigne) >= 4 && stoi(demiLigne) <= 27))
+                        throw runtime_error("La valeur d'une pin dans pins.txt est incorrecte");
+                    else
+                    {
+                        if(!valeurs.insert(stoi(demiLigne)).second)
+                            throw runtime_error("Le fichier pins.txt est mal écrit (doublons dans les valeurs de pin)");
+                    }
+                    if(!mPinMapFromFile.insert(make_pair(cleTemp, stoi(demiLigne))).second)
+                        throw runtime_error("Le fichier pins.txt est mal écrit (doublons dans les labels de pin)");
+                }
+
             }
-            if(!mPinMapFromFile.insert(make_pair(cleTemp, stoi(demiLigne))).second)
-                throw runtime_error("Le fichier pins.txt est mal écrit (doublons dans les labels de pin)");
         }
+        else
+            throw runtime_error("Le fichier pins.txt n'a pas été trouvé !");
+        mFile.close();
 
-
+        declarePin(Pin::LED1);
+        declarePin(Pin::SW1);
+        declarePin(Pin::SW2);
+        declarePin(Pin::TRIG_AV);
+        declarePin(Pin::ECHO_AV);
+        declarePin(Pin::TRIG_AR);
+        declarePin(Pin::ECHO_AR);
+        declarePin(Pin::CMD_ALIM_US);
+        declarePin(Pin::XSHUT_G);
+        declarePin(Pin::GPIO1_G);
+        declarePin(Pin::XSHUT_D);
+        declarePin(Pin::GPIO1_D);
+        declarePin(Pin::XSHUT_S);
+        declarePin(Pin::GPIO1_S);
+        declarePin(Pin::PWM_S);
+        declarePin(Pin::GPIO_OP1);
+        declarePin(Pin::GPIO_OP2);
+        declarePin(Pin::GPIO_OP3);
+        declarePin(Pin::GPIO_OP4);
+        declarePin(Pin::GPIO_OP5);
+        declarePin(Pin::GPIO_OP6);
+        declarePin(Pin::CMD_BUCK);
 
     }
-}
-else
-    throw runtime_error("Le fichier pins.txt n'a pas été trouvé !");
-mFile.close();
+    catch(exception const& exep)
+    {
+        cerr << exep.what() <<endl;
+    }
 }
 
 PGpioManager::~PGpioManager()
@@ -60,74 +89,104 @@ PGpioManager::~PGpioManager()
 
 void PGpioManager::declarePin(const Pin id)
 {
-    const auto found = mPinMapFromFile.find(fromPinToString(id));
-    if(found != mPinMapFromFile.end())
+    try
     {
-        if(mPinMap.insert(make_pair(id, found->second)).second)
+        std::unique_lock<std::mutex> lock(mMutex);
+        const auto found = mPinMapFromFile.find(fromPinToString(id));
+        if(found != mPinMapFromFile.end())
         {
-            mFile.open("/sys/class/gpio/export",ios::out);
-            mFile<<to_string(found->second);
-            mFile.close();
-            mFile.open("/sys/class/gpio/gpio"+to_string(found->second)+"/direction",ios::out);
-            if((uint8_t)id>>7)
-                mFile<<"out";
+            if(mPinMap.insert(make_pair(id, found->second)).second)
+            {
+                mFile.open("/sys/class/gpio/export",ios::out);
+                mFile<<to_string(found->second);
+                mFile.close();
+                mFile.open("/sys/class/gpio/gpio"+to_string(found->second)+"/direction",ios::out);
+                if((uint8_t)id>>7)
+                    mFile<<"out";
+                else
+                    mFile<<"in";
+                mFile.close();
+            }
             else
-                mFile<<"in";
-            mFile.close();
+                throw std::logic_error("La pin a déjà ete ajoutée !");
         }
         else
-            throw std::logic_error("La pin a déjà ete ajoutée !");
+            throw runtime_error("Le fichier pins.txt ne définie pas cette pin : "+fromPinToString(id)+" !");
     }
-    else
-        throw runtime_error("Le fichier pins.txt ne définie pas cette pin !");
+    catch(exception const& exep)
+    {
+        cerr << exep.what() <<endl;
+    }
 
 
 }
 
 void PGpioManager::deletePin(const Pin id)
 {
-    auto found = mPinMap.find(id); //on cherche la pin pour verifier qu'elle a été exportée
-    if(found != mPinMap.end())
+    try
     {
-        mFile.open("/sys/class/gpio/unexport",ios::out);
-        mFile<<to_string(found->second);
-        mFile.close();
-        mPinMap.erase(found);
+        auto found = mPinMap.find(id); //on cherche la pin pour verifier qu'elle a été exportée
+        if(found != mPinMap.end())
+        {
+            mFile.open("/sys/class/gpio/unexport",ios::out);
+            mFile<<to_string(found->second);
+            mFile.close();
+            mPinMap.erase(found);
+        }
+        else
+            throw std::logic_error("Cette pin n'a pas été ajoutée donc ne peut pas être suprimée !");
     }
-    else
-        throw std::logic_error("Cette pin n'a pas été ajoutée donc ne peut pas être suprimée !");
-
+    catch(exception const& exep)
+    {
+        cerr << exep.what() <<endl;
+    }
 }
 bool PGpioManager::read(const Pin id)
 {
     bool value = 0;
-    auto found = mPinMap.find(id);
-    if(found != mPinMap.end())
+    try
     {
-        mFile.open("/sys/class/gpio/gpio" + to_string(found->second) +"/value",ios::in);
-        mFile>>value;
-        mFile.close();
+        std::unique_lock<std::mutex> lock(mMutex);
+        auto found = mPinMap.find(id);
+        if(found != mPinMap.end())
+        {
+            mFile.open("/sys/class/gpio/gpio" + to_string(found->second) +"/value",ios::in);
+            mFile>>value;
+            mFile.close();
+        }
+        else
+            throw std::logic_error("Cette pin n'a pas été ajoutée donc ne peut pas être lue !");
     }
-    else
-        throw std::logic_error("Cette pin n'a pas été ajoutée donc ne peut pas être lue !");
+    catch(exception const& exep)
+    {
+        cerr << exep.what() <<endl;
+    }
     return value;
 }
 void PGpioManager::write(const Pin id, const bool value)
 {
-    auto found = mPinMap.find(id);
-    if(found != mPinMap.end())
+    try
     {
-        if((uint8_t)id>>7) //test si le bit de poids for est egal à 1 donc, que la pin est en sortie
+        std::unique_lock<std::mutex> lock(mMutex);
+        auto found = mPinMap.find(id);
+        if(found != mPinMap.end())
         {
-            mFile.open("/sys/class/gpio/gpio"+to_string(found->second)+"/value",ios::out);
-            mFile<<to_string(value);
-            mFile.close();
+            if((uint8_t)id>>7) //test si le bit de poids for est egal à 1 donc, que la pin est en sortie
+            {
+                mFile.open("/sys/class/gpio/gpio"+to_string(found->second)+"/value",ios::out);
+                mFile<<to_string(value);
+                mFile.close();
+            }
+            else
+                throw std::logic_error("Cette pin est en entrée donc sa valeur ne peut pas être changée !");
         }
         else
-            throw std::logic_error("Cette pin est en entrée donc sa valeur ne peut pas être changée !");
+            throw std::logic_error("Cette pin n'a pas été ajoutée donc sa valeur ne peut pas être changée !");
     }
-    else
-        throw std::logic_error("Cette pin n'a pas été ajoutée donc sa valeur ne peut pas être changée !");
+    catch(exception const& exep)
+    {
+        cerr << exep.what() <<endl;
+    }
 
 }
 

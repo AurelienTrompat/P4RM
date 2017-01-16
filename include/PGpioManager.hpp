@@ -9,6 +9,7 @@
 #include <memory>
 #include <fstream>
 #include <string>
+#include <mutex>
 
 #include "PSingleTon.hpp"
 
@@ -45,7 +46,7 @@ enum class Pin : uint8_t {
 
     //Partie opérative
     GPIO_OP1    = 3,   ///<Partie opérative 1
-    GPIO_OP2    = 2,   ///<Partie opérative 2
+    GPIO_OP2    = 200,   ///<Partie opérative 2
     GPIO_OP3    = 4,   ///<Partie opérative 3
     GPIO_OP4    = 132, ///<Partie opérative 4
     GPIO_OP5    = 135, ///<Partie opérative 5
@@ -66,12 +67,6 @@ class PGpioManager : public PSingleTon<PGpioManager> //Pour assurer l'instance u
         PGpioManager(const PGpioManager&){}
         ~PGpioManager();
     public:
-        /** \brief Déclare une broche au manager.
-        *   \param id Label de la broche à ajouter.
-        */
-        void declarePin(const Pin id);
-
-
         /** \brief Lit une broche.
         *   \param id Label de la broche à lire.
         *   \return Valeur de la broche.
@@ -85,6 +80,11 @@ class PGpioManager : public PSingleTon<PGpioManager> //Pour assurer l'instance u
         void write(const Pin id, const bool value);
 
     private:
+        /** \brief Déclare une broche au manager.
+        *   \param id Label de la broche à ajouter.
+        */
+        void declarePin(const Pin id);
+
         void deletePin(const Pin id);
         std::string fromPinToString(const Pin id);
 
@@ -93,6 +93,8 @@ class PGpioManager : public PSingleTon<PGpioManager> //Pour assurer l'instance u
         std::map<std::string, uint8_t> mPinMapFromFile;
         std::map<Pin, uint8_t> mPinMap;
         std::fstream mFile;
+
+        std::mutex mMutex;
 
 };
 

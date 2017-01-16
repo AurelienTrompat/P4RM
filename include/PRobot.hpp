@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "PMaster.hpp"
+#include "PGpioManager.hpp"
 #include "PNetwork.hpp"
 #include "PI2C.hpp"
 
@@ -19,6 +20,7 @@ class PRobot : public PMaster
 
         void handleEvent(const PEvent &event);
     private:
+        PGpioManager &mPm;
         PNetwork mNetwork;
         PI2C mI2C;
 };
