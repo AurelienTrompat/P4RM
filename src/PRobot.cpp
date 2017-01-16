@@ -49,8 +49,7 @@ void PRobot::handleEvent(const PEvent& event)
 
             command.i2c_p.motorP.RAZdefaultDroite = false;
             command.i2c_p.motorP.RAZdefaultGauche = false;
-            command.i2c_p.motorP.renvoieDistanceDroite = false;
-            command.i2c_p.motorP.renvoieDistanceGauche = false;
+            command.i2c_p.motorP.renvoieDistance = true;
             command.i2c_p.motorP.vitesseProgressiveDroite = false;
             command.i2c_p.motorP.vitesseProgressiveGauche = false;
 
@@ -104,8 +103,8 @@ void PRobot::handleEvent(const PEvent& event)
 
 
            // cout<<+((uint8_t)cg) <<" "<<+((uint8_t)cd)<<endl;
-            command.i2c_p.motorP.vitesseDroite = (uint8_t)cd;
-            command.i2c_p.motorP.vitesseGauche = (uint8_t)cg;
+           command.i2c_p.motorP.vitesseDroite = (uint8_t)cd;
+           command.i2c_p.motorP.vitesseGauche = (uint8_t)cg;
 
             pushCommand(command);
             break;
