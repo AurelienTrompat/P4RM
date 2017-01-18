@@ -29,7 +29,7 @@ class PI2C : public PAgent
         void handleCommand(const PCommand &command);
         void OpenI2C();
         void SetAdresse(uint8_t adresse);
-        void SendEvent(PEvent::Type typeEvent);
+        void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent);
         int BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_data *data);
         void MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p);
         void MicroC_ShutdownMoteur();

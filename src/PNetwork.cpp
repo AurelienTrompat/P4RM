@@ -4,6 +4,7 @@ using namespace std;
 
 PNetwork::PNetwork() : mPort(4444), mListener(), mSocket(), mStatus(sf::Socket::Disconnected)
 {
+    setAgent(Agent::Network);
     mListener.setBlocking(false);
     mSocket.setBlocking(false);
 }
@@ -130,9 +131,9 @@ void PNetwork::handleConnection(bool eventType)
 {
     PEvent event;
     if(eventType)
-        event.mType=PEvent::Type::ClientConnected;
+        event.network_p.type=PEvent::Network_Parameters::Network_Event::ClientConnected;
     else
-        event.mType=PEvent::Type::ClientDisconnected;
+        event.network_p.type=PEvent::Network_Parameters::Network_Event::ClientDisconnected;
     pushEvent(event);
 }
 
@@ -142,9 +143,9 @@ void PNetwork::handleJoystick()
     PEvent event;
     /*cout<<"Joystick x : "<<static_cast<signed int>(mBuffer[0])<<endl;
     cout<<"Joystick y : "<<static_cast<signed int>(mBuffer[1])<<endl;*/
-    event.mType = PEvent::Type::Joystick;
-    event.joystick.x = mBuffer[0];
-    event.joystick.y = mBuffer[1];
+    event.network_p.type = PEvent::Network_Parameters::Network_Event::JoystickMoved;
+    event.network_p.joystick.x = mBuffer[0];
+    event.network_p.joystick.y = mBuffer[1];
     pushEvent(event);
 }
 

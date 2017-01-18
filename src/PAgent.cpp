@@ -19,8 +19,9 @@ void PAgent::bindMaster(PMaster *master)
     mMaster = master;
 }
 
-void PAgent::pushEvent(const PEvent &event)
+void PAgent::pushEvent(PEvent &event)
 {
+    event.mAgent=mAgent;
     if(mMaster!= nullptr)
         mMaster->putEvent(event);
 }
@@ -36,4 +37,9 @@ void PAgent::pollCommand()
 PQueue<PCommand>* PAgent::getCommandQueue()
 {
     return &mCommandQueue;
+}
+
+void PAgent::setAgent(const Agent agent)
+{
+    mAgent = agent;
 }

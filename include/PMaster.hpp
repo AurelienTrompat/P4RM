@@ -25,7 +25,7 @@ class PMaster : public PThread
         void pushCommand(const PCommand command);
         virtual void handleEvent(const PEvent &event) = 0;
 
-        void bindCommandeQueue(const PCommand::Agent agent, PQueue<PCommand> *commandQueue);
+        void bindCommandeQueue(const Agent agent, PQueue<PCommand> *commandQueue);
     private:
         void childStart();
         void childStop();
@@ -35,7 +35,7 @@ class PMaster : public PThread
         std::thread mEventThread;
 
         PQueue<PEvent> mEventQueue;
-        std::map<PCommand::Agent, PQueue<PCommand>*> mCommandQueueMap;
+        std::map<Agent, PQueue<PCommand>*> mCommandQueueMap;
 
 
 };

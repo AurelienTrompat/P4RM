@@ -4,9 +4,7 @@
 #include "PThread.hpp"
 #include "PMaster.hpp"
 #include "PQueue.hpp"
-#include "PCommand.hpp"
 #include "PEvent.hpp"
-
 
 class PAgent : public PThread
 {
@@ -22,8 +20,10 @@ class PAgent : public PThread
         virtual void run() = 0;
         virtual void postRun() = 0;
 
-        void pushEvent(const PEvent &event);
+        void pushEvent(PEvent &event);
         virtual void handleCommand(const PCommand &command) = 0;
+
+        void setAgent(const Agent agent);
 
     private:
         void childStart();
@@ -34,6 +34,8 @@ class PAgent : public PThread
 
         PMaster *mMaster;
         PQueue<PCommand> mCommandQueue;
+
+        Agent mAgent;
 };
 
 #endif // PAGENT_HPP

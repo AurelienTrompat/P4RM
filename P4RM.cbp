@@ -44,6 +44,7 @@
 		</Linker>
 		<Unit filename="include/PAgent.hpp" />
 		<Unit filename="include/PCommand.hpp" />
+		<Unit filename="include/PDefines.hpp" />
 		<Unit filename="include/PEvent.hpp" />
 		<Unit filename="include/PGpioManager.hpp" />
 		<Unit filename="include/PI2C.hpp" />

@@ -4,7 +4,7 @@ using namespace std;
 
 PI2C::PI2C() : mNewCommand(false), mActiverRenvoieDist(false), mRenvoieDistance(false)
 {
-    //ctor
+   setAgent(Agent::I2C);
 }
 
 PI2C::~PI2C()
@@ -87,7 +87,7 @@ void PI2C::postRun()
 
 void PI2C::handleCommand(const PCommand& command)
 {
-    if (command.mAgent == PCommand::Agent::I2C)
+    if (command.mAgent == Agent::I2C)
     {
         switch (command.i2c_p.type)
         {
@@ -124,19 +124,20 @@ void PI2C::handleCommand(const PCommand& command)
     }
 }
 
-void PI2C::SendEvent(PEvent::Type typeEvent)
+void PI2C::SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent)
 {
     PEvent event;
-    event.mType=typeEvent;
+    event.mAgent=Agent::I2C;
+    event.i2c_p.type = typeEvent;
     pushEvent(event);
 }
 
 void PI2C::OpenI2C()
 {
 
-     if ((mFd = open("/dev/i2c-1",O_RDWR))== -1)
+    if ((mFd = open("/dev/i2c-1",O_RDWR))== -1)
     {
-        SendEvent(PEvent::Type::I2C_NotOpen);
+        SendEvent(PEvent::I2C_Parameters::I2C_Event::OpenFailed);
     }
 
 }
@@ -144,7 +145,7 @@ void PI2C::SetAdresse(uint8_t adresse)
 {
     if (ioctl(mFd, I2C_SLAVE, adresse)== -1)
     {
-        SendEvent(PEvent::Type::I2C_SetAdresseFailed);
+        SendEvent(PEvent::I2C_Parameters::I2C_Event::SetAddressFailed);
     }
 }
 
@@ -165,7 +166,7 @@ int PI2C::BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_dat
     this_thread::sleep_for(chrono::microseconds(20));
     if (i == 3)
     {
-        SendEvent(PEvent::Type::I2C_WriteFailed);
+        SendEvent(PEvent::I2C_Parameters::I2C_Event::WriteFailed);
         return -1;
     }
     else

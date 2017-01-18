@@ -13,11 +13,11 @@ PRobot::~PRobot()
 }
 void PRobot::preRun()
 {
-    bindCommandeQueue(PCommand::Agent::Network, mNetwork.getCommandQueue());
+    bindCommandeQueue(Agent::Network, mNetwork.getCommandQueue());
     mNetwork.bindMaster(this);
     mNetwork.start();
 
-    bindCommandeQueue(PCommand::Agent::I2C, mI2C.getCommandQueue());
+    bindCommandeQueue(Agent::I2C, mI2C.getCommandQueue());
     mI2C.bindMaster(this);
     mI2C.start();
 }
@@ -35,17 +35,51 @@ void PRobot::postRun()
 
 void PRobot::handleEvent(const PEvent& event)
 {
-    uint16_t cg, cd;
-    PCommand command;
-    static bool dir;
-    switch(event.mType)
-    {
-        case PEvent::Type::Joystick:
-        {
-            //cout <<"Event Joystick !!! ("<<+event.joystick.x<<", "<<+event.joystick.y<<")"<<endl;
 
-            command.mAgent=PCommand::Agent::I2C;
-            command.i2c_p.type =PCommand::I2C_Parameters::I2C_Command::SetCommandMotor;
+    switch(event.mAgent)
+    {
+        case Agent::I2C:
+        {
+            handleI2CEvent(event);
+            break;
+        }
+        case Agent::Network:
+        {
+            handleNetworkEvent(event);
+            break;
+        }
+    }
+}
+
+void PRobot::handleNetworkEvent(const PEvent &event)
+{
+    uint16_t cg, cd;
+    static bool dir;
+
+    PCommand command;
+
+    switch(event.network_p.type)
+    {
+        case PEvent::Network_Parameters::Network_Event::ClientConnected:
+        {
+            cout <<"Event ClientConnected !"<<endl;
+            break;
+        }
+        case PEvent::Network_Parameters::Network_Event::ClientDisconnected:
+        {
+            cout <<"Event ClientDisconnected !"<<endl;
+            command.mAgent = Agent::I2C;
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::StopMoteur;
+            pushCommand(command);
+            break;
+        }
+        case PEvent::Network_Parameters::Network_Event::JoystickMoved:
+        {
+            const uint8_t &x = event.network_p.joystick.x;
+            const uint8_t &y = event.network_p.joystick.y;
+
+            command.mAgent=Agent::I2C;
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::SetCommandMotor;
 
             command.i2c_p.motorP.RAZdefaultDroite = false;
             command.i2c_p.motorP.RAZdefaultGauche = false;
@@ -53,16 +87,16 @@ void PRobot::handleEvent(const PEvent& event)
             command.i2c_p.motorP.vitesseProgressiveDroite = false;
             command.i2c_p.motorP.vitesseProgressiveGauche = false;
 
-            if(event.joystick.y > 128)
+            if(y > 128)
             {
-                cg=((event.joystick.y)-128)*2;
+                cg=(y-128)*2;
                 command.i2c_p.motorP.directionDroite = true;
                 command.i2c_p.motorP.directionGauche = true;
                 dir=true;
             }
-            else if(event.joystick.y < 128)
+            else if(y < 128)
             {
-                cg=((128-event.joystick.y))*2;
+                cg=((128-y))*2;
                 command.i2c_p.motorP.directionDroite = false;
                 command.i2c_p.motorP.directionGauche = false;
                 dir=false;
@@ -71,29 +105,28 @@ void PRobot::handleEvent(const PEvent& event)
             {
                 command.i2c_p.motorP.directionDroite = dir;
                 command.i2c_p.motorP.directionGauche = dir;
-                //cout << dir<<endl;
                 cg=0;
             }
 
 
             cd=cg;
 
-            if(event.joystick.x < 128)
+            if(x < 128)
             {
-                if(cg>=128-event.joystick.x)
-                    cg-=128-event.joystick.x;
+                if(cg>=128-x)
+                    cg-=128-x;
                 else
                     cg=0;
 
-                cd+=128-event.joystick.x;
+                cd+=128-x;
             }
-            else if(event.joystick.x > 128)
+            else if(x > 128)
             {
-                if(cd>=(event.joystick.x-128))
-                    cd-=(event.joystick.x-128);
+                if(cd>=(x-128))
+                    cd-=(x-128);
                 else
                     cd=0;
-                cg+=(event.joystick.x-128);
+                cg+=(x-128);
             }
 
             if(cg > 255)
@@ -101,47 +134,33 @@ void PRobot::handleEvent(const PEvent& event)
             if(cd > 255)
                 cd=255;
 
-
-           // cout<<+((uint8_t)cg) <<" "<<+((uint8_t)cd)<<endl;
-           command.i2c_p.motorP.vitesseDroite = (uint8_t)cd;
-           command.i2c_p.motorP.vitesseGauche = (uint8_t)cg;
+            command.i2c_p.motorP.vitesseDroite = (uint8_t)cd;
+            command.i2c_p.motorP.vitesseGauche = (uint8_t)cg;
 
             pushCommand(command);
             break;
         }
-        case PEvent::Type::ClientConnected:
-        {
-            cout <<"Event ClientConnected !"<<endl;
-            break;
-        }
-        case PEvent::Type::ClientDisconnected:
-        {
-            cout <<"Event ClientDisconnected !"<<endl;
-            command.mAgent = PCommand::Agent::I2C;
-            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::StopMoteur;
-            pushCommand(command);
-            break;
-        }
+    }
+}
 
-        case PEvent::Type::I2C_NotOpen :
+void PRobot::handleI2CEvent(const PEvent &event)
+{
+    switch(event.i2c_p.type)
+    {
+        case PEvent::I2C_Parameters::I2C_Event::OpenFailed:
         {
             cout << "Le Peripherique I2C n'a pas pu etre ouvert" << endl ;
             break;
         }
-        case PEvent::Type::I2C_SetAdresseFailed :
+        case PEvent::I2C_Parameters::I2C_Event::SetAddressFailed:
         {
             cout <<"L'adresse de l'esclave n'a pas pu etre selectionee" <<endl;
             break;
         }
-        case PEvent::Type::I2C_WriteFailed :
+        case PEvent::I2C_Parameters::I2C_Event::WriteFailed:
         {
             cout << "L'ecriture a echoue" << endl;
             break;
         }
-
-        default:
-        {}
     }
-
-    mPm.write(Pin::GPIO_OP2, true);
 }

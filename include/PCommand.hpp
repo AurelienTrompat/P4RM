@@ -1,15 +1,11 @@
 #ifndef PCOMMAND_HPP
 #define PCOMMAND_HPP
 
+#include "PDefines.hpp"
+
 class PCommand
 {
 public:
-    enum class Agent
-    {
-        Network,
-        I2C
-    };
-
     struct I2C_Parameters
     {
         enum class I2C_Command

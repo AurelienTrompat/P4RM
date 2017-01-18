@@ -20,7 +20,7 @@ void PMaster::putEvent(const PEvent event)
     mEventQueue.push(event);
 }
 
-void PMaster::bindCommandeQueue(const PCommand::Agent agent, PQueue<PCommand> *commandQueue)
+void PMaster::bindCommandeQueue(const Agent agent, PQueue<PCommand> *commandQueue)
 {
     const auto found = mCommandQueueMap.find(agent);
     if(found == mCommandQueueMap.end())

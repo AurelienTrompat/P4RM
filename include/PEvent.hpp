@@ -4,31 +4,50 @@
 
 class PEvent
 {
-    public:
+public:
 
-        struct JoystickEvent
+    struct I2C_Parameters
+    {
+        enum class I2C_Event
+        {
+            OpenFailed,
+            SetAddressFailed,
+            WriteFailed
+        };
+
+        I2C_Event type;
+    };
+
+    struct Network_Parameters
+    {
+        enum class Network_Event
+        {
+            ClientConnected,
+            ClientDisconnected,
+            JoystickMoved
+        };
+
+        struct JoystickParameters
         {
             uint8_t x;
             uint8_t y;
         };
 
-        enum class Type
-        {
-            Quit,
-            ClientConnected,
-            ClientDisconnected,
-            Joystick,
-            I2C_NotOpen,
-            I2C_SetAdresseFailed,
-            I2C_WriteFailed
-        };
-
-        Type mType;
+        Network_Event type;
 
         union
         {
-            JoystickEvent joystick;
+            JoystickParameters joystick;
         };
+    };
+
+    Agent mAgent;
+
+    union
+    {
+        I2C_Parameters i2c_p;
+        Network_Parameters network_p;
+    };
 };
 
 #endif // PEVENT_HPP
