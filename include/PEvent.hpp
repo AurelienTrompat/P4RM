@@ -12,10 +12,40 @@ public:
         {
             OpenFailed,
             SetAddressFailed,
-            WriteFailed
+            WriteFailed,
+            I2C_ErrorBattery,
+            I2C_ErrorMotorDriver,
+            I2C_ErrorTimeOut,
+            I2C_DistanceParcouru,
+            I2C_DistanceArret
+        };
+
+        enum class I2C_Device
+        {
+            I2C,
+            MoteurGauche,
+            MoteurDroit,
+            Giro,
+            Axel,
+            Magn,
+            LaserAvant,
+            LaserGauche,
+            LaserDroit
+        };
+
+        union
+        {
+            uint8_t distanceDroite;
+            uint16_t distanceArretDroite;
+        };
+        union
+        {
+            uint8_t distanceGauche;
+            uint16_t distanceArretGauche;
         };
 
         I2C_Event type;
+        I2C_Device device;
     };
 
     struct Network_Parameters

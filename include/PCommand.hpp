@@ -12,9 +12,11 @@ public:
         {
             SetCommandMotor,
             StopMoteur,
-            Giroscope,
-            AxelEtMagn,
-            Laser
+            VerifDefaultMotor,
+            Giro,
+            Axel,
+            Magn,
+            Laser,
         };
 
         struct MotorParameters

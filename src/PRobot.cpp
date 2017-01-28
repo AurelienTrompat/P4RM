@@ -20,6 +20,9 @@ void PRobot::preRun()
     bindCommandeQueue(Agent::I2C, mI2C.getCommandQueue());
     mI2C.bindMaster(this);
     mI2C.start();
+
+
+
 }
 
 void PRobot::run()
@@ -63,6 +66,9 @@ void PRobot::handleNetworkEvent(const PEvent &event)
         case PEvent::Network_Parameters::Network_Event::ClientConnected:
         {
             cout <<"Event ClientConnected !"<<endl;
+            command.mAgent=Agent::I2C;
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::VerifDefaultMotor;
+            pushCommand(command);
             break;
         }
         case PEvent::Network_Parameters::Network_Event::ClientDisconnected:
@@ -84,8 +90,8 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             command.i2c_p.motorP.RAZdefaultDroite = false;
             command.i2c_p.motorP.RAZdefaultGauche = false;
             command.i2c_p.motorP.renvoieDistance = true;
-            command.i2c_p.motorP.vitesseProgressiveDroite = false;
-            command.i2c_p.motorP.vitesseProgressiveGauche = false;
+            command.i2c_p.motorP.vitesseProgressiveDroite =  true;
+            command.i2c_p.motorP.vitesseProgressiveGauche = true;
 
             if(y > 128)
             {
@@ -147,19 +153,46 @@ void PRobot::handleI2CEvent(const PEvent &event)
 {
     switch(event.i2c_p.type)
     {
-        case PEvent::I2C_Parameters::I2C_Event::OpenFailed:
+        case PEvent::I2C_Parameters::I2C_Event::OpenFailed :
         {
             cout << "Le Peripherique I2C n'a pas pu etre ouvert" << endl ;
             break;
         }
-        case PEvent::I2C_Parameters::I2C_Event::SetAddressFailed:
+        case PEvent::I2C_Parameters::I2C_Event::SetAddressFailed :
         {
-            cout <<"L'adresse de l'esclave n'a pas pu etre selectionee" <<endl;
+            cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : L'adresse de l'esclave n'a pas pu etre selectionee" <<endl;
             break;
         }
-        case PEvent::I2C_Parameters::I2C_Event::WriteFailed:
+        case PEvent::I2C_Parameters::I2C_Event::WriteFailed :
         {
-            cout << "L'ecriture a echoue" << endl;
+            cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : L'ecriture a echoue" << endl;
+            break;
+        }
+        case PEvent::I2C_Parameters::I2C_Event::I2C_ErrorBattery :
+        {
+            cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : Erreur Batterie" << endl;
+            break;
+        }
+        case PEvent::I2C_Parameters::I2C_Event::I2C_ErrorMotorDriver :
+        {
+            cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : Erreur Driver Moteur" << endl;
+            break;
+        }
+        case PEvent::I2C_Parameters::I2C_Event::I2C_ErrorTimeOut :
+        {
+            cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : Erreur Time Out" << endl;
+            break;
+        }
+        case PEvent::I2C_Parameters::I2C_Event::I2C_DistanceParcouru :
+        {
+            //cout << "Distance moteur gauche : " << +event.i2c_p.distanceGauche << endl;
+            //cout << "Distance moteur droit : " << +event.i2c_p.distanceDroite << endl;
+            break;
+        }
+        case PEvent::I2C_Parameters::I2C_Event::I2C_DistanceArret :
+        {
+            cout << "Distance d'arret moteur gauche : " << +event.i2c_p.distanceArretGauche << endl;
+            cout << "Distance d'arret moteur droit : " << +event.i2c_p.distanceArretDroite << endl;
             break;
         }
     }

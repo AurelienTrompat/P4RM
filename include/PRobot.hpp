@@ -2,6 +2,8 @@
 #define PROBOT_HPP
 
 #include <iostream>
+#include <atomic>
+
 #include "PMaster.hpp"
 #include "PGpioManager.hpp"
 #include "PNetwork.hpp"
