@@ -65,6 +65,12 @@ void PNetwork::run()
                         mDecoder=std::bind(&PNetwork::handleJoystick, this);
                         break;
                     }
+                    case 'D' :
+                    {
+                        mMaxLen=1;
+                        mDecoder=std::bind(&PNetwork::handleDebug, this);
+                        break;
+                    }
                     default:
                     {
                         cout << "\tInvalid Client !!! Kicking it..." <<endl;
@@ -149,3 +155,22 @@ void PNetwork::handleJoystick()
     pushEvent(event);
 }
 
+void PNetwork::handleDebug()
+{
+    PEvent event;
+    switch(mBuffer[0])
+    {
+        case 'r':
+        {
+            event.network_p.type = PEvent::Network_Parameters::Network_Event::ButtonRAZDefaults;
+            break;
+        }
+        default:
+        {
+            kick(false);
+            break;
+        }
+    }
+
+    pushEvent(event);
+}

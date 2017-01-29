@@ -54,7 +54,8 @@ public:
         {
             ClientConnected,
             ClientDisconnected,
-            JoystickMoved
+            JoystickMoved,
+            ButtonRAZDefaults
         };
 
         struct JoystickParameters

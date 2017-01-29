@@ -30,14 +30,23 @@ void PI2C::run()
     }
 
     std::chrono::duration<double> diff = Chrono::now() - mChronoDistance;
-    if ((diff.count() > 0.05) && mRenvoieDistance)
+    if ((diff.count() > 0.05))
     {
         mChronoDistance = Chrono::now();
-        if (!mMoteurGErreur && !mMoteurDErreur)
-            MicroC_ReadErreurEtVitesse();
+        if (mRenvoieDistance)
+        {
+            if (!mMoteurGErreur && !mMoteurDErreur)
+                MicroC_ReadErreurEtVitesse();
+            else
+                MicroC_DistanceArret();
+        }
         else
-            MicroC_DistanceArret();
+        {
+            MicroC_VerifDefault();
+        }
     }
+
+
 
     diff = Chrono::now() - mChronoPing;
     if (diff.count() > 0.1)
@@ -92,28 +101,15 @@ void PI2C::run()
                 mRenvoieDistance = false;
                 break;
             }
+            case i2c_Command::RAZDefaultMotor :
+            {
+                MicroC_RAZDefault();
+                mMoteurGErreur = false;
+                mMoteurDErreur = false;
+            }
             case i2c_Command::VerifDefaultMotor :
             {
-                //Moteur Gauche
-                SetAdresse(0x10);
-                mI2C_Device = i2c_Device::MoteurGauche;
-                if(BusAccess(I2C_SMBUS_READ ,0 ,I2C_SMBUS_BYTE, &data) != -1)
-                {
-                    if(MicroC_CheckError((uint8_t)(data.byte & 0x0007))==-1)
-                        mMoteurGErreur = true;
-                    else
-                        mMoteurGErreur = false;
-                }
-                //Moteur Droit
-                mI2C_Device = i2c_Device::MoteurDroit;
-                SetAdresse(0x20);
-                if(BusAccess(I2C_SMBUS_READ ,0 ,I2C_SMBUS_BYTE, &data) != -1)
-                {
-                    if(MicroC_CheckError((uint8_t)(data.byte & 0x07))==-1)
-                        mMoteurDErreur = true;
-                    else
-                        mMoteurDErreur = false;
-                }
+                MicroC_VerifDefault();
             }
             case i2c_Command::Giro :
             {
@@ -160,6 +156,7 @@ void PI2C::handleCommand(const PCommand& command)
                 break;
             }
             case i2c_Command::StopMoteur :
+            case i2c_Command::RAZDefaultMotor :
             case i2c_Command::VerifDefaultMotor :
             {
                 mI2C_Command = command.i2c_p.type;
@@ -269,7 +266,7 @@ void PI2C::MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p)
 {
     // Moteur Gauche
     mCmdMoteur.CmdMGauche   =  (1 << 5)
-                            + (i2c_p.motorP.RAZdefaultGauche << 4)
+                            + (0 << 4)
                             + (i2c_p.motorP.renvoieDistance << 3)
                             + (1 << 2)
                             + (i2c_p.motorP.directionGauche << 1)
@@ -279,7 +276,7 @@ void PI2C::MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p)
 
     //Moteur Droit
     mCmdMoteur.CmdMDroit    = (1 << 5)
-                            + (i2c_p.motorP.RAZdefaultDroite << 4)
+                            + (0 << 4)
                             + (i2c_p.motorP.renvoieDistance << 3)
                             + (1 << 2)
                             + (i2c_p.motorP.directionDroite << 1)
@@ -412,4 +409,45 @@ std::string PI2C::fromDeviceToString(const i2c_Device device)
             return "Laser Droit";
     }
     return "";
+}
+
+void PI2C::MicroC_RAZDefault()
+{
+  union i2c_smbus_data data;
+    data.byte = 0;
+
+// Moteur Gauche
+    mI2C_Device = i2c_Device::MoteurGauche;
+    SetAdresse(0x10);
+    BusAccess(I2C_SMBUS_WRITE,((1 << 5)+(1 << 4)),I2C_SMBUS_BYTE_DATA, &data);
+
+//Moteur Droit
+    mI2C_Device = i2c_Device::MoteurDroit;
+    SetAdresse(0x20);
+    BusAccess(I2C_SMBUS_WRITE,((1 << 5)+(1 << 4)),I2C_SMBUS_BYTE_DATA, &data);
+}
+void PI2C::MicroC_VerifDefault()
+{
+    union i2c_smbus_data data;
+
+     //Moteur Gauche
+     SetAdresse(0x10);
+     mI2C_Device = i2c_Device::MoteurGauche;
+     if(BusAccess(I2C_SMBUS_READ ,0 ,I2C_SMBUS_BYTE, &data) != -1)
+     {
+        if(MicroC_CheckError((uint8_t)(data.byte & 0x0007))==-1)
+            mMoteurGErreur = true;
+        else
+            mMoteurGErreur = false;
+    }
+    //Moteur Droit
+    mI2C_Device = i2c_Device::MoteurDroit;
+    SetAdresse(0x20);
+    if(BusAccess(I2C_SMBUS_READ ,0 ,I2C_SMBUS_BYTE, &data) != -1)
+    {
+        if(MicroC_CheckError((uint8_t)(data.byte & 0x07))==-1)
+            mMoteurDErreur = true;
+        else
+            mMoteurDErreur = false;
+    }
 }

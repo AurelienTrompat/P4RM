@@ -8,6 +8,7 @@
 #include "PGpioManager.hpp"
 #include "PNetwork.hpp"
 #include "PI2C.hpp"
+#include "PCB_Moteur.hpp"
 
 class PRobot : public PMaster
 {
@@ -28,6 +29,7 @@ class PRobot : public PMaster
         PGpioManager &mPm;
         PNetwork mNetwork;
         PI2C mI2C;
+        PCB_Moteur mCB_Moteur;
 };
 
 #endif // PROBOT_HPP

@@ -43,7 +43,9 @@
 			<Add library="lib/libstdc++.a" />
 		</Linker>
 		<Unit filename="include/PAgent.hpp" />
+		<Unit filename="include/PCB_Moteur.hpp" />
 		<Unit filename="include/PCommand.hpp" />
+		<Unit filename="include/PCommandBuilder.hpp" />
 		<Unit filename="include/PDefines.hpp" />
 		<Unit filename="include/PEvent.hpp" />
 		<Unit filename="include/PGpioManager.hpp" />
@@ -57,6 +59,7 @@
 		<Unit filename="include/PUltrasonicSensor.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/PAgent.cpp" />
+		<Unit filename="src/PCB_Moteur.cpp" />
 		<Unit filename="src/PGpioManager.cpp" />
 		<Unit filename="src/PI2C.cpp" />
 		<Unit filename="src/PMaster.cpp" />

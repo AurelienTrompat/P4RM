@@ -42,6 +42,8 @@ class PI2C : public PAgent
         void MicroC_ReadErreurEtVitesse();
         int MicroC_CheckError(uint8_t error);
         void MicroC_DistanceArret();
+        void MicroC_RAZDefault();
+        void MicroC_VerifDefault();
 
     private:
         int mFd;

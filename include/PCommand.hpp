@@ -13,6 +13,7 @@ public:
             SetCommandMotor,
             StopMoteur,
             VerifDefaultMotor,
+            RAZDefaultMotor,
             Giro,
             Axel,
             Magn,
@@ -24,12 +25,10 @@ public:
             uint8_t vitesseGauche;
             bool directionGauche;
             bool vitesseProgressiveGauche;
-            bool RAZdefaultGauche;
 
             uint8_t vitesseDroite;
             bool directionDroite;
             bool vitesseProgressiveDroite;
-            bool RAZdefaultDroite;
 
             bool renvoieDistance;
         };
