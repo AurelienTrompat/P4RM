@@ -73,9 +73,22 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             pushCommand(command);
             break;
         }
-        case PEvent::Network_Parameters::Network_Event::JoystickMoved:
+        case PEvent::Network_Parameters::Network_Event::Motion:
         {
-            pushCommand(mCB_Moteur.updateWithJoystick(event.network_p.joystick));
+            switch(event.network_p.motion_p.type)
+            {
+                case PEvent::Network_Parameters::MotionParameters::MotionType::Joystick:
+                {
+                    pushCommand(mCB_Moteur.updateWithJoystick(event.network_p.motion_p.joystick));
+                    break;
+                }
+                case PEvent::Network_Parameters::MotionParameters::MotionType::Rotation:
+                {
+                    pushCommand(mCB_Moteur.updateWithRotation(event.network_p.motion_p.rotation_p));
+                    break;
+                }
+            }
+
             break;
         }
         case PEvent::Network_Parameters::Network_Event::ButtonRAZDefaults :

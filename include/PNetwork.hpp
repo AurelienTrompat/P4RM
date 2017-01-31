@@ -22,9 +22,9 @@ class PNetwork : public PAgent
         void run();
         void postRun();
 
-        void kick(bool force);
+        void kick(bool force, bool message);
 
-        void handleJoystick();
+        void handleMotion();
         void handleConnection(bool eventType);
         void handleDebug();
     private:
