@@ -6,7 +6,8 @@
 enum class Agent
 {
     Network,
-    I2C
+    I2C,
+    US
 };
 
 #endif // PDEFINES_HPP

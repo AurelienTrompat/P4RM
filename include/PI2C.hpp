@@ -37,6 +37,8 @@ class PI2C : public PAgent
         void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent);
         void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent, uint16_t distanceGauche, uint16_t distanceDroite);
         int BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_data *data);
+
+        //Microcontroleurs
         void MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p);
         void MicroC_ShutdownMoteur();
         void MicroC_ReadErreurEtVitesse();

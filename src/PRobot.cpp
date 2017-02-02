@@ -20,6 +20,10 @@ void PRobot::preRun()
     bindCommandeQueue(Agent::I2C, mI2C.getCommandQueue());
     mI2C.bindMaster(this);
     mI2C.start();
+
+    bindCommandeQueue(Agent::US, mUS.getCommandQueue());
+    mUS.bindMaster(this);
+    mUS.start();
 }
 
 void PRobot::run()
@@ -31,6 +35,7 @@ void PRobot::postRun()
 {
     mNetwork.stop();
     mI2C.stop();
+    mUS.stop();
 }
 
 void PRobot::handleEvent(const PEvent& event)
@@ -48,6 +53,11 @@ void PRobot::handleEvent(const PEvent& event)
             handleNetworkEvent(event);
             break;
         }
+        case Agent::US:
+        {
+            handleUSEvent(event);
+            break;
+        }
     }
 }
 
@@ -63,6 +73,10 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             command.mAgent=Agent::I2C;
             command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::VerifDefaultMotor;
             pushCommand(command);
+
+            command.mAgent = Agent::US;
+            command.us_p.type = PCommand::US_Parameters::US_Command::StartAvant;
+            pushCommand(command);
             break;
         }
         case PEvent::Network_Parameters::Network_Event::ClientDisconnected:
@@ -71,17 +85,44 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             command.mAgent = Agent::I2C;
             command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::StopMoteur;
             pushCommand(command);
+
+            command.mAgent = Agent::US;
+            command.us_p.type = PCommand::US_Parameters::US_Command::StopUS;
+            pushCommand(command);
             break;
         }
         case PEvent::Network_Parameters::Network_Event::JoystickMoved:
         {
-            pushCommand(mCB_Moteur.updateWithJoystick(event.network_p.joystick));
+            command = mCB_Moteur.updateWithJoystick(event.network_p.joystick);
+            pushCommand(command);
+            if (command.i2c_p.motorP.directionDroite == true && command.i2c_p.motorP.directionGauche == true)
+            {
+                command.mAgent = Agent::US;
+                command.us_p.type = PCommand::US_Parameters::US_Command::StartAvant;
+                pushCommand(command);
+            }
+            else if (command.i2c_p.motorP.directionDroite == false && command.i2c_p.motorP.directionGauche == false)
+            {
+                command.mAgent = Agent::US;
+                command.us_p.type = PCommand::US_Parameters::US_Command::StartArriere;
+                pushCommand(command);
+            }
+            else
+            {
+                command.mAgent = Agent::US;
+                command.us_p.type = PCommand::US_Parameters::US_Command::StopUS;
+                pushCommand(command);
+            }
             break;
         }
         case PEvent::Network_Parameters::Network_Event::ButtonRAZDefaults :
         {
             command.mAgent = Agent::I2C;
             command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::RAZDefaultMotor;
+            pushCommand(command);
+
+            command.mAgent = Agent::US;
+            command.us_p.type = PCommand::US_Parameters::US_Command::Reset;
             pushCommand(command);
             break;
         }
@@ -132,6 +173,37 @@ void PRobot::handleI2CEvent(const PEvent &event)
         {
             cout << "Distance d'arret moteur gauche : " << +event.i2c_p.distanceArretGauche << endl;
             cout << "Distance d'arret moteur droit : " << +event.i2c_p.distanceArretDroite << endl;
+            break;
+        }
+    }
+}
+
+void PRobot::handleUSEvent(const PEvent &event)
+{
+    switch (event.us_p.type)
+    {
+        case PEvent::US_Parameters::US_Event::US_Obstacle :
+        {
+            if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurAvant)
+                cout << "Capteur US Avant : Obstacle" << endl;
+            else if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurArriere)
+                cout << "Capteur US Arriere : Obstacle" << endl;
+
+            pushCommand(mCB_Moteur.updateWithUS(event.us_p.seuil));
+
+
+            break;
+        }
+        case PEvent::US_Parameters::US_Event::US_Error :
+        {
+            if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurAvant)
+                cout << "Capteur US Avant : Erreur" << endl;
+            else if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurArriere)
+                cout << "Capteur US Arriere : Erreur" << endl;
+        }
+        case PEvent::US_Parameters::US_Event::US_Distance :
+        {
+
             break;
         }
     }

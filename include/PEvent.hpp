@@ -72,12 +72,45 @@ public:
         };
     };
 
+    struct US_Parameters
+    {
+        enum class US_Event
+        {
+            US_Obstacle,
+            US_Error,
+            US_Distance
+        };
+
+         enum class US_Device
+        {
+           CapteurAvant,
+           CapteurArriere
+        };
+
+        enum class US_Seuil
+        {
+            SeuilUtilisateur,
+            Seuil1m,
+            Seuil50cm,
+            Seuil25cm,
+            Seuil10cm,
+            NoObstacle
+        };
+
+        US_Event type;
+        US_Device device;
+        US_Seuil seuil;
+
+        uint16_t distObstacle;
+    };
+
     Agent mAgent;
 
     union
     {
         I2C_Parameters i2c_p;
         Network_Parameters network_p;
+        US_Parameters us_p;
     };
 };
 

@@ -1,6 +1,8 @@
 #include "PCB_Moteur.hpp"
 
-PCB_Moteur::PCB_Moteur()
+using namespace std;
+
+PCB_Moteur::PCB_Moteur() : mSpeedFactor(1)
 {
     mCommand.mAgent = Agent::I2C;
     mCommand.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::SetCommandMotor;
@@ -63,6 +65,50 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Joyst
         else
             cg=255;
     }
+    cg *= mSpeedFactor;
+    cd *= mSpeedFactor;
+    return mCommand;
+}
 
+PCommand PCB_Moteur::updateWithUS(PEvent::US_Parameters::US_Seuil seuil)
+{
+    cout <<"update"<<endl;
+    switch(seuil)
+    {
+        case PEvent::US_Parameters::US_Seuil::NoObstacle :
+        {
+            mSpeedFactor = 1;
+            cout << "no" <<endl;
+            break;
+        }
+        case PEvent::US_Parameters::US_Seuil::Seuil1m :
+        {
+            mSpeedFactor = 0.5;
+            cout << "1m" <<endl;
+            break;
+        }
+        case PEvent::US_Parameters::US_Seuil::Seuil50cm :
+        {
+            mSpeedFactor = 0.40;
+            cout << "50cm" <<endl;
+            break;
+        }
+        case PEvent::US_Parameters::US_Seuil::Seuil25cm :
+        {
+            mSpeedFactor = 0.30;
+            cout << "25cm" <<endl;
+            break;
+        }
+        case PEvent::US_Parameters::US_Seuil::Seuil10cm :
+        {
+            mSpeedFactor = 0;
+            cout << "10cm" <<endl;
+            break;
+        }
+    }
+    mCommand.i2c_p.motorP.vitesseProgressiveDroite =  false;
+    mCommand.i2c_p.motorP.vitesseProgressiveGauche = false;
+    mCommand.i2c_p.motorP.vitesseGauche *= mSpeedFactor;
+    mCommand.i2c_p.motorP.vitesseDroite *= mSpeedFactor;
     return mCommand;
 }

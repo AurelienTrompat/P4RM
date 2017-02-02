@@ -41,11 +41,27 @@ public:
 
     };
 
+    struct US_Parameters
+    {
+        enum class US_Command
+        {
+            StartAvant,
+            StartArriere,
+            StopUS,
+            SetSeuil,
+            GetDistance,
+            Reset
+        };
+        US_Command type;
+        uint16_t seuil;
+    };
+
     Agent mAgent;
 
     union
     {
         struct I2C_Parameters i2c_p;
+        struct US_Parameters us_p;
     };
 };
 

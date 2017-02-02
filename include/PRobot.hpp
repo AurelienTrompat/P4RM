@@ -8,6 +8,8 @@
 #include "PGpioManager.hpp"
 #include "PNetwork.hpp"
 #include "PI2C.hpp"
+#include "PUltrasonicSensor.hpp"
+
 #include "PCB_Moteur.hpp"
 
 class PRobot : public PMaster
@@ -25,10 +27,14 @@ class PRobot : public PMaster
 
         void handleNetworkEvent(const PEvent &event);
         void handleI2CEvent(const PEvent &event);
+        void handleUSEvent(const PEvent &event);
+
     private:
         PGpioManager &mPm;
         PNetwork mNetwork;
         PI2C mI2C;
+        PUltrasonicSensor mUS;
+
         PCB_Moteur mCB_Moteur;
 };
 
