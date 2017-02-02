@@ -54,21 +54,43 @@ public:
         {
             ClientConnected,
             ClientDisconnected,
-            JoystickMoved,
+            Motion,
             ButtonRAZDefaults
         };
 
-        struct JoystickParameters
+        struct MotionParameters
         {
-            uint8_t x;
-            uint8_t y;
+            enum class MotionType
+            {
+                Joystick,
+                Rotation
+            };
+
+
+            struct JoystickParameters
+            {
+                uint8_t x;
+                uint8_t y;
+            };
+            enum class RotationParameters
+            {
+                Trigo,
+                Anti,
+                Stop
+            };
+            MotionType type;
+            union
+            {
+                struct JoystickParameters joystick;
+                RotationParameters rotation_p;
+            };
         };
 
         Network_Event type;
 
         union
         {
-            JoystickParameters joystick;
+            struct MotionParameters motion_p;
         };
     };
 

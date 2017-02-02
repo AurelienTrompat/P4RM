@@ -91,27 +91,37 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             pushCommand(command);
             break;
         }
-        case PEvent::Network_Parameters::Network_Event::JoystickMoved:
+        case PEvent::Network_Parameters::Network_Event::Motion:
         {
-            command = mCB_Moteur.updateWithJoystick(event.network_p.joystick);
-            pushCommand(command);
-            if (command.i2c_p.motorP.directionDroite == true && command.i2c_p.motorP.directionGauche == true)
+            switch(event.network_p.motion_p.type)
             {
-                command.mAgent = Agent::US;
-                command.us_p.type = PCommand::US_Parameters::US_Command::StartAvant;
-                pushCommand(command);
-            }
-            else if (command.i2c_p.motorP.directionDroite == false && command.i2c_p.motorP.directionGauche == false)
-            {
-                command.mAgent = Agent::US;
-                command.us_p.type = PCommand::US_Parameters::US_Command::StartArriere;
-                pushCommand(command);
-            }
-            else
-            {
-                command.mAgent = Agent::US;
-                command.us_p.type = PCommand::US_Parameters::US_Command::StopUS;
-                pushCommand(command);
+                case PEvent::Network_Parameters::MotionParameters::MotionType::Joystick:
+                {
+                    command = mCB_Moteur.updateWithJoystick(event.network_p.motion_p.joystick);
+                    pushCommand(command);
+                    if (command.i2c_p.motorP.directionDroite == true && command.i2c_p.motorP.directionGauche == true)
+                    {
+                        command.mAgent = Agent::US;
+                        command.us_p.type = PCommand::US_Parameters::US_Command::StartAvant;
+                        pushCommand(command);
+                    }
+                    else if (command.i2c_p.motorP.directionDroite == false && command.i2c_p.motorP.directionGauche == false)
+                    {
+                        command.mAgent = Agent::US;
+                        command.us_p.type = PCommand::US_Parameters::US_Command::StartArriere;
+                        pushCommand(command);
+                    }
+                    break;
+
+                }
+                case PEvent::Network_Parameters::MotionParameters::MotionType::Rotation:
+                {
+                    pushCommand(mCB_Moteur.updateWithRotation(event.network_p.motion_p.rotation_p));
+                    command.mAgent = Agent::US;
+                    command.us_p.type = PCommand::US_Parameters::US_Command::StopUS;
+                    pushCommand(command);
+                    break;
+                }
             }
             break;
         }
