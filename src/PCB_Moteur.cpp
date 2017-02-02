@@ -10,7 +10,7 @@ PCB_Moteur::PCB_Moteur() : mSpeedFactor(1)
     mCommand.i2c_p.motorP.renvoieDistance = false;
 }
 
-PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::JoystickParameters joystickData)
+PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::MotionParameters::JoystickParameters joystickData)
 {
     const uint8_t &x = joystickData.x;
     const uint8_t &y = joystickData.y;
@@ -112,3 +112,32 @@ PCommand PCB_Moteur::updateWithUS(PEvent::US_Parameters::US_Seuil seuil)
     mCommand.i2c_p.motorP.vitesseDroite *= mSpeedFactor;
     return mCommand;
 }
+PCommand PCB_Moteur::updateWithRotation(PEvent::Network_Parameters::MotionParameters::RotationParameters param)
+{
+
+    PCommand::I2C_Parameters::MotorParameters &motorP = mCommand.i2c_p.motorP;
+
+    motorP.vitesseGauche = 128;
+    motorP.vitesseDroite = 128;
+
+    motorP.vitesseProgressiveDroite =  true;
+    motorP.vitesseProgressiveGauche = true;
+
+    if(param == PEvent::Network_Parameters::MotionParameters::RotationParameters::Trigo)
+    {
+        motorP.directionGauche = false;
+        motorP.directionDroite = true;
+    }
+    else if(param == PEvent::Network_Parameters::MotionParameters::RotationParameters::Anti)
+    {
+        motorP.directionGauche = true;
+        motorP.directionDroite = false;
+    }
+    else if(param == PEvent::Network_Parameters::MotionParameters::RotationParameters::Stop)
+    {
+        motorP.vitesseGauche = 0;
+        motorP.vitesseDroite = 0;
+    }
+    return mCommand;
+}
+

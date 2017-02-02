@@ -59,10 +59,10 @@ void PNetwork::run()
                 cout<<mFirst<<endl;*/
                 switch(mFirst)
                 {
-                    case 'J':
+                    case 'm':
                     {
-                        mMaxLen=2;
-                        mDecoder=std::bind(&PNetwork::handleJoystick, this);
+                        mMaxLen=3;
+                        mDecoder=std::bind(&PNetwork::handleMotion, this);
                         break;
                     }
                     case 'D' :
@@ -73,8 +73,7 @@ void PNetwork::run()
                     }
                     default:
                     {
-                        cout << "\tInvalid Client !!! Kicking it..." <<endl;
-                        kick(false);
+                        kick(false, true);
                     }
                     case ';':
                     {
@@ -98,8 +97,7 @@ void PNetwork::run()
                     }
                     else
                     {
-                        cout << "\tInvalid Client !!! Kicking it..." <<endl;
-                        kick(false);
+                        kick(false, true);
                     }
                 }
 
@@ -115,13 +113,15 @@ void PNetwork::run()
 void PNetwork::postRun()
 {
     cout << "\tStop Listening" <<endl;
-    kick(true);
+    kick(true, false);
     mListener.close();
 }
 
-void PNetwork::kick(bool force)
+void PNetwork::kick(bool force, bool message)
 {
     size_t sentLen;
+    if(message)
+        cout << "\tInvalid Client !!! Kicking it..." <<endl;
     do
     {
         mStatus = mSocket.send(";", 1, sentLen);
@@ -144,14 +144,38 @@ void PNetwork::handleConnection(bool eventType)
 }
 
 
-void PNetwork::handleJoystick()
+void PNetwork::handleMotion()
 {
     PEvent event;
+    event.network_p.type = PEvent::Network_Parameters::Network_Event::Motion;
     /*cout<<"Joystick x : "<<static_cast<signed int>(mBuffer[0])<<endl;
     cout<<"Joystick y : "<<static_cast<signed int>(mBuffer[1])<<endl;*/
-    event.network_p.type = PEvent::Network_Parameters::Network_Event::JoystickMoved;
-    event.network_p.joystick.x = mBuffer[0];
-    event.network_p.joystick.y = mBuffer[1];
+    switch(mBuffer[0])
+    {
+        case 'J':
+        {
+            event.network_p.motion_p.type = PEvent::Network_Parameters::MotionParameters::MotionType::Joystick;
+            event.network_p.motion_p.joystick.x = mBuffer[1];
+            event.network_p.motion_p.joystick.y = mBuffer[2];
+            break;
+        }
+        case 'R':
+        {
+            event.network_p.motion_p.type = PEvent::Network_Parameters::MotionParameters::MotionType::Rotation;
+            if(mBuffer[1] == 'T')
+                event.network_p.motion_p.rotation_p = PEvent::Network_Parameters::MotionParameters::RotationParameters::Trigo;
+            else if(mBuffer[1] == 'A')
+                event.network_p.motion_p.rotation_p = PEvent::Network_Parameters::MotionParameters::RotationParameters::Anti;
+            else if(mBuffer[1] == 'S')
+                event.network_p.motion_p.rotation_p = PEvent::Network_Parameters::MotionParameters::RotationParameters::Stop;
+            else
+                kick(false, true);
+
+            break;
+        }
+        default:
+            kick(false, true);
+    }
     pushEvent(event);
 }
 
@@ -160,16 +184,13 @@ void PNetwork::handleDebug()
     PEvent event;
     switch(mBuffer[0])
     {
-        case 'r':
+        case 'R':
         {
             event.network_p.type = PEvent::Network_Parameters::Network_Event::ButtonRAZDefaults;
             break;
         }
         default:
-        {
-            kick(false);
-            break;
-        }
+            kick(false, true);
     }
 
     pushEvent(event);
