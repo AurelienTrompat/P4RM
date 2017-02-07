@@ -21,7 +21,7 @@ PServo::~PServo()
 void PServo::pwm_init()
 {
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/duty_cycle",ios::out);
-    mFile<<0;
+    mFile<<1000000;
     mFile.close();
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/enable",ios::out);
     mFile<<1;
@@ -34,7 +34,7 @@ void PServo::pwm_setangle(float newangle)
     else if (newangle > 120) angleact = 120;
     else angleact = 0;
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/duty_cycle",ios::out);
-    mFile<<angleact*100000;
+    mFile<<angleact*1000000/180+1000000;
     mFile.close();
 }
 
@@ -56,7 +56,7 @@ void PServo::pwm_nextpas()
 void PServo::pwm_stop()
 {
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/duty_cycle",ios::out);
-    mFile<<0;
+    mFile<<1000000;
     mFile.close();
     this_thread::sleep_for(chrono::milliseconds(100));
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/enable",ios::out);
