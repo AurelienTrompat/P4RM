@@ -51,17 +51,20 @@ void PUltrasonicSensor::run()
             }
             case us_Command::Reset :
             {
-                Us_Stop();
-                this_thread::sleep_for(chrono::milliseconds(10));
-                Us_Start();
-                break;
+               if(mActive==true)
+               {
+                    Us_Stop();
+                    this_thread::sleep_for(chrono::milliseconds(10));
+                    Us_Start();
+                    break;
+               }
             }
             default :
                 break;
         }
         mNewCommand = false;
     }
-    else if (mActive && diff.count() > 0.1)
+    else if (mActive && diff.count() > 0.06)
     {
         Us_OneMesure();
         mChronoMesure = Chrono::now();
@@ -119,6 +122,8 @@ void PUltrasonicSensor::SendEvent(us_Event typeEvent)
 
 void PUltrasonicSensor::Us_Start()
 {
+    mDernierreMesure.clear();
+    mMesureOk.clear();
     mPm.write(Pin::CMD_ALIM_US, true);
     this_thread::sleep_for(chrono::milliseconds(10));
     mActive = true;
@@ -155,10 +160,12 @@ void PUltrasonicSensor::Us_OneMesure()
             std::vector<double>::iterator it;
             double newMesure = (double)(diff.count()*ConvertCm);
             double MoyDMesure =0;
-
-            for (it = mDernierreMesure.begin();it < mDernierreMesure.end();it++)
+            if (mDernierreMesure.size() !=0)
+            {
+                for (it = mDernierreMesure.begin();it < mDernierreMesure.end();it++)
                 MoyDMesure += *it;
-            MoyDMesure = (double)(MoyDMesure / mDernierreMesure.size());
+                MoyDMesure = (double)(MoyDMesure / mDernierreMesure.size());
+            }
 
             if ((((newMesure <= (MoyDMesure+20))) && (newMesure >= (MoyDMesure-20)))|| mDistanceObstacle == 0)
             {
@@ -166,14 +173,17 @@ void PUltrasonicSensor::Us_OneMesure()
                 mMesureOk.insert(it,newMesure);
             }
 
-            if (mMesureOk.size() > 5)
+            if (mMesureOk.size() > 3)
                 mMesureOk.pop_back();
             mDistanceObstacle=0;
-            for (it = mMesureOk.begin();it < mMesureOk.end();it++)
-                mDistanceObstacle += round(*it);
-            mDistanceObstacle = round((double)(mDistanceObstacle/mMesureOk.size()));
-            //cout << mDistanceObstacle << "  " << newMesure<< endl;
 
+            if (mMesureOk.size() != 0)
+            {
+                 for (it = mMesureOk.begin();it < mMesureOk.end();it++)
+                    mDistanceObstacle += round(*it);
+                mDistanceObstacle = round((double)(mDistanceObstacle/mMesureOk.size()));
+
+            }
 
             if (Us_TestSeuil())
             {
@@ -211,17 +221,17 @@ void PUltrasonicSensor::Us_OneMesure()
 
 bool PUltrasonicSensor::Us_TestSeuil()
 {
-    if (mDistanceObstacle > 200 && mUS_Seuil != us_Seuil::NoObstacle && mDistanceObstacle > 120)
+    if (mUS_Seuil != us_Seuil::NoObstacle && mDistanceObstacle > 120)
     {
         mUS_Seuil = us_Seuil::NoObstacle;
         return 1;
     }
-    else if (mDistanceObstacle < 100 && mUS_Seuil != us_Seuil::Seuil1m && mDistanceObstacle > 60)
+    else if (mDistanceObstacle < 100 && mUS_Seuil != us_Seuil::Seuil1m && mDistanceObstacle > 70)
     {
         mUS_Seuil = us_Seuil::Seuil1m;
         return 1;
     }
-    else if (mDistanceObstacle < 50 && mUS_Seuil != us_Seuil::Seuil50cm && mDistanceObstacle > 30)
+    else if (mDistanceObstacle < 50 && mUS_Seuil != us_Seuil::Seuil50cm && mDistanceObstacle > 40)
     {
         mUS_Seuil = us_Seuil::Seuil50cm;
         return 1;

@@ -65,14 +65,12 @@ PGpioManager::PGpioManager()
         declarePin(Pin::GPIO1_D);
         declarePin(Pin::XSHUT_S);
         declarePin(Pin::GPIO1_S);
-        declarePin(Pin::PWM_S);
         declarePin(Pin::GPIO_OP1);
         declarePin(Pin::GPIO_OP2);
         declarePin(Pin::GPIO_OP3);
         declarePin(Pin::GPIO_OP4);
         declarePin(Pin::GPIO_OP5);
         declarePin(Pin::GPIO_OP6);
-        declarePin(Pin::CMD_BUCK);
 
     }
     catch(exception const& exep)
@@ -155,7 +153,10 @@ bool PGpioManager::read(const Pin id)
             mFile.close();
         }
         else
+        {
             throw std::logic_error("Cette pin n'a pas été ajoutée donc ne peut pas être lue !");
+        }
+
     }
     catch(exception const& exep)
     {
@@ -222,8 +223,6 @@ string PGpioManager::fromPinToString(Pin id)
         return "XSHUT_S";
     case Pin::GPIO1_S:
         return "GPIO1_S";
-    case Pin::PWM_S:
-        return "PWM_S";
     case Pin::GPIO_OP1:
         return "GPIO_OP1";
     case Pin::GPIO_OP2:
@@ -236,8 +235,6 @@ string PGpioManager::fromPinToString(Pin id)
         return "GPIO_OP5";
     case Pin::GPIO_OP6:
         return "GPIO_OP6";
-    case Pin::CMD_BUCK:
-        return "CMD_BUCK";
     }
     return "";
 }

@@ -41,19 +41,13 @@ enum class Pin : uint8_t {
     XSHUT_S    = 137, ///<Activation du capteur laser avant
     GPIO1_S     = 9,   ///<Intérruption du capteur laser avant
 
-    //Servomoteur
-    PWM_S       = 134, ///<Commande le servomoteur
-
     //Partie opérative
     GPIO_OP1    = 3,   ///<Partie opérative 1
-    GPIO_OP2    = 200,   ///<Partie opérative 2
+    GPIO_OP2    = 200, ///<Partie opérative 2
     GPIO_OP3    = 4,   ///<Partie opérative 3
     GPIO_OP4    = 132, ///<Partie opérative 4
     GPIO_OP5    = 135, ///<Partie opérative 5
     GPIO_OP6    = 139, ///<Partie opérative 6
-
-    //Autres
-    CMD_BUCK    = 131, ///<Non Utilisé
     }; // le bit de poids fort à 1 indique que la broche est une sortie
 
 /** \class PGpioManager PGpioManager.hpp PGpioManager.hpp Gère les broches du GPIO.

@@ -64,6 +64,7 @@ void PRobot::handleEvent(const PEvent& event)
 void PRobot::handleNetworkEvent(const PEvent &event)
 {
     PCommand command;
+    bool updateUS =false;
 
     switch(event.network_p.type)
     {
@@ -72,10 +73,6 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             cout <<"Event ClientConnected !"<<endl;
             command.mAgent=Agent::I2C;
             command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::VerifDefaultMotor;
-            pushCommand(command);
-
-            command.mAgent = Agent::US;
-            command.us_p.type = PCommand::US_Parameters::US_Command::StartAvant;
             pushCommand(command);
             break;
         }
@@ -97,18 +94,29 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             {
                 case PEvent::Network_Parameters::MotionParameters::MotionType::Joystick:
                 {
-                    command = mCB_Moteur.updateWithJoystick(event.network_p.motion_p.joystick);
+                    command = mCB_Moteur.updateWithJoystick(event.network_p.motion_p.joystick, updateUS);
                     pushCommand(command);
-                    if (command.i2c_p.motorP.directionDroite == true && command.i2c_p.motorP.directionGauche == true)
+                    if (updateUS)
                     {
                         command.mAgent = Agent::US;
-                        command.us_p.type = PCommand::US_Parameters::US_Command::StartAvant;
-                        pushCommand(command);
-                    }
-                    else if (command.i2c_p.motorP.directionDroite == false && command.i2c_p.motorP.directionGauche == false)
-                    {
-                        command.mAgent = Agent::US;
-                        command.us_p.type = PCommand::US_Parameters::US_Command::StartArriere;
+                        switch (mCB_Moteur.getEtatUS())
+                        {
+                            case 0:
+                            {
+                                command.us_p.type = PCommand::US_Parameters::US_Command::StopUS;
+                                break;
+                            }
+                            case 2:
+                            {
+                                command.us_p.type = PCommand::US_Parameters::US_Command::StartAvant;
+                                break;
+                            }
+                            case 1:
+                            {
+                                command.us_p.type = PCommand::US_Parameters::US_Command::StartArriere;
+                                break;
+                            }
+                        }
                         pushCommand(command);
                     }
                     break;

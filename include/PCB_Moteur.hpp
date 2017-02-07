@@ -10,12 +10,16 @@ class PCB_Moteur : public PCommandBuilder
     public:
         PCB_Moteur();
 
-        PCommand updateWithJoystick(struct PEvent::Network_Parameters::MotionParameters::JoystickParameters joystickData);
+        PCommand updateWithJoystick(struct PEvent::Network_Parameters::MotionParameters::JoystickParameters joystickData, bool &updateUS);
         PCommand updateWithRotation(PEvent::Network_Parameters::MotionParameters::RotationParameters param);
         PCommand updateWithUS(PEvent::US_Parameters::US_Seuil seuil);
 
+        uint8_t getEtatUS();
+        void setEtatUS(uint8_t etatUS);
+
     private:
         float mSpeedFactor;
+        uint8_t mEtatUS;
 
 };
 
