@@ -77,6 +77,7 @@ void PUltrasonicSensor::postRun()
     mPm.write(Pin::CMD_ALIM_US, false);
     mPm.write(Pin::TRIG_AV, false);
     mPm.write(Pin::TRIG_AR, false);
+    cout << "USStop" <<endl;
 }
 
 void PUltrasonicSensor::handleCommand(const PCommand &command)
@@ -124,6 +125,7 @@ void PUltrasonicSensor::Us_Start()
 {
     mDernierreMesure.clear();
     mMesureOk.clear();
+    mDistanceObstacle = 0;
     mPm.write(Pin::CMD_ALIM_US, true);
     this_thread::sleep_for(chrono::milliseconds(10));
     mActive = true;

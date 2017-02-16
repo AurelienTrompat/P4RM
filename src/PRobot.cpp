@@ -36,6 +36,7 @@ void PRobot::postRun()
     mNetwork.stop();
     mI2C.stop();
     mUS.stop();
+    cout << "Stop" <<endl;
 }
 
 void PRobot::handleEvent(const PEvent& event)

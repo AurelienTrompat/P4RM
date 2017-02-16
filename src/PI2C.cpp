@@ -142,6 +142,7 @@ void PI2C::postRun()
 {
     MicroC_ShutdownMoteur();
     close(mFd);
+    cout << "i2cStop" <<endl;
 }
 
 void PI2C::handleCommand(const PCommand& command)
@@ -194,6 +195,7 @@ void PI2C::SendEvent(i2c_Event typeEvent)
 {
     PEvent event;
     event.i2c_p.type = typeEvent;
+
         event.i2c_p.device = mI2C_Device;
     pushEvent(event);
 }

@@ -115,6 +115,7 @@ void PNetwork::postRun()
     cout << "\tStop Listening" <<endl;
     kick(true, false);
     mListener.close();
+    cout << "NETWORKStop" <<endl;
 }
 
 void PNetwork::kick(bool force, bool message)
