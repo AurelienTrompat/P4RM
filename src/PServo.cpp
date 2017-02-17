@@ -12,7 +12,12 @@ PServo::PServo()
 
 PServo::~PServo()
 {
-    pwm_stop();
+    pwm_init();
+    pwm_start();
+    this_thread::sleep_for(chrono::milliseconds(250));
+    mFile.open("/sys/class/pwm/pwmchip0/unexport",ios::out);
+    mFile<<0;
+    mFile.close();
 }
 
 void PServo::pwm_init()
@@ -23,6 +28,10 @@ void PServo::pwm_init()
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/duty_cycle",ios::out);
     mFile<<1000000;
     mFile.close();    //temps haut en nanoseconde
+}
+
+void PServo::pwm_start()
+{
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/enable",ios::out);
     mFile<<1;
     mFile.close();
@@ -34,7 +43,7 @@ void PServo::pwm_setangle(float newangle)
     int futurangle;
     if (newangle <= 160 && newangle >= 20) angleact = newangle;
     else if (newangle > 160) angleact = 160;
-    else angleact = 10;
+    else angleact = 20;
     futurangle = 750000 + (angleact * 1500000) / 180; //conversion des degrés en nanosecondes
     frequence = 20000000 + futurangle;
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/period",ios::out);
@@ -62,8 +71,6 @@ void PServo::pwm_nextpas()
 
 void PServo::pwm_stop()
 {
-    pwm_init();
-    this_thread::sleep_for(chrono::milliseconds(100));
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/enable",ios::out);
     mFile<<0;
     mFile.close();

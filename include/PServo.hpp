@@ -12,6 +12,7 @@ class PServo
         ~PServo();
 
         void    pwm_init();
+        void    pwm_start();
         void    pwm_setangle(float newangle);
         void    pwm_setpas(float newpas);
         void    pwm_nextpas();
