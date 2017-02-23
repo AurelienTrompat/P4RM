@@ -2,7 +2,7 @@
 
 using namespace std;
 
-PCB_Moteur::PCB_Moteur() : mSpeedFactor(1), mEtatUS(0)
+PCB_Moteur::PCB_Moteur() : mSpeedFactor(1), mEtatUS(0), mUpdateUS(false)
 {
     mCommand.mAgent = Agent::I2C;
     mCommand.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::SetCommandMotor;
@@ -11,7 +11,7 @@ PCB_Moteur::PCB_Moteur() : mSpeedFactor(1), mEtatUS(0)
     mCommand.i2c_p.motorP.renvoieDistance = false;
 }
 
-PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::MotionParameters::JoystickParameters joystickData, bool &updateUS)
+PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::MotionParameters::JoystickParameters joystickData)
 {
     const uint8_t &x = joystickData.x;
     const uint8_t &y = joystickData.y;
@@ -31,10 +31,10 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Motio
         {
             motorP.directionDroite = true;
             motorP.directionGauche = true;
-            updateUS = true;
-            mEtatUS = 2;
-        }
+            mUpdateUS = true;
+            mEtatUS = 1;
 
+        }
     }
     else if(y < 128)
     {
@@ -46,8 +46,9 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Motio
         {
             motorP.directionDroite = false;
             motorP.directionGauche = false;
-            updateUS = true;
-            mEtatUS = 1;
+            mUpdateUS = true;
+            mEtatUS = 2;
+
         }
 
     }
@@ -78,8 +79,11 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Motio
         else
             cg=255;
     }
-    cg *= mSpeedFactor;
-    cd *= mSpeedFactor;
+    if (mSpeedFactor !=0 || mSpeedFactor!= 1)
+    {
+        cg *= (double)((255/((1-mSpeedFactor)*cg+255*mSpeedFactor))*mSpeedFactor);
+        cd *= (double)((255/((1-mSpeedFactor)*cd+255*mSpeedFactor))*mSpeedFactor);
+    }
     return mCommand;
 }
 
@@ -102,13 +106,13 @@ PCommand PCB_Moteur::updateWithUS(PEvent::US_Parameters::US_Seuil seuil)
         }
         case PEvent::US_Parameters::US_Seuil::Seuil50cm :
         {
-            mSpeedFactor = 0.50;
+            mSpeedFactor = 0.5;
             cout << "50cm" <<endl;
             break;
         }
         case PEvent::US_Parameters::US_Seuil::Seuil25cm :
         {
-            mSpeedFactor = 0.20;
+            mSpeedFactor = 0.2;
             cout << "25cm" <<endl;
             break;
         }
@@ -127,8 +131,11 @@ PCommand PCB_Moteur::updateWithUS(PEvent::US_Parameters::US_Seuil seuil)
     }
     mCommand.i2c_p.motorP.vitesseProgressiveDroite =  vitesseProgressive;
     mCommand.i2c_p.motorP.vitesseProgressiveGauche = vitesseProgressive;
-    mCommand.i2c_p.motorP.vitesseGauche *= mSpeedFactor;
-    mCommand.i2c_p.motorP.vitesseDroite *= mSpeedFactor;
+    if (mSpeedFactor !=0 || mSpeedFactor!= 1)
+    {
+        mCommand.i2c_p.motorP.vitesseGauche *= (double)((255/((1-mSpeedFactor)*mCommand.i2c_p.motorP.vitesseGauche+255*mSpeedFactor))*mSpeedFactor);
+        mCommand.i2c_p.motorP.vitesseDroite *= (double)((255/((1-mSpeedFactor)*mCommand.i2c_p.motorP.vitesseDroite+255*mSpeedFactor))*mSpeedFactor);
+    }
     return mCommand;
 }
 PCommand PCB_Moteur::updateWithRotation(PEvent::Network_Parameters::MotionParameters::RotationParameters param)
@@ -163,7 +170,13 @@ PCommand PCB_Moteur::updateWithRotation(PEvent::Network_Parameters::MotionParame
 
 uint8_t PCB_Moteur::getEtatUS()
 {
-    return mEtatUS;
+    if (mUpdateUS)
+    {
+        mUpdateUS = false;
+        return mEtatUS;
+    }
+    else
+        return 3;
 }
 
 void PCB_Moteur::setEtatUS(uint8_t etatUS)

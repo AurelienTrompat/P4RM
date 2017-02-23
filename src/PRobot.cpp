@@ -65,7 +65,6 @@ void PRobot::handleEvent(const PEvent& event)
 void PRobot::handleNetworkEvent(const PEvent &event)
 {
     PCommand command;
-    bool updateUS =false;
 
     switch(event.network_p.type)
     {
@@ -95,33 +94,33 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             {
                 case PEvent::Network_Parameters::MotionParameters::MotionType::Joystick:
                 {
-                    command = mCB_Moteur.updateWithJoystick(event.network_p.motion_p.joystick, updateUS);
+                    command = mCB_Moteur.updateWithJoystick(event.network_p.motion_p.joystick);
                     pushCommand(command);
-                    if (updateUS)
-                    {
-                        command.mAgent = Agent::US;
-                        switch (mCB_Moteur.getEtatUS())
+                    uint8_t usUpdate = mCB_Moteur.getEtatUS();
+                    command.mAgent = Agent::US;
+                        switch (usUpdate)
                         {
                             case 0:
                             {
                                 command.us_p.type = PCommand::US_Parameters::US_Command::StopUS;
                                 break;
                             }
-                            case 2:
+                            case 1:
                             {
                                 command.us_p.type = PCommand::US_Parameters::US_Command::StartAvant;
                                 break;
                             }
-                            case 1:
+                            case 2:
                             {
                                 command.us_p.type = PCommand::US_Parameters::US_Command::StartArriere;
                                 break;
                             }
+                            default :
+                                break;
                         }
-                        pushCommand(command);
-                    }
-                    break;
-
+                        if (usUpdate !=3)
+                            pushCommand(command);
+                        break;
                 }
                 case PEvent::Network_Parameters::MotionParameters::MotionType::Rotation:
                 {
