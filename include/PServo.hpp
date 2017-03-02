@@ -20,8 +20,8 @@ class PServo
         void    pwm_stop();
 
     private:
-        float   pas; //en degré
-        float   angleact; //en degré
+        float   pas; //en degrÃ©
+        float   angleact; //en degrÃ©
 
         std::fstream mFile;
 };
