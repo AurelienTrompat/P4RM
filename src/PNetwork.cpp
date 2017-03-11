@@ -2,7 +2,7 @@
 
 using namespace std;
 
-PNetwork::PNetwork() : mPort(4444), mListener(), mSocket(), mStatus(sf::Socket::Disconnected)
+PNetwork::PNetwork() : mPort(4444), mListener(), mSocket(), mStatus(sf::Socket::Disconnected), mNewDataToSend(false)
 {
     setAgent(Agent::Network);
     mListener.setBlocking(false);
@@ -14,7 +14,16 @@ PNetwork::~PNetwork()
 }
 void PNetwork::handleCommand(const PCommand& command)
 {
- cout<<"test";
+    stringstream ss;
+    switch(command.network_p.type)
+    {
+        case PCommand::Network_Parameters::Network_Command::NewPosition:
+        {
+            ss << "MP" << command.network_p.pos.x << command.network_p.pos.y << command.network_p.pos.phi;
+            mDataToSend = ss.str();
+            mNewDataToSend = true;
+        }
+    }
 }
 
 void PNetwork::preRun()
@@ -52,7 +61,7 @@ void PNetwork::run()
             do
             {
                 mStatus = mSocket.receive(&mFirst, 1, mRecvLen);
-            }while(mStatus == sf::Socket::NotReady && getRunState());
+            }while(mStatus == sf::Socket::NotReady && getRunState() && !mNewDataToSend);
             if(mStatus == sf::Socket::Done)
             {
                 /*cout << "\tReceived data first step" <<endl;
@@ -95,10 +104,14 @@ void PNetwork::run()
                             cout<<static_cast<signed int>(*itr)<<endl;*/
                         mDecoder();
                     }
-                    else
+                    else if(mStatus == sf::Socket::Done)
                     {
                         kick(false, true);
                     }
+                }
+                if(mNewDataToSend && mStatus != sf::Socket::Disconnected)
+                {
+                    mSocket.send(mDataToSend.c_str(), mDataToSend.length());
                 }
 
             }

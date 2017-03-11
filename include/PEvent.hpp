@@ -103,7 +103,7 @@ public:
             US_Distance
         };
 
-         enum class US_Device
+        enum class US_Device
         {
            CapteurAvant,
            CapteurArriere
@@ -126,13 +126,34 @@ public:
         uint16_t distObstacle;
     };
 
+    struct PositionTracker_Parameters
+    {
+        enum class PositionTracker_Event
+        {
+            PosHasChanged
+        };
+
+        PositionTracker_Event type;
+
+        struct Position
+        {
+            int size;
+            int resolution;
+            float x;
+            float y;
+            float phi;
+        };
+        Position pos;
+    };
+
     Agent mAgent;
 
     union
     {
-        I2C_Parameters i2c_p;
-        Network_Parameters network_p;
-        US_Parameters us_p;
+        struct I2C_Parameters i2c_p;
+        struct Network_Parameters network_p;
+        struct US_Parameters us_p;
+        struct PositionTracker_Parameters posTracker_p;
     };
 };
 
