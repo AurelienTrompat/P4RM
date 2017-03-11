@@ -51,6 +51,7 @@
 		<Unit filename="include/PGpioManager.hpp" />
 		<Unit filename="include/PI2C.hpp" />
 		<Unit filename="include/PMaster.hpp" />
+		<Unit filename="include/PMicro_C.hpp" />
 		<Unit filename="include/PNetwork.hpp" />
 		<Unit filename="include/PPositionTracker.hpp" />
 		<Unit filename="include/PQueue.hpp" />
@@ -64,6 +65,7 @@
 		<Unit filename="src/PGpioManager.cpp" />
 		<Unit filename="src/PI2C.cpp" />
 		<Unit filename="src/PMaster.cpp" />
+		<Unit filename="src/PMicro_C.cpp" />
 		<Unit filename="src/PNetwork.cpp" />
 		<Unit filename="src/PPositionTracker.cpp" />
 		<Unit filename="src/PRobot.cpp" />
