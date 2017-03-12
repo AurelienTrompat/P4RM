@@ -26,7 +26,7 @@ PServo::~PServo()
 void PServo::pwm_init()
 {
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/period",ios::out);
-    mFile<<2850000;  //periode en nanoseconde
+    mFile<<20850000;  //periode en nanoseconde
     mFile.close();
     mFile.open("/sys/class/pwm/pwmchip0/pwm0/duty_cycle",ios::out);
     mFile<<850000;

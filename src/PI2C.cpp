@@ -187,12 +187,12 @@ int PI2C::BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_dat
     args.size       = dataSize ;
     args.data       = data ;
 
-    while((ioctl (mFd, I2C_SMBUS, &args) == -1)&& (i<3))
+    while((ioctl (mFd, I2C_SMBUS, &args) == -1)&& (i<10))
     {
         i++;
+        this_thread::sleep_for(chrono::microseconds(100));
     }
-    this_thread::sleep_for(chrono::microseconds(100));
-    if (i == 3)
+    if (i == 10)
     {
         SendEvent(i2c_Event::WriteFailed);
         return -1;
