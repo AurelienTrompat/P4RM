@@ -53,9 +53,9 @@
 		<Unit filename="include/PMaster.hpp" />
 		<Unit filename="include/PMicro_C.hpp" />
 		<Unit filename="include/PNetwork.hpp" />
+		<Unit filename="include/PPositionTracker.hpp" />
 		<Unit filename="include/PQueue.hpp" />
 		<Unit filename="include/PRobot.hpp" />
-		<Unit filename="include/PServo.hpp" />
 		<Unit filename="include/PSingleTon.hpp" />
 		<Unit filename="include/PThread.hpp" />
 		<Unit filename="include/PUltrasonicSensor.hpp" />
@@ -67,8 +67,8 @@
 		<Unit filename="src/PMaster.cpp" />
 		<Unit filename="src/PMicro_C.cpp" />
 		<Unit filename="src/PNetwork.cpp" />
+		<Unit filename="src/PPositionTracker.cpp" />
 		<Unit filename="src/PRobot.cpp" />
-		<Unit filename="src/PServo.cpp" />
 		<Unit filename="src/PThread.cpp" />
 		<Unit filename="src/PUltrasonicSensor.cpp" />
 		<Extensions>

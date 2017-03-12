@@ -3,6 +3,8 @@
 
 #include <thread>
 #include <atomic>
+#include <string>
+#include <sstream>
 #include <functional>
 #include <iostream>
 #include <iomanip>
@@ -39,6 +41,9 @@ class PNetwork : public PAgent
         char mFirst;
         size_t mMaxLen;
         size_t mRecvLen;
+
+        std::atomic_bool mNewDataToSend;
+        std::string mDataToSend;
 };
 
 #endif // PNETWORK_HPP

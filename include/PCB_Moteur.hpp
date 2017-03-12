@@ -17,6 +17,9 @@ class PCB_Moteur : public PCommandBuilder
         uint8_t getEtatUS();
         void setEtatUS(uint8_t etatUS);
 
+        bool getLeftDirection() const;
+        bool getRightDirection() const;
+
     private:
         double mSpeedFactor;
         uint8_t mEtatUS;

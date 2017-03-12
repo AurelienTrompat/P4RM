@@ -8,7 +8,7 @@ PCB_Moteur::PCB_Moteur() : mSpeedFactor(1), mEtatUS(0), mUpdateUS(false)
     mCommand.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::SetCommandMotor;
     mCommand.i2c_p.motorP.vitesseDroite = 0;
     mCommand.i2c_p.motorP.vitesseGauche = 0;
-    mCommand.i2c_p.motorP.renvoieDistance = false;
+    mCommand.i2c_p.motorP.renvoieDistance = true;
 }
 
 PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::MotionParameters::JoystickParameters joystickData)
@@ -56,7 +56,7 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Motio
         cg=0;
     cd=cg;
 
-    if(x < 128)
+    /*if(x < 128)
     {
         if(cg>=128-x)
             cg-=128-x;
@@ -78,7 +78,7 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Motio
             cg+=(x-128);
         else
             cg=255;
-    }
+    }*/
     if (mSpeedFactor !=0 || mSpeedFactor!= 1)
     {
         cg *= (double)((255/((1-mSpeedFactor)*cg+255*mSpeedFactor))*mSpeedFactor);
@@ -183,5 +183,14 @@ void PCB_Moteur::setEtatUS(uint8_t etatUS)
 {
     if (etatUS== 0 || etatUS == 1 || etatUS == 2)
         mEtatUS = etatUS;
+}
+bool PCB_Moteur::getLeftDirection() const
+{
+    return mCommand.i2c_p.motorP.directionGauche;
+}
+
+bool PCB_Moteur::getRightDirection() const
+{
+    return mCommand.i2c_p.motorP.directionDroite;
 }
 

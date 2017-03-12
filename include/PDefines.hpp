@@ -7,7 +7,8 @@ enum class Agent
 {
     Network,
     I2C,
-    US
+    US,
+    PositionTracker
 };
 
 #endif // PDEFINES_HPP

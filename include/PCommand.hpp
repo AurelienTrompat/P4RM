@@ -56,12 +56,47 @@ public:
         uint16_t seuil;
     };
 
+    struct PositionTracker_Parameters
+    {
+        enum class PositionTracker_Command
+        {
+            UpdatePosition
+        };
+        PositionTracker_Command type;
+
+        struct TraveledDist
+        {
+            int16_t leftDist;
+            int16_t rightDist;
+        };
+        TraveledDist traveledDist;
+    };
+
+    struct Network_Parameters
+    {
+        enum class Network_Command
+        {
+            NewPosition
+        };
+
+        struct Position
+        {
+            int16_t x;
+            int16_t y;
+            int16_t phi;
+        };
+        Network_Command type;
+        Position pos;
+    };
+
     Agent mAgent;
 
     union
     {
         struct I2C_Parameters i2c_p;
         struct US_Parameters us_p;
+        struct PositionTracker_Parameters posTracker_p;
+        struct Network_Parameters network_p;
     };
 };
 
