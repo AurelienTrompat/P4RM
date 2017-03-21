@@ -56,7 +56,7 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Motio
         cg=0;
     cd=cg;
 
-    /*if(x < 128)
+    if(x < 128)
     {
         if(cg>=128-x)
             cg-=128-x;
@@ -78,7 +78,7 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Motio
             cg+=(x-128);
         else
             cg=255;
-    }*/
+    }
     if (mSpeedFactor !=0 || mSpeedFactor!= 1)
     {
         cg *= (double)((255/((1-mSpeedFactor)*cg+255*mSpeedFactor))*mSpeedFactor);

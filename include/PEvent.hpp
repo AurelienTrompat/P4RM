@@ -17,7 +17,8 @@ public:
             I2C_ErrorMotorDriver,
             I2C_ErrorTimeOut,
             I2C_DistanceParcouru,
-            I2C_DistanceArret
+            I2C_DistanceArret,
+            I2C_ZAxisAngularData
         };
 
         enum class I2C_Device
@@ -25,7 +26,7 @@ public:
             I2C,
             MoteurGauche,
             MoteurDroit,
-            Giro,
+            Gyro,
             Axel,
             Magn,
             LaserAvant,
@@ -43,6 +44,8 @@ public:
             uint8_t distanceGauche;
             uint16_t distanceArretGauche;
         };
+
+        int16_t angularData;
 
         I2C_Event type;
         I2C_Device device;

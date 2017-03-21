@@ -1,8 +1,9 @@
 #include "PI2C.hpp"
 #include"PMicro_C.hpp"
+
 using namespace std;
 
-PI2C::PI2C() : mMicroC(this), mNewCommand(false)
+PI2C::PI2C() : mMicroC(this), mModule9DOF(this), mNewCommand(false)
 {
    setAgent(Agent::I2C);
 }
@@ -16,6 +17,9 @@ void PI2C::preRun()
 {
     mI2C_Device = i2c_Device::I2C;
     OpenI2C();
+    this_thread::sleep_for(chrono::milliseconds(1));
+    mModule9DOF.Gyro_Init();
+    mModule9DOF.Gyro_Start();
 }
 
 void PI2C::run()
@@ -27,6 +31,7 @@ void PI2C::run()
 
     mMicroC.MicroC_Ping();
 
+    mModule9DOF.Gyro_CheckAngle();
 
     if (mNewCommand)
     {
@@ -45,12 +50,13 @@ void PI2C::run()
             case i2c_Command::RAZDefaultMotor :
             {
                 mMicroC.MicroC_RAZDefault();
+                mModule9DOF.Gyro_RAZDefault();
             }
             case i2c_Command::VerifDefaultMotor :
             {
                 mMicroC.MicroC_VerifDefault();
             }
-            case i2c_Command::Giro :
+            case i2c_Command::Gyro :
             {
 
                 break;
@@ -80,6 +86,7 @@ void PI2C::run()
 void PI2C::postRun()
 {
     mMicroC.MicroC_ShutdownMoteur();
+    mModule9DOF.Gyro_Shutdown();
     close(mFd);
     cout << "i2cStop" <<endl;
 }
@@ -102,7 +109,7 @@ void PI2C::handleCommand(const PCommand& command)
                 mI2C_Command = command.i2c_p.type;
                 break;
             }
-            case i2c_Command::Giro :
+            case i2c_Command::Gyro :
             {
 
                 break;
@@ -159,6 +166,15 @@ void PI2C::SendEvent(i2c_Event typeEvent, uint16_t distanceGauche, uint16_t dist
     pushEvent(event);
 }
 
+void PI2C::SendEvent(i2c_Event typeEvent, int16_t angularData)
+{
+    PEvent event;
+
+    event.i2c_p.type = typeEvent;
+    event.i2c_p.angularData = angularData;
+
+    pushEvent(event);
+}
 void PI2C::OpenI2C()
 {
 
@@ -213,8 +229,8 @@ std::string PI2C::fromDeviceToString(const i2c_Device device)
             return "MoteurGauche";
         case i2c_Device::MoteurDroit :
             return "Moteur Droit";
-        case i2c_Device::Giro :
-            return "Giroscope";
+        case i2c_Device::Gyro :
+            return "Gyroscope";
         case i2c_Device::Axel :
             return "Axelerometre";
         case i2c_Device::Magn :

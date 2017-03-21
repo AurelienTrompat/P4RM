@@ -19,9 +19,9 @@ void PNetwork::handleCommand(const PCommand& command)
     {
         case PCommand::Network_Parameters::Network_Command::NewPosition:
         {
-            ss << "MP" << command.network_p.pos.x << command.network_p.pos.y << command.network_p.pos.phi;
+            //ss << "MP" << command.network_p.pos.x << command.network_p.pos.y << command.network_p.pos.phi;
             mDataToSend = ss.str();
-            mNewDataToSend = true;
+            //mNewDataToSend = true;
         }
     }
 }

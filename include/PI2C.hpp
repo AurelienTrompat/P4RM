@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <atomic>
-#include <bitset>
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -14,15 +13,19 @@
 #include "PCommand.hpp"
 #include "PAgent.hpp"
 #include "PMicro_C.hpp"
+#include "PModule9DOF.hpp"
 
 typedef PCommand::I2C_Parameters::I2C_Command i2c_Command;
 typedef PEvent::I2C_Parameters::I2C_Event i2c_Event;
 typedef PEvent::I2C_Parameters::I2C_Device i2c_Device;
 
 class PMicro_C;
+class PModule9DOF;
+
 class PI2C : public PAgent
 {
     friend PMicro_C;
+    friend PModule9DOF;
     public:
         PI2C();
         ~PI2C();
@@ -37,10 +40,12 @@ class PI2C : public PAgent
         void SetAdresse(uint8_t adresse);
         void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent);
         void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent, uint16_t distanceGauche, uint16_t distanceDroite);
+        void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent, int16_t angularData);
         int BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_data *data);
 
     private:
         PMicro_C mMicroC;
+        PModule9DOF mModule9DOF;
         int mFd;
         i2c_Device mI2C_Device;
         i2c_Command mI2C_Command;

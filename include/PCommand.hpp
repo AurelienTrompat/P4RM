@@ -14,7 +14,7 @@ public:
             StopMoteur,
             VerifDefaultMotor,
             RAZDefaultMotor,
-            Giro,
+            Gyro,
             Axel,
             Magn,
             Laser,

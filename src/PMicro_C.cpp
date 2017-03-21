@@ -2,8 +2,8 @@
 #include "PI2C.hpp"
 PMicro_C::PMicro_C(PI2C *ParentI2C) : mParentI2C(ParentI2C), mMoteurGErreur(false), mMoteurDErreur(false), mArretGauche(0), mArretDroit(0), mActiverRenvoieDist(false), mRenvoieDistance(false)
 {
-    //ctor
-
+    mChronoPing = Chrono::now();
+    mChronoDistance = Chrono::now();
 }
 
 PMicro_C::~PMicro_C()
@@ -82,7 +82,7 @@ void PMicro_C::MicroC_ReadErreurEtVitesse()
     else
         mMoteurDErreur = false;
 
-    if (lectureGauche != -1 && lectureDroite != -1 && erreurMoteurGauche == 0 && erreurMoteurDroit == 0)
+    if (lectureGauche != -1 && lectureDroite != -1 && erreurMoteurGauche == 0 && erreurMoteurDroit == 0 && distanceGauche != 0 && distanceDroit != 0 )
     {
         mParentI2C->SendEvent(i2c_Event::I2C_DistanceParcouru, distanceGauche, distanceDroit);
     }
@@ -134,8 +134,6 @@ void PMicro_C::MicroC_DistanceArret()
     mArretGauche = distanceArretGauche;
     mArretDroit = distanceArretDroit;
 }
-
-
 
 void PMicro_C::MicroC_RAZDefault()
 {
