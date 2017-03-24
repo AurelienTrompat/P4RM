@@ -23,7 +23,7 @@ class PMicro_C
         void MicroC_DemmanderDistance();
         void MicroC_Ping();
         void MicroC_SetCommandMoteur();
-        void MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p);
+        bool MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p);
         void MicroC_ShutdownMoteur();
         void MicroC_ReadErreurEtVitesse();
         int MicroC_CheckError(uint8_t error);

@@ -83,7 +83,13 @@ void PRobot::handleNetworkEvent(const PEvent &event)
         {
             cout <<"Event ClientConnected !"<<endl;
             command.mAgent=Agent::I2C;
-            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::VerifDefaultMotor;
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::MicroC_VerifDefaultMotor;
+            pushCommand(command);
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::Gyro_Start;
+            pushCommand(command);
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::Magn_Start;
+            pushCommand(command);
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::Axel_Start;
             pushCommand(command);
             break;
         }
@@ -91,7 +97,15 @@ void PRobot::handleNetworkEvent(const PEvent &event)
         {
             cout <<"Event ClientDisconnected !"<<endl;
             command.mAgent = Agent::I2C;
-            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::StopMoteur;
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::MicroC_StopMoteur;
+            pushCommand(command);
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::MicroC_VerifDefaultMotor;
+            pushCommand(command);
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::Gyro_Stop;
+            pushCommand(command);
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::Magn_Stop;
+            pushCommand(command);
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::Axel_Stop;
             pushCommand(command);
 
             command.mAgent = Agent::US;
@@ -147,7 +161,7 @@ void PRobot::handleNetworkEvent(const PEvent &event)
         case PEvent::Network_Parameters::Network_Event::ButtonRAZDefaults :
         {
             command.mAgent = Agent::I2C;
-            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::RAZDefaultMotor;
+            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::MicroC_RAZDefaultMotor;
             pushCommand(command);
 
             command.mAgent = Agent::US;
@@ -212,7 +226,14 @@ void PRobot::handleI2CEvent(const PEvent &event)
         }
         case PEvent::I2C_Parameters::I2C_Event::I2C_ZAxisAngularData :
         {
-            cout << mI2C.fromDeviceToString(event.i2c_p.device) << "rotation relative du robot = " << +event.i2c_p.angularData << endl;
+            //cout << mI2C.fromDeviceToString(event.i2c_p.device) << "rotation du robot par rapport au nord = " << +event.i2c_p.angularData << endl;
+            break;
+
+        }
+        case PEvent::I2C_Parameters::I2C_Event::I2C_ErrorRobotLift :
+        {
+            cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : Erreur !!! Repose ce robot a terre" << endl;
+            break;
         }
     }
 }
@@ -229,8 +250,6 @@ void PRobot::handleUSEvent(const PEvent &event)
                 cout << "Capteur US Arriere : Obstacle" << endl;
 
             pushCommand(mCB_Moteur.updateWithUS(event.us_p.seuil));
-
-
             break;
         }
         case PEvent::US_Parameters::US_Event::US_Error :
@@ -239,10 +258,10 @@ void PRobot::handleUSEvent(const PEvent &event)
                 cout << "Capteur US Avant : Erreur" << endl;
             else if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurArriere)
                 cout << "Capteur US Arriere : Erreur" << endl;
+            break;
         }
         case PEvent::US_Parameters::US_Event::US_Distance :
         {
-
             break;
         }
     }
