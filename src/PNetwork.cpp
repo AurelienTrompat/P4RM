@@ -19,9 +19,19 @@ void PNetwork::handleCommand(const PCommand& command)
     {
         case PCommand::Network_Parameters::Network_Command::NewPosition:
         {
-            //ss << "MP" << command.network_p.pos.x << command.network_p.pos.y << command.network_p.pos.phi;
+            cout << "x : "<<command.network_p.pos.x <<endl;
+            cout << "y : "<<command.network_p.pos.y <<endl;
+            ss << "MP" << ((char)(command.network_p.pos.x >> 8)) << ((unsigned char)(command.network_p.pos.x))
+                << ((char)(command.network_p.pos.y >> 8)) << ((unsigned char)(command.network_p.pos.y))
+                << command.network_p.pos.phi;
             mDataToSend = ss.str();
-            //mNewDataToSend = true;
+            for(unsigned int i=0; i<mDataToSend.length(); i++)
+            {
+                for(int j=0; j<8; j++)
+                    cout<<(((int)((int)mDataToSend[i]) >> j) & 1);
+                cout << endl;
+            }
+            mNewDataToSend = true;
         }
     }
 }
@@ -42,6 +52,7 @@ void PNetwork::preRun()
 
 void PNetwork::run()
 {
+    size_t sent;
     switch(mStatus)
     {
         case sf::Socket::Disconnected:
@@ -109,11 +120,15 @@ void PNetwork::run()
                         kick(false, true);
                     }
                 }
-                if(mNewDataToSend && mStatus != sf::Socket::Disconnected)
-                {
-                    mSocket.send(mDataToSend.c_str(), mDataToSend.length());
-                }
 
+            }
+            else if(mNewDataToSend && mStatus != sf::Socket::Disconnected)
+            {
+                do{
+                    cout << "Sending"<<endl;
+                    mStatus = mSocket.send(mDataToSend.c_str(), mDataToSend.length(), sent);
+                }while(mStatus == sf::Socket::NotReady && getRunState());
+                mNewDataToSend = false;
             }
             break;
         }

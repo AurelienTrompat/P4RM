@@ -39,12 +39,12 @@ void PPositionTracker::updatePos(const PCommand &command)
         mDxp=mRadius*(1-cos(mAngle));
         mDyp=mRadius*sin(mAngle);
 
-        pos.phi+=mAngle;
-        mDx=mDxp*cos(mAngle)-mDyp*sin(mAngle);
+        pos.phi-=mAngle;
+        mDx=mDxp*cos(pos.phi)-mDyp*sin(pos.phi);
 
-        if(sin(mAngle)!=0)
-            mDy=-(mDx*cos(mAngle-mDxp)/sin(mAngle));
-        else if(mAngle < M_PI)
+        if(sin(pos.phi)!=0)
+            mDy=-(mDx*cos(pos.phi)-mDxp)/sin(pos.phi);
+        else if(pos.phi < M_PI)
             mDy=mDyp;
         else
             mDy=-mDyp;
