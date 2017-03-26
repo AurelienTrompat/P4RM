@@ -18,57 +18,74 @@ void PI2C::preRun()
     mI2C_Device = i2c_Device::I2C;
     OpenI2C();
     this_thread::sleep_for(chrono::milliseconds(1));
-    mModule9DOF.Gyro_Init();
-    mModule9DOF.Gyro_Start();
+
+    mModule9DOF.PModule9DOF_Init();
 }
 
 void PI2C::run()
 {
 
     mMicroC.MicroC_ActiverRenvoieDistance();
-
     mMicroC.MicroC_DemmanderDistance();
-
     mMicroC.MicroC_Ping();
 
     mModule9DOF.Gyro_CheckAngle();
+    //mModule9DOF.Axel_CheckAxeleration();
+    mModule9DOF.Magn_CheckOrientation();
+
 
     if (mNewCommand)
     {
         switch (mI2C_Command)
         {
-            case i2c_Command::SetCommandMotor :
+            case i2c_Command::MicroC_SetCommandMotor :
             {
                 mMicroC.MicroC_SetCommandMoteur();
                 break;
             }
-            case i2c_Command::StopMoteur :
+            case i2c_Command::MicroC_StopMoteur :
             {
                 mMicroC.MicroC_ShutdownMoteur();
                 break;
             }
-            case i2c_Command::RAZDefaultMotor :
+            case i2c_Command::MicroC_RAZDefaultMotor :
             {
                 mMicroC.MicroC_RAZDefault();
                 mModule9DOF.Gyro_RAZDefault();
             }
-            case i2c_Command::VerifDefaultMotor :
+            case i2c_Command::MicroC_VerifDefaultMotor :
             {
                 mMicroC.MicroC_VerifDefault();
-            }
-            case i2c_Command::Gyro :
-            {
-
                 break;
             }
-            case i2c_Command::Axel :
+            case i2c_Command::Gyro_Start :
             {
-
+                mModule9DOF.Gyro_Start();
                 break;
             }
-            case i2c_Command::Magn :
+            case i2c_Command::Gyro_Stop :
             {
-
+                mModule9DOF.Gyro_Stop();
+                break;
+            }
+            case i2c_Command::Axel_Start :
+            {
+                mModule9DOF.Axel_Start();
+                break;
+            }
+            case i2c_Command::Axel_Stop :
+            {
+                mModule9DOF.Axel_Stop();
+                break;
+            }
+            case i2c_Command::Magn_Start :
+            {
+                mModule9DOF.Magn_Start();
+                break;
+            }
+            case i2c_Command::Magn_Stop :
+            {
+                mModule9DOF.Magn_Stop();
                 break;
             }
             case i2c_Command::Laser :
@@ -86,7 +103,7 @@ void PI2C::run()
 void PI2C::postRun()
 {
     mMicroC.MicroC_ShutdownMoteur();
-    mModule9DOF.Gyro_Shutdown();
+    mModule9DOF.PModule9DOF_Shutdown();
     close(mFd);
     cout << "i2cStop" <<endl;
 }
@@ -97,31 +114,22 @@ void PI2C::handleCommand(const PCommand& command)
     {
         switch (command.i2c_p.type)
         {
-            case i2c_Command::SetCommandMotor :
+            case i2c_Command::MicroC_SetCommandMotor :
             {
-                mMicroC.MicroC_WriteCmd(command.i2c_p);
+                mModule9DOF.SetRobotImmobile(mMicroC.MicroC_WriteCmd(command.i2c_p));
                 break;
             }
-            case i2c_Command::StopMoteur :
-            case i2c_Command::RAZDefaultMotor :
-            case i2c_Command::VerifDefaultMotor :
+            case i2c_Command::MicroC_StopMoteur :
+            case i2c_Command::MicroC_RAZDefaultMotor :
+            case i2c_Command::MicroC_VerifDefaultMotor :
+            case i2c_Command::Gyro_Start :
+            case i2c_Command::Gyro_Stop :
+            case i2c_Command::Axel_Start :
+            case i2c_Command::Axel_Stop :
+            case i2c_Command::Magn_Start :
+            case i2c_Command::Magn_Stop :
             {
                 mI2C_Command = command.i2c_p.type;
-                break;
-            }
-            case i2c_Command::Gyro :
-            {
-
-                break;
-            }
-            case i2c_Command::Axel :
-            {
-
-                break;
-            }
-            case i2c_Command::Magn :
-            {
-
                 break;
             }
             case i2c_Command::Laser :
@@ -133,7 +141,7 @@ void PI2C::handleCommand(const PCommand& command)
                 break;
         }
         mNewCommand = true;
-        while(!(mNewCommand & getRunState()));
+        while(mNewCommand & getRunState());
     }
 }
 

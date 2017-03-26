@@ -18,7 +18,8 @@ public:
             I2C_ErrorTimeOut,
             I2C_DistanceParcouru,
             I2C_DistanceArret,
-            I2C_ZAxisAngularData
+            I2C_ZAxisAngularData,
+            I2C_ErrorRobotLift
         };
 
         enum class I2C_Device

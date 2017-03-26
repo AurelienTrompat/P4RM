@@ -11,7 +11,7 @@ PMicro_C::~PMicro_C()
     //dtor
 }
 
-void PMicro_C::MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p)
+bool PMicro_C::MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p)
 {
     // Moteur Gauche
     mCmdMoteur.CmdMGauche   =  (1 << 5)
@@ -32,13 +32,16 @@ void PMicro_C::MicroC_WriteCmd(const struct PCommand::I2C_Parameters &i2c_p)
                               + (i2c_p.motorP.vitesseProgressiveDroite);
 
     mCmdMoteur.VitesseDroite = i2c_p.motorP.vitesseDroite;
-    mParentI2C->mI2C_Command = i2c_Command::SetCommandMotor;
+    mParentI2C->mI2C_Command = i2c_Command::MicroC_SetCommandMotor;
 
     if (i2c_p.motorP.renvoieDistance && !mRenvoieDistance && !mMoteurGErreur && !mMoteurDErreur)
     {
         mActiverRenvoieDist = true;
     }
-
+    if (i2c_p.motorP.vitesseGauche == 0 && i2c_p.motorP.vitesseDroite == 0)
+        return true;
+    else
+        return false;
 }
 
 void PMicro_C::MicroC_ShutdownMoteur()

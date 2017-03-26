@@ -5,7 +5,7 @@ using namespace std;
 PCB_Moteur::PCB_Moteur() : mSpeedFactor(1), mEtatUS(0), mUpdateUS(false)
 {
     mCommand.mAgent = Agent::I2C;
-    mCommand.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::SetCommandMotor;
+    mCommand.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::MicroC_SetCommandMotor;
     mCommand.i2c_p.motorP.vitesseDroite = 0;
     mCommand.i2c_p.motorP.vitesseGauche = 0;
     mCommand.i2c_p.motorP.renvoieDistance = true;

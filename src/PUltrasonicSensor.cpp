@@ -105,7 +105,7 @@ void PUltrasonicSensor::handleCommand(const PCommand &command)
         }
     }
 
-    while(!(mNewCommand & getRunState()));
+    while((mNewCommand & getRunState()));
 }
 
 void PUltrasonicSensor::SendEvent(us_Event typeEvent)

@@ -4,6 +4,8 @@
 #include <mutex>
 #include <condition_variable>
 #include <queue>
+#include <iostream>
+using namespace std;
 
 template<typename T>
 class PQueue
@@ -16,6 +18,7 @@ class PQueue
         {
             std::unique_lock<std::mutex> lock(mMutex);
             mQueue.push(element);
+            //cout <<"PUSH"<<endl;
             lock.unlock();
             mCond.notify_one();
         }
@@ -30,6 +33,7 @@ class PQueue
             {
                 first = mQueue.front();
                 mQueue.pop();
+                //cout <<"POP"<<endl;
             }
             return mRun;
 

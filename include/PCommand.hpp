@@ -10,14 +10,17 @@ public:
     {
         enum class I2C_Command
         {
-            SetCommandMotor,
-            StopMoteur,
-            VerifDefaultMotor,
-            RAZDefaultMotor,
-            Gyro,
-            Axel,
-            Magn,
-            Laser,
+            MicroC_SetCommandMotor,
+            MicroC_StopMoteur,
+            MicroC_VerifDefaultMotor,
+            MicroC_RAZDefaultMotor,
+            Gyro_Start,
+            Gyro_Stop,
+            Axel_Start,
+            Axel_Stop,
+            Magn_Start,
+            Magn_Stop,
+            Laser
         };
 
         struct MotorParameters
