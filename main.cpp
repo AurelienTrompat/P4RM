@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     {
         cout << "Vous devez specifier un argument : "<<endl;
         cout <<"-d pour debug (le programme s'arrete avec un appui sur entrée)"<<endl;
-        cout <<"-r pour release (le programme s'arrete avec un appui SW1)"<<endl;
+        cout <<"-r pour release (le programme s'arrete avec un appui sur SW1)"<<endl;
     }
     return 0;
 }

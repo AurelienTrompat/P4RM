@@ -95,31 +95,31 @@ PCommand PCB_Moteur::updateWithUS(PEvent::US_Parameters::US_Seuil seuil)
         case PEvent::US_Parameters::US_Seuil::NoObstacle :
         {
             mSpeedFactor = 1;
-            cout << "no" <<endl;
+            //cout << "no" <<endl;
             break;
         }
         case PEvent::US_Parameters::US_Seuil::Seuil1m :
         {
             mSpeedFactor = 0.8;
-            cout << "1m" <<endl;
+            //cout << "1m" <<endl;
             break;
         }
         case PEvent::US_Parameters::US_Seuil::Seuil50cm :
         {
             mSpeedFactor = 0.5;
-            cout << "50cm" <<endl;
+            //cout << "50cm" <<endl;
             break;
         }
         case PEvent::US_Parameters::US_Seuil::Seuil25cm :
         {
             mSpeedFactor = 0.2;
-            cout << "25cm" <<endl;
+            //cout << "25cm" <<endl;
             break;
         }
         case PEvent::US_Parameters::US_Seuil::Seuil10cm :
         {
             mSpeedFactor = 0;
-            cout << "10cm" <<endl;
+            //cout << "10cm" <<endl;
             vitesseProgressive = false;
 
             break;

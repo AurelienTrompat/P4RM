@@ -26,8 +26,8 @@ class PPositionTracker : public PAgent
     float mAngle;
     float mDxp;
     float mDyp;
-    float mDx;
-    float mDy;
+    double mDx;
+    double mDy;
 };
 
 #endif // PPOSITIONTRACKER_HPP

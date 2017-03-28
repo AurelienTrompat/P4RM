@@ -323,10 +323,10 @@ void PModule9DOF::Axel_CheckAxeleration()
             if (lectureAxel != -1)
             {
                 AxelZ += data.byte<<8;
-                double AxelZConvert = (double)(AxelZ*0.000122);
+                /*double AxelZConvert = (double)(AxelZ*0.000122);
                 if (AxelZConvert > 1.1)
                     mParentI2C->SendEvent(i2c_Event::I2C_ErrorRobotLift);
-                cout << "Acceleration sur Z : " << AxelZConvert << endl;
+                cout << "Acceleration sur Z : " << AxelZConvert << endl;*/
             }
         }
     }

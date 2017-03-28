@@ -46,7 +46,7 @@ public:
             uint16_t distanceArretGauche;
         };
 
-        int16_t angularData;
+        double angularData;
 
         I2C_Event type;
         I2C_Device device;
@@ -59,7 +59,8 @@ public:
             ClientConnected,
             ClientDisconnected,
             Motion,
-            ButtonRAZDefaults
+            ButtonRAZDefaults,
+            ButtonRAZPosition
         };
 
         struct MotionParameters
@@ -143,8 +144,8 @@ public:
         {
             int size;
             int resolution;
-            float x;
-            float y;
+            double x;
+            double y;
             float phi;
         };
         Position pos;

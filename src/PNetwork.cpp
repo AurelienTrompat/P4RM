@@ -19,18 +19,18 @@ void PNetwork::handleCommand(const PCommand& command)
     {
         case PCommand::Network_Parameters::Network_Command::NewPosition:
         {
-            cout << "x : "<<command.network_p.pos.x <<endl;
-            cout << "y : "<<command.network_p.pos.y <<endl;
+            /*cout << "x : "<<command.network_p.pos.x <<endl;
+            cout << "y : "<<command.network_p.pos.y <<endl;*/
             ss << "MP" << ((char)(command.network_p.pos.x >> 8)) << ((unsigned char)(command.network_p.pos.x))
                 << ((char)(command.network_p.pos.y >> 8)) << ((unsigned char)(command.network_p.pos.y))
                 << command.network_p.pos.phi;
             mDataToSend = ss.str();
-            for(unsigned int i=0; i<mDataToSend.length(); i++)
+            /*for(unsigned int i=0; i<mDataToSend.length(); i++)
             {
                 for(int j=0; j<8; j++)
                     cout<<(((int)((int)mDataToSend[i]) >> j) & 1);
                 cout << endl;
-            }
+            }*/
             mNewDataToSend = true;
         }
     }
@@ -85,10 +85,16 @@ void PNetwork::run()
                         mDecoder=std::bind(&PNetwork::handleMotion, this);
                         break;
                     }
-                    case 'D' :
+                    case 'D':
                     {
                         mMaxLen=1;
                         mDecoder=std::bind(&PNetwork::handleDebug, this);
+                        break;
+                    }
+                    case 'M':
+                    {
+                        mMaxLen=1;
+                        mDecoder=std::bind(&PNetwork::handleMapping, this);
                         break;
                     }
                     default:
@@ -125,7 +131,6 @@ void PNetwork::run()
             else if(mNewDataToSend && mStatus != sf::Socket::Disconnected)
             {
                 do{
-                    cout << "Sending"<<endl;
                     mStatus = mSocket.send(mDataToSend.c_str(), mDataToSend.length(), sent);
                 }while(mStatus == sf::Socket::NotReady && getRunState());
                 mNewDataToSend = false;
@@ -216,6 +221,22 @@ void PNetwork::handleDebug()
         case 'R':
         {
             event.network_p.type = PEvent::Network_Parameters::Network_Event::ButtonRAZDefaults;
+            break;
+        }
+        default:
+            kick(false, true);
+    }
+
+    pushEvent(event);
+}
+void PNetwork::handleMapping()
+{
+    PEvent event;
+    switch(mBuffer[0])
+    {
+        case 'R':
+        {
+            event.network_p.type = PEvent::Network_Parameters::Network_Event::ButtonRAZPosition;
             break;
         }
         default:

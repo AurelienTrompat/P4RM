@@ -40,7 +40,7 @@ class PI2C : public PAgent
         void SetAdresse(uint8_t adresse);
         void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent);
         void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent, uint16_t distanceGauche, uint16_t distanceDroite);
-        void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent, int16_t angularData);
+        void SendEvent(PEvent::I2C_Parameters::I2C_Event typeEvent, double angularData);
         int BusAccess (bool rw, uint8_t command, int dataSize, union i2c_smbus_data *data);
 
     private:

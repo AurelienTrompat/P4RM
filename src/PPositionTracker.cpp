@@ -23,6 +23,17 @@ void PPositionTracker::handleCommand(const PCommand& command)
             updatePos(command);
             break;
         }
+        case PCommand::PositionTracker_Parameters::PositionTracker_Command::ResetPosition:
+        {
+            mEvent.posTracker_p.pos.x=0.f;
+            mEvent.posTracker_p.pos.y=0.f;
+            break;
+        }
+        case PCommand::PositionTracker_Parameters::PositionTracker_Command::UpdateAngle:
+        {
+            mEvent.posTracker_p.pos.phi = command.posTracker_p.angleGyro * 2*M_PI/360.f;
+            break;
+        }
     }
 }
 

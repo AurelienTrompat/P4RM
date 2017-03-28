@@ -63,7 +63,9 @@ public:
     {
         enum class PositionTracker_Command
         {
-            UpdatePosition
+            UpdatePosition,
+            UpdateAngle, //Gyro
+            ResetPosition
         };
         PositionTracker_Command type;
 
@@ -72,7 +74,12 @@ public:
             int16_t leftDist;
             int16_t rightDist;
         };
-        TraveledDist traveledDist;
+        union
+        {
+            TraveledDist traveledDist;
+            double angleGyro;
+        };
+
     };
 
     struct Network_Parameters

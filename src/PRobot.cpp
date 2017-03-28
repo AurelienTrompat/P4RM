@@ -42,7 +42,7 @@ void PRobot::postRun()
     mI2C.stop();
     mUS.stop();
     mPosTracker.stop();
-    cout << "Stop" <<endl;
+    cout << "Stop PRobot" <<endl;
 }
 
 void PRobot::handleEvent(const PEvent& event)
@@ -169,11 +169,19 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             pushCommand(command);
             break;
         }
+        case PEvent::Network_Parameters::Network_Event::ButtonRAZPosition :
+        {
+            command.mAgent = Agent::PositionTracker;
+            command.posTracker_p.type = PCommand::PositionTracker_Parameters::PositionTracker_Command::ResetPosition;
+            pushCommand(command);
+            break;
+        }
     }
 }
 
 void PRobot::handleI2CEvent(const PEvent &event)
 {
+    PCommand command;
     switch(event.i2c_p.type)
     {
         case PEvent::I2C_Parameters::I2C_Event::OpenFailed :
@@ -208,8 +216,8 @@ void PRobot::handleI2CEvent(const PEvent &event)
         }
         case PEvent::I2C_Parameters::I2C_Event::I2C_DistanceParcouru :
         {
-            cout << "Distance moteur gauche : " << +event.i2c_p.distanceGauche/*fromStepToCentimeter(event.i2c_p.distanceGauche)*/ << endl;
-            cout << "Distance moteur droit : " << +event.i2c_p.distanceDroite/*fromStepToCentimeter(event.i2c_p.distanceDroite)*/ << endl;
+            //cout << "Distance moteur gauche : " << +event.i2c_p.distanceGauche/*fromStepToCentimeter(event.i2c_p.distanceGauche)*/ << endl;
+            //cout << "Distance moteur droit : " << +event.i2c_p.distanceDroite/*fromStepToCentimeter(event.i2c_p.distanceDroite)*/ << endl;
             convertAndRelayDist(event.i2c_p.distanceGauche, event.i2c_p.distanceDroite);
             mDG+=event.i2c_p.distanceGauche;
             mDD+=event.i2c_p.distanceDroite;
@@ -217,8 +225,8 @@ void PRobot::handleI2CEvent(const PEvent &event)
         }
         case PEvent::I2C_Parameters::I2C_Event::I2C_DistanceArret :
         {
-            cout << "Distance d'arret moteur gauche : " << +event.i2c_p.distanceArretGauche/*fromStepToCentimeter(event.i2c_p.distanceArretGauche)*/ << endl;
-            cout << "Distance d'arret moteur droit : " << +event.i2c_p.distanceArretDroite/*fromStepToCentimeter(event.i2c_p.distanceArretDroite)*/ << endl;
+            //cout << "Distance d'arret moteur gauche : " << +event.i2c_p.distanceArretGauche/*fromStepToCentimeter(event.i2c_p.distanceArretGauche)*/ << endl;
+            //cout << "Distance d'arret moteur droit : " << +event.i2c_p.distanceArretDroite/*fromStepToCentimeter(event.i2c_p.distanceArretDroite)*/ << endl;
             convertAndRelayDist(event.i2c_p.distanceArretGauche, event.i2c_p.distanceArretDroite);
             mDG+=event.i2c_p.distanceArretGauche;
             mDD+=event.i2c_p.distanceArretDroite;
@@ -228,6 +236,10 @@ void PRobot::handleI2CEvent(const PEvent &event)
         {
             //cout << mI2C.fromDeviceToString(event.i2c_p.device) << "rotation relative du robot = " << +event.i2c_p.angularData << endl;
             //cout << mI2C.fromDeviceToString(event.i2c_p.device) << "rotation du robot par rapport au nord = " << +event.i2c_p.angularData << endl;
+            command.mAgent=Agent::PositionTracker;
+            command.posTracker_p.type = PCommand::PositionTracker_Parameters::PositionTracker_Command::UpdateAngle;
+            command.posTracker_p.angleGyro=event.i2c_p.angularData;
+            pushCommand(command);
             break;
 
         }
@@ -245,10 +257,10 @@ void PRobot::handleUSEvent(const PEvent &event)
     {
         case PEvent::US_Parameters::US_Event::US_Obstacle :
         {
-            if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurAvant)
+            /*if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurAvant)
                 cout << "Capteur US Avant : Obstacle" << endl;
             else if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurArriere)
-                cout << "Capteur US Arriere : Obstacle" << endl;
+                cout << "Capteur US Arriere : Obstacle" << endl;*/
 
             pushCommand(mCB_Moteur.updateWithUS(event.us_p.seuil));
             break;
@@ -274,10 +286,10 @@ void PRobot::handlePosTrackerEvent(const PEvent& event)
     {
         case PEvent::PositionTracker_Parameters::PositionTracker_Event::PosHasChanged:
         {
-            cout << mDG << "\t" << mDD <<endl;
-            cout << "x : " << +event.posTracker_p.pos.x/*fromStepToCentimeter(event.posTracker_p.pos.x)*/ <<endl;
-            cout << "y : " << +event.posTracker_p.pos.y/*fromStepToCentimeter(event.posTracker_p.pos.y)*/ <<endl;
-            cout << "phi : " << +event.posTracker_p.pos.phi*2*M_PI/360 <<endl;
+            //cout << mDG << "\t" << mDD <<endl;
+            //cout << "x : " << +event.posTracker_p.pos.x/*fromStepToCentimeter(event.posTracker_p.pos.x)*/ <<endl;
+            //cout << "y : " << +event.posTracker_p.pos.y/*fromStepToCentimeter(event.posTracker_p.pos.y)*/ <<endl;
+            //cout << "phi : " << +event.posTracker_p.pos.phi*2*M_PI/360 <<endl;
 
             command.mAgent = Agent::Network;
             command.network_p.type = PCommand::Network_Parameters::Network_Command::NewPosition;

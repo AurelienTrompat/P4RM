@@ -31,7 +31,7 @@ void PI2C::run()
 
     mModule9DOF.Gyro_CheckAngle();
     //mModule9DOF.Axel_CheckAxeleration();
-    mModule9DOF.Magn_CheckOrientation();
+    //mModule9DOF.Magn_CheckOrientation();
 
 
     if (mNewCommand)
@@ -174,7 +174,7 @@ void PI2C::SendEvent(i2c_Event typeEvent, uint16_t distanceGauche, uint16_t dist
     pushEvent(event);
 }
 
-void PI2C::SendEvent(i2c_Event typeEvent, int16_t angularData)
+void PI2C::SendEvent(i2c_Event typeEvent, double angularData)
 {
     PEvent event;
 
