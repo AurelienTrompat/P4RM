@@ -30,8 +30,8 @@ void PI2C::run()
     mMicroC.MicroC_Ping();
 
     mModule9DOF.Gyro_CheckAngle();
-    //mModule9DOF.Axel_CheckAxeleration();
-    //mModule9DOF.Magn_CheckOrientation();
+    mModule9DOF.Axel_CheckAxeleration();
+    mModule9DOF.Magn_CheckOrientation();
 
 
     if (mNewCommand)
@@ -171,16 +171,22 @@ void PI2C::SendEvent(i2c_Event typeEvent, uint16_t distanceGauche, uint16_t dist
         event.i2c_p.distanceArretGauche = distanceGauche;
     }
 
+    event.i2c_p.device = mI2C_Device;
     pushEvent(event);
 }
 
-void PI2C::SendEvent(i2c_Event typeEvent, double angularData)
+void PI2C::SendEvent(i2c_Event typeEvent, double data)
 {
     PEvent event;
 
     event.i2c_p.type = typeEvent;
-    event.i2c_p.angularData = angularData;
 
+    if (typeEvent == i2c_Event::I2C_ZAxisAngularData)
+        event.i2c_p.angularData = data;
+    else
+        event.i2c_p.accelerationData = data;
+
+    event.i2c_p.device = mI2C_Device;
     pushEvent(event);
 }
 void PI2C::OpenI2C()

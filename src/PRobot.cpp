@@ -234,18 +234,28 @@ void PRobot::handleI2CEvent(const PEvent &event)
         }
         case PEvent::I2C_Parameters::I2C_Event::I2C_ZAxisAngularData :
         {
-            //cout << mI2C.fromDeviceToString(event.i2c_p.device) << "rotation relative du robot = " << +event.i2c_p.angularData << endl;
-            //cout << mI2C.fromDeviceToString(event.i2c_p.device) << "rotation du robot par rapport au nord = " << +event.i2c_p.angularData << endl;
-            command.mAgent=Agent::PositionTracker;
-            command.posTracker_p.type = PCommand::PositionTracker_Parameters::PositionTracker_Command::UpdateAngle;
-            command.posTracker_p.angleGyro=event.i2c_p.angularData;
-            pushCommand(command);
+            if (event.i2c_p.device == PEvent::I2C_Parameters::I2C_Device::Gyro)
+            {
+                //cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : rotation relative du robot = " << +event.i2c_p.angularData << endl;
+                command.mAgent=Agent::PositionTracker;
+                command.posTracker_p.type = PCommand::PositionTracker_Parameters::PositionTracker_Command::UpdateAngle;
+                command.posTracker_p.angleGyro=event.i2c_p.angularData;
+                pushCommand(command);
+            }
+            else if (event.i2c_p.device == PEvent::I2C_Parameters::I2C_Device::Magn)
+            {
+                //cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : rotation du robot par rapport au nord = " << +event.i2c_p.angularData << endl;
+            }
             break;
-
         }
-        case PEvent::I2C_Parameters::I2C_Event::I2C_ErrorRobotLift :
+        case PEvent::I2C_Parameters::I2C_Event::I2C_ZAxisAccelerationData :
         {
-            cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : Erreur !!! Repose ce robot a terre" << endl;
+            //cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : acceleration sur l'axe Z = " << +event.i2c_p.accelerationData << endl;
+            break;
+        }
+        case PEvent::I2C_Parameters::I2C_Event::I2C_NewDataFromLazerSensor :
+        {
+            //cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : distance obstacle = " << +event.i2c_p.DistanceData << " mm" << endl;
             break;
         }
     }

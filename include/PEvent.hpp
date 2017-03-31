@@ -19,7 +19,8 @@ public:
             I2C_DistanceParcouru,
             I2C_DistanceArret,
             I2C_ZAxisAngularData,
-            I2C_ErrorRobotLift
+            I2C_ZAxisAccelerationData,
+            I2C_NewDataFromLazerSensor
         };
 
         enum class I2C_Device
@@ -46,7 +47,13 @@ public:
             uint16_t distanceArretGauche;
         };
 
-        double angularData;
+        union
+        {
+            double angularData;
+            double accelerationData;
+            uint16_t DistanceData;
+
+        };
 
         I2C_Event type;
         I2C_Device device;
