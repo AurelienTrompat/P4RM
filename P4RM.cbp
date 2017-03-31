@@ -50,6 +50,8 @@
 		<Unit filename="include/PEvent.hpp" />
 		<Unit filename="include/PGpioManager.hpp" />
 		<Unit filename="include/PI2C.hpp" />
+		<Unit filename="include/PLazerSensor.hpp" />
+		<Unit filename="include/PLazerSensorManager.hpp" />
 		<Unit filename="include/PMaster.hpp" />
 		<Unit filename="include/PMicro_C.hpp" />
 		<Unit filename="include/PModule9DOF.hpp" />
@@ -66,6 +68,8 @@
 		<Unit filename="src/PCB_Moteur.cpp" />
 		<Unit filename="src/PGpioManager.cpp" />
 		<Unit filename="src/PI2C.cpp" />
+		<Unit filename="src/PLazerSensor.cpp" />
+		<Unit filename="src/PLazerSensorManager.cpp" />
 		<Unit filename="src/PMaster.cpp" />
 		<Unit filename="src/PMicro_C.cpp" />
 		<Unit filename="src/PModule9DOF.cpp" />

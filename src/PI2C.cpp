@@ -3,7 +3,7 @@
 
 using namespace std;
 
-PI2C::PI2C() : mMicroC(this), mModule9DOF(this), mNewCommand(false)
+PI2C::PI2C() : mMicroC(this), mModule9DOF(this),mLazerSensorManager(this), mNewCommand(false)
 {
    setAgent(Agent::I2C);
 }
@@ -20,6 +20,8 @@ void PI2C::preRun()
     this_thread::sleep_for(chrono::milliseconds(1));
 
     mModule9DOF.PModule9DOF_Init();
+
+    mLazerSensorManager.PLazerSensorManager_Init();
 }
 
 void PI2C::run()
@@ -88,7 +90,17 @@ void PI2C::run()
                 mModule9DOF.Magn_Stop();
                 break;
             }
-            case i2c_Command::Laser :
+            case i2c_Command::LaserAskDataFromFront :
+            {
+
+                break;
+            }
+            case i2c_Command::LaserAskDataFromLeft :
+            {
+
+                break;
+            }
+            case i2c_Command::LaserAskDataFromRight :
             {
 
                 break;
@@ -104,6 +116,7 @@ void PI2C::postRun()
 {
     mMicroC.MicroC_ShutdownMoteur();
     mModule9DOF.PModule9DOF_Shutdown();
+    mLazerSensorManager.PLazerSensorManager_Shutdown();
     close(mFd);
     cout << "i2cStop" <<endl;
 }
@@ -128,13 +141,11 @@ void PI2C::handleCommand(const PCommand& command)
             case i2c_Command::Axel_Stop :
             case i2c_Command::Magn_Start :
             case i2c_Command::Magn_Stop :
+            case i2c_Command::LaserAskDataFromFront :
+            case i2c_Command::LaserAskDataFromLeft :
+            case i2c_Command::LaserAskDataFromRight :
             {
                 mI2C_Command = command.i2c_p.type;
-                break;
-            }
-            case i2c_Command::Laser :
-            {
-
                 break;
             }
             default :

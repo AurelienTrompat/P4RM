@@ -20,7 +20,9 @@ public:
             Axel_Stop,
             Magn_Start,
             Magn_Stop,
-            Laser
+            LaserAskDataFromFront,
+            LaserAskDataFromLeft,
+            LaserAskDataFromRight
         };
 
         struct MotorParameters

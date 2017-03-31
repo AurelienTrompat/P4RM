@@ -14,6 +14,8 @@
 #include "PAgent.hpp"
 #include "PMicro_C.hpp"
 #include "PModule9DOF.hpp"
+#include "PLazerSensorManager.hpp"
+#include "PLazerSensor.hpp"
 
 typedef PCommand::I2C_Parameters::I2C_Command i2c_Command;
 typedef PEvent::I2C_Parameters::I2C_Event i2c_Event;
@@ -21,11 +23,16 @@ typedef PEvent::I2C_Parameters::I2C_Device i2c_Device;
 
 class PMicro_C;
 class PModule9DOF;
+class PLazerSensorManager;
+class PLazerSensor;
 
 class PI2C : public PAgent
 {
     friend PMicro_C;
     friend PModule9DOF;
+    friend PLazerSensor;
+    friend PLazerSensorManager;
+
     public:
         PI2C();
         ~PI2C();
@@ -46,6 +53,7 @@ class PI2C : public PAgent
     private:
         PMicro_C mMicroC;
         PModule9DOF mModule9DOF;
+        PLazerSensorManager mLazerSensorManager;
         int mFd;
         i2c_Device mI2C_Device;
         i2c_Command mI2C_Command;
