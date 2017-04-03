@@ -27,6 +27,7 @@ class PNetwork : public PAgent
         void kick(bool force, bool message);
 
         void handleMotion();
+        void handleMode();
         void handleMapping();
         void handleConnection(bool eventType);
         void handleDebug();

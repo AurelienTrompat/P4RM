@@ -79,11 +79,9 @@ PCommand PCB_Moteur::updateWithJoystick(struct PEvent::Network_Parameters::Motio
         else
             cg=255;
     }
-    if (mSpeedFactor !=0 || mSpeedFactor!= 1)
-    {
-        cg *= (double)((255/((1-mSpeedFactor)*cg+255*mSpeedFactor))*mSpeedFactor);
-        cd *= (double)((255/((1-mSpeedFactor)*cd+255*mSpeedFactor))*mSpeedFactor);
-    }
+    cg *= (double)((255/((1-mSpeedFactor)*cg+255*mSpeedFactor))*mSpeedFactor);
+    cd *= (double)((255/((1-mSpeedFactor)*cd+255*mSpeedFactor))*mSpeedFactor);
+
     return mCommand;
 }
 
@@ -138,7 +136,7 @@ PCommand PCB_Moteur::updateWithUS(PEvent::US_Parameters::US_Seuil seuil)
     }
     return mCommand;
 }
-PCommand PCB_Moteur::updateWithRotation(PEvent::Network_Parameters::MotionParameters::RotationParameters param)
+PCommand PCB_Moteur::updateWithRotation(PEvent::Network_Parameters::MotionParameters::RotationType param)
 {
 
     PCommand::I2C_Parameters::MotorParameters &motorP = mCommand.i2c_p.motorP;
@@ -149,17 +147,17 @@ PCommand PCB_Moteur::updateWithRotation(PEvent::Network_Parameters::MotionParame
     motorP.vitesseProgressiveDroite =  true;
     motorP.vitesseProgressiveGauche = true;
 
-    if(param == PEvent::Network_Parameters::MotionParameters::RotationParameters::Trigo)
+    if(param == PEvent::Network_Parameters::MotionParameters::RotationType::Trigo)
     {
         motorP.directionGauche = false;
         motorP.directionDroite = true;
     }
-    else if(param == PEvent::Network_Parameters::MotionParameters::RotationParameters::Anti)
+    else if(param == PEvent::Network_Parameters::MotionParameters::RotationType::Anti)
     {
         motorP.directionGauche = true;
         motorP.directionDroite = false;
     }
-    else if(param == PEvent::Network_Parameters::MotionParameters::RotationParameters::Stop)
+    else if(param == PEvent::Network_Parameters::MotionParameters::RotationType::Stop)
     {
         motorP.vitesseGauche = 0;
         motorP.vitesseDroite = 0;

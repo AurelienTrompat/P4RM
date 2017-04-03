@@ -12,6 +12,7 @@
 #include "PUltrasonicSensor.hpp"
 
 #include "PCB_Moteur.hpp"
+#include "PServo.hpp"
 
 class PRobot : public PMaster
 {
@@ -43,6 +44,10 @@ class PRobot : public PMaster
         PPositionTracker mPosTracker;
 
         PCB_Moteur mCB_Moteur;
+        PServo mServo;
+
+        bool mSendDebugValues;
+        bool mUseUS;
 
         unsigned long mDD;
         unsigned long mDG;

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-PModule9DOF::PModule9DOF(PI2C *ParentI2C) : mParentI2C(ParentI2C), mGyroEnable(false), mAxelEnable(false), mMagnEnable(false), mRobotImmobile(false)
+PModule9DOF::PModule9DOF(PI2C *ParentI2C) : mParentI2C(ParentI2C), mGyroEnable(false), mAxelEnable(false), mMagnEnable(false), mGyroFirstRead(true), mPositionAngulaire(0.f), mRobotImmobile(false)
 {
     mChronoCheckGyroAngle = Chrono::now();
     mChronoCheckMagnAngle = Chrono::now();
@@ -61,7 +61,6 @@ void PModule9DOF::Gyro_Start()
 
     data.byte = 0x0C;
     mParentI2C->BusAccess(I2C_SMBUS_WRITE,0x20,I2C_SMBUS_BYTE_DATA, &data);
-
     mGyroEnable = true;
 }
 
@@ -107,9 +106,14 @@ void PModule9DOF::Gyro_CheckAngle()
             if (lectureGyro != -1)
             {
                 vitesseAngulaire += data.byte<<8;
-                double AngleRelatif=vitesseAngulaire-60;
+                //cout << "Vit :" << vitesseAngulaire << endl;
+                double AngleRelatif=vitesseAngulaire-50;
                 AngleRelatif =AngleRelatif*0.00875;
-                mPositionAngulaire += (AngleRelatif*diff.count());
+                if (!mGyroFirstRead)
+                {
+                    mPositionAngulaire += (AngleRelatif*diff.count());
+                }
+                mGyroFirstRead = false;
                 if (mPositionAngulaire < 0)
                     mPositionAngulaire += 360;
                 else if (mPositionAngulaire > 360)
@@ -309,7 +313,7 @@ void PModule9DOF::Axel_CheckAxeleration()
 {
     union i2c_smbus_data data;
     chrono::duration<double> diff = Chrono::now() - mChronoCheckAxelZ;
-    if ((diff.count() > 0.20) && mAxelEnable)
+    if ((diff.count() > 0.5f) && mAxelEnable)
     {
         mChronoCheckAxelZ = Chrono::now();
         mParentI2C->mI2C_Device = i2c_Device::Axel;
@@ -324,7 +328,7 @@ void PModule9DOF::Axel_CheckAxeleration()
             {
                 AxelZ += data.byte<<8;
                 double AxelZConvert = (double)(AxelZ*0.000122);
-                mParentI2C->SendEvent(i2c_Event::I2C_NewDataFromLazerSensor, AxelZConvert);
+                mParentI2C->SendEvent(i2c_Event::I2C_ZAxisAccelerationData, AxelZConvert);
                 //cout << "Acceleration sur Z : " << AxelZConvert << endl;
             }
         }
@@ -335,4 +339,11 @@ void PModule9DOF::SetRobotImmobile(uint8_t robotImmobile)
 {
     mRobotImmobile = robotImmobile;
 
+}
+
+void PModule9DOF::resetChrono()
+{
+    mChronoCheckGyroAngle = Chrono::now();
+    mChronoCheckMagnAngle = Chrono::now();
+    mChronoCheckAxelZ = Chrono::now();
 }

@@ -66,8 +66,10 @@ public:
             ClientConnected,
             ClientDisconnected,
             Motion,
-            ButtonRAZDefaults,
-            ButtonRAZPosition
+            DebugAction,
+            ModeChanged,
+            ButtonRAZPosition,
+
         };
 
         struct MotionParameters
@@ -84,7 +86,7 @@ public:
                 uint8_t x;
                 uint8_t y;
             };
-            enum class RotationParameters
+            enum class RotationType
             {
                 Trigo,
                 Anti,
@@ -93,9 +95,34 @@ public:
             MotionType type;
             union
             {
-                struct JoystickParameters joystick;
-                RotationParameters rotation_p;
+                struct JoystickParameters joystick_p;
+                RotationType rotation_p;
             };
+        };
+
+        struct DebugActionParameters
+        {
+            enum class DebugActionType
+            {
+                UsEnable,
+                UsDisable,
+                ServoEnable,
+                ServoDisable,
+                ServoValueChanged,
+                RAZDefaults
+            };
+
+            uint8_t servoValue;
+
+            DebugActionType type;
+        };
+
+
+        enum class Mode
+        {
+            Manual,
+            Auto,
+            Debug
         };
 
         Network_Event type;
@@ -103,6 +130,8 @@ public:
         union
         {
             struct MotionParameters motion_p;
+            struct DebugActionParameters debug_p;
+            Mode mode;
         };
     };
 

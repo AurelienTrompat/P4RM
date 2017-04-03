@@ -4,6 +4,8 @@ using namespace std;
 
 PRobot::PRobot() : mPm(PGpioManager::getInstance())
 {
+    mSendDebugValues=false;
+    mUseUS=true;
     mDG=0;
     mDD=0;
 }
@@ -119,10 +121,12 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             {
                 case PEvent::Network_Parameters::MotionParameters::MotionType::Joystick:
                 {
-                    command = mCB_Moteur.updateWithJoystick(event.network_p.motion_p.joystick);
+                    command = mCB_Moteur.updateWithJoystick(event.network_p.motion_p.joystick_p);
                     pushCommand(command);
                     uint8_t usUpdate = mCB_Moteur.getEtatUS();
                     command.mAgent = Agent::US;
+                        if(!mUseUS)
+                            usUpdate=0;
                         switch (usUpdate)
                         {
                             case 0:
@@ -158,18 +162,89 @@ void PRobot::handleNetworkEvent(const PEvent &event)
             }
             break;
         }
-        case PEvent::Network_Parameters::Network_Event::ButtonRAZDefaults :
+        case PEvent::Network_Parameters::Network_Event::DebugAction:
         {
-            command.mAgent = Agent::I2C;
-            command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::MicroC_RAZDefaultMotor;
-            pushCommand(command);
+            switch(event.network_p.debug_p.type)
+            {
+                case PEvent::Network_Parameters::DebugActionParameters::DebugActionType::RAZDefaults:
+                {
+                    command.mAgent = Agent::I2C;
+                    command.i2c_p.type = PCommand::I2C_Parameters::I2C_Command::MicroC_RAZDefaultMotor;
+                    pushCommand(command);
 
-            command.mAgent = Agent::US;
-            command.us_p.type = PCommand::US_Parameters::US_Command::Reset;
-            pushCommand(command);
+                    command.mAgent = Agent::US;
+                    command.us_p.type = PCommand::US_Parameters::US_Command::Reset;
+                    pushCommand(command);
+                    break;
+                }
+                case PEvent::Network_Parameters::DebugActionParameters::DebugActionType::UsDisable:
+                {
+                    //cout << "US Disable" <<endl;
+                    mUseUS=false;
+                    mCB_Moteur.updateWithUS(PEvent::US_Parameters::US_Seuil::NoObstacle);
+                    break;
+                }
+                case PEvent::Network_Parameters::DebugActionParameters::DebugActionType::UsEnable:
+                {
+                    //cout << "US Enable" <<endl;
+                    mUseUS=true;
+                    break;
+                }
+                case PEvent::Network_Parameters::DebugActionParameters::DebugActionType::ServoDisable:
+                {
+                    //cout << "Servo Disable" <<endl;
+                    mServo.pwm_stop();
+                    break;
+                }
+                case PEvent::Network_Parameters::DebugActionParameters::DebugActionType::ServoEnable:
+                {
+                    //cout << "Servo Enable" <<endl;
+                    mServo.pwm_start();
+                    mServo.pwm_setangle(115);
+                    break;
+                }
+                case PEvent::Network_Parameters::DebugActionParameters::DebugActionType::ServoValueChanged:
+                {
+                    //cout << "Servo Value" <<endl;
+                    mServo.pwm_setangle(event.network_p.debug_p.servoValue + 55);
+                    break;
+                }
+            }
+
             break;
         }
-        case PEvent::Network_Parameters::Network_Event::ButtonRAZPosition :
+        case PEvent::Network_Parameters::Network_Event::ModeChanged:
+        {
+            switch(event.network_p.mode)
+            {
+                case PEvent::Network_Parameters::Mode::Manual:
+                {
+                    mSendDebugValues=false;
+                    break;
+                }
+                case PEvent::Network_Parameters::Mode::Auto:
+                {
+                    mSendDebugValues=false;
+                    break;
+                }
+                case PEvent::Network_Parameters::Mode::Debug:
+                {
+                    mSendDebugValues=true;
+                    command.mAgent=Agent::Network;
+                    if(mUseUS)
+                        command.network_p.type = PCommand::Network_Parameters::Network_Command::UsEnabled;
+                    else
+                        command.network_p.type = PCommand::Network_Parameters::Network_Command::UsDisabled;
+                    pushCommand(command);
+
+                    command.network_p.type = PCommand::Network_Parameters::Network_Command::ServoDisabled;
+                    pushCommand(command);
+                    break;
+                }
+            }
+            break;
+        }
+        case PEvent::Network_Parameters::Network_Event::ButtonRAZPosition:
         {
             command.mAgent = Agent::PositionTracker;
             command.posTracker_p.type = PCommand::PositionTracker_Parameters::PositionTracker_Command::ResetPosition;
@@ -245,12 +320,28 @@ void PRobot::handleI2CEvent(const PEvent &event)
             else if (event.i2c_p.device == PEvent::I2C_Parameters::I2C_Device::Magn)
             {
                 //cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : rotation du robot par rapport au nord = " << +event.i2c_p.angularData << endl;
+                if(mSendDebugValues)
+                {
+                    command.mAgent=Agent::Network;
+                    command.network_p.type = PCommand::Network_Parameters::Network_Command::NewSensorData;
+                    command.network_p.newSensorData_p.sensor = PCommand::Network_Parameters::NewSensorData_Parameters::Sensor::Magn;
+                    command.network_p.newSensorData_p.valueInt = event.i2c_p.angularData;
+                    pushCommand(command);
+                }
             }
             break;
         }
         case PEvent::I2C_Parameters::I2C_Event::I2C_ZAxisAccelerationData :
         {
             //cout << mI2C.fromDeviceToString(event.i2c_p.device) << " : acceleration sur l'axe Z = " << +event.i2c_p.accelerationData << endl;
+            if(mSendDebugValues)
+            {
+                command.mAgent=Agent::Network;
+                command.network_p.type = PCommand::Network_Parameters::Network_Command::NewSensorData;
+                command.network_p.newSensorData_p.sensor = PCommand::Network_Parameters::NewSensorData_Parameters::Sensor::Accel;
+                command.network_p.newSensorData_p.valueDouble = event.i2c_p.accelerationData;
+                pushCommand(command);
+            }
             break;
         }
         case PEvent::I2C_Parameters::I2C_Event::I2C_NewDataFromLazerSensor :
@@ -272,7 +363,8 @@ void PRobot::handleUSEvent(const PEvent &event)
             else if (event.us_p.device == PEvent::US_Parameters::US_Device::CapteurArriere)
                 cout << "Capteur US Arriere : Obstacle" << endl;*/
 
-            pushCommand(mCB_Moteur.updateWithUS(event.us_p.seuil));
+            if(mUseUS)
+                pushCommand(mCB_Moteur.updateWithUS(event.us_p.seuil));
             break;
         }
         case PEvent::US_Parameters::US_Event::US_Error :
