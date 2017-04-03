@@ -4,6 +4,8 @@
 #include "PLazerSensor.hpp"
 #include "PGpioManager.hpp"
 
+typedef std::chrono::high_resolution_clock Chrono;
+
 class PLazerSensorManager
 {
     public:
@@ -22,6 +24,7 @@ class PLazerSensorManager
         bool mInitAvantOK;
         bool mInitDroitOK;
         bool mInitGaucheOK;
+        Chrono::time_point mChronoLaser;
 };
 
 #endif // PLAZERSENSORMANAGER_HPP
