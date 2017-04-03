@@ -11,7 +11,7 @@ class PCB_Moteur : public PCommandBuilder
         PCB_Moteur();
 
         PCommand updateWithJoystick(struct PEvent::Network_Parameters::MotionParameters::JoystickParameters joystickData);
-        PCommand updateWithRotation(PEvent::Network_Parameters::MotionParameters::RotationParameters param);
+        PCommand updateWithRotation(PEvent::Network_Parameters::MotionParameters::RotationType param);
         PCommand updateWithUS(PEvent::US_Parameters::US_Seuil seuil);
 
         uint8_t getEtatUS();

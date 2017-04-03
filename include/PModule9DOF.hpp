@@ -3,6 +3,7 @@
 
 #include <linux/i2c.h>
 #include <cmath>
+#include <iostream>
 
 #include "PCommand.hpp"
 #include "PAgent.hpp"
@@ -24,6 +25,8 @@ class PModule9DOF
         void PModule9DOF_Shutdown();
 
         void Gyro_RAZDefault();
+        void resetChrono();
+
 
         void Gyro_CheckAngle();
         void Magn_CheckOrientation();
@@ -54,6 +57,7 @@ class PModule9DOF
         bool mGyroEnable;
         bool mAxelEnable;
         bool mMagnEnable;
+        bool mGyroFirstRead;
         Chrono::time_point mChronoCheckGyroAngle;
         Chrono::time_point mChronoCheckMagnAngle;
         Chrono::time_point mChronoCheckAxelZ;

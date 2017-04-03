@@ -22,6 +22,7 @@ void PI2C::preRun()
     mModule9DOF.PModule9DOF_Init();
 
     mLazerSensorManager.PLazerSensorManager_Init();
+    mModule9DOF.resetChrono();
 }
 
 void PI2C::run()

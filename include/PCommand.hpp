@@ -88,7 +88,12 @@ public:
     {
         enum class Network_Command
         {
-            NewPosition
+            NewPosition,
+            NewSensorData,
+            UsEnabled,
+            UsDisabled,
+            ServoEnabled,
+            ServoDisabled
         };
 
         struct Position
@@ -97,8 +102,35 @@ public:
             int16_t y;
             int16_t phi;
         };
+
+        struct NewSensorData_Parameters
+        {
+            enum class Sensor
+            {
+                LaserGauche,
+                LaserAvant,
+                LaserDroit,
+                Accel,
+                Magn,
+            };
+
+            Sensor sensor;
+
+            union
+            {
+                uint16_t valueInt;
+                double valueDouble;
+            };
+        };
+
         Network_Command type;
-        Position pos;
+
+        union
+        {
+            struct Position pos;
+            struct NewSensorData_Parameters newSensorData_p;
+        };
+
     };
 
     Agent mAgent;
